@@ -82,11 +82,12 @@ Your browser may send audio to its own recognition service. TeachAPP does not up
 
 The AI student can read its replies aloud. Turn it on with **Student voice** above the chat; each reply also has a **Listen** button. The setting is remembered per browser and is off by default.
 
-- With `GOOGLE_TTS_API_KEY` set, replies are synthesized by Google Cloud Text-to-Speech (Chirp 3: HD, MP3) through `POST /api/sessions/:id/messages/:messageId/speech`. The route reads only a stored student reply owned by the caller, never arbitrary text.
-- Without a key, on a provider error, or after the cap is reached, the browser's built-in voice is used instead. Russian text is read with a Russian voice.
-- Characters are reserved in the durable `tts_usage` table before each provider call and are never released. The monthly cap defaults to 900,000 characters (UTC months) and cannot be set above Google's 1,000,000-character free tier. One reply can be synthesized at most three times; the browser keeps the audio for repeat plays on the same page.
-- No automatic retries. The OpenAI `ai_usage` ledger and its $4 cap are unchanged and do not cover text-to-speech.
-- Google bills automatically beyond the free tier with no provider-side cap. Keep the Google Cloud account on the Free Trial and restrict the API key to the Text-to-Speech API.
+- **Cloud voice.** `POST /api/sessions/:id/messages/:messageId/speech` reads only a stored student reply owned by the caller, never arbitrary text, and returns MP3.
+  - `DEEPGRAM_API_KEY` (preferred): Deepgram Aura-2, English replies only. Paid from Deepgram's sign-up credit, which needs no card.
+  - `GOOGLE_TTS_API_KEY`: Google Cloud Text-to-Speech, Chirp 3: HD, English and Russian. Google bills automatically beyond its free tier, so keep that account on the Free Trial and restrict the key.
+- **Browser voice.** Used with no key, for replies the cloud voice does not support (Russian with Deepgram), on any provider error, and after the cap. It picks the most natural installed voice: Edge "Natural" voices, macOS Premium or Enhanced voices, then Chrome's Google voices; macOS novelty voices are never used.
+- **Limits.** Characters are reserved per provider in the durable `tts_usage` table before each call and are never released. Monthly caps (UTC months): Deepgram 1,000,000 by default, at most 3,000,000; Google 900,000 by default, at most 1,000,000. `TTS_MONTHLY_CHARACTER_CAP` can only lower them. One reply can be synthesized at most three times; the browser keeps audio for repeat plays on the same page. No automatic retries.
+- The OpenAI `ai_usage` ledger and its $4 cap are unchanged and do not cover text-to-speech.
 - Some browsers block audio that does not follow a click, so an automatic reading may stay silent; **Listen** still works.
 
 ## History without login

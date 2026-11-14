@@ -2,29 +2,38 @@ import { describe, expect, it, vi } from "vitest";
 
 vi.mock("server-only", () => ({}));
 
-import { countCharacters, DEFAULT_MONTHLY_CHARACTER_CAP, readTtsConfig, usageMonth } from "../src/server/tts/config";
+import { countCharacters, readTtsConfig, usageMonth } from "../src/server/tts/config";
 
 describe("text-to-speech config", () => {
-  it("is disabled without an API key", () => {
-    expect(readTtsConfig({}).apiKey).toBeNull();
-    expect(readTtsConfig({ GOOGLE_TTS_API_KEY: "  " }).apiKey).toBeNull();
+  it("is disabled without any key", () => {
+    expect(readTtsConfig({}).provider).toBeNull();
+    expect(readTtsConfig({ GOOGLE_TTS_API_KEY: "  ", DEEPGRAM_API_KEY: "" }).provider).toBeNull();
   });
 
-  it("defaults the cap below the free tier and never raises it above", () => {
-    expect(readTtsConfig({}).monthlyCharacterCap).toBe(DEFAULT_MONTHLY_CHARACTER_CAP);
-    expect(readTtsConfig({ TTS_MONTHLY_CHARACTER_CAP: "5000000" }).monthlyCharacterCap).toBe(1_000_000);
-    expect(readTtsConfig({ TTS_MONTHLY_CHARACTER_CAP: "1000" }).monthlyCharacterCap).toBe(1000);
-    expect(readTtsConfig({ TTS_MONTHLY_CHARACTER_CAP: "0" }).monthlyCharacterCap).toBe(0);
-    expect(readTtsConfig({ TTS_MONTHLY_CHARACTER_CAP: "lots" }).monthlyCharacterCap).toBe(DEFAULT_MONTHLY_CHARACTER_CAP);
-    expect(readTtsConfig({ TTS_MONTHLY_CHARACTER_CAP: "-1" }).monthlyCharacterCap).toBe(DEFAULT_MONTHLY_CHARACTER_CAP);
+  it("prefers Deepgram when both keys are set", () => {
+    const config = readTtsConfig({ GOOGLE_TTS_API_KEY: "g", DEEPGRAM_API_KEY: "d" });
+    expect(config).toMatchObject({ provider: "deepgram-aura-2", apiKey: "d", voice: "thalia", monthlyCharacterCap: 1_000_000 });
+    expect(readTtsConfig({ GOOGLE_TTS_API_KEY: "g" })).toMatchObject({ provider: "google-chirp3-hd", voice: "Leda", monthlyCharacterCap: 900_000 });
+  });
+
+  it("lets the cap be lowered but never raised above the provider ceiling", () => {
+    expect(readTtsConfig({ GOOGLE_TTS_API_KEY: "g", TTS_MONTHLY_CHARACTER_CAP: "5000000" }).monthlyCharacterCap).toBe(1_000_000);
+    expect(readTtsConfig({ DEEPGRAM_API_KEY: "d", TTS_MONTHLY_CHARACTER_CAP: "99000000" }).monthlyCharacterCap).toBe(3_000_000);
+    expect(readTtsConfig({ DEEPGRAM_API_KEY: "d", TTS_MONTHLY_CHARACTER_CAP: "1000" }).monthlyCharacterCap).toBe(1000);
+    expect(readTtsConfig({ DEEPGRAM_API_KEY: "d", TTS_MONTHLY_CHARACTER_CAP: "0" }).monthlyCharacterCap).toBe(0);
+    expect(readTtsConfig({ DEEPGRAM_API_KEY: "d", TTS_MONTHLY_CHARACTER_CAP: "lots" }).monthlyCharacterCap).toBe(1_000_000);
+    expect(readTtsConfig({ DEEPGRAM_API_KEY: "d", TTS_MONTHLY_CHARACTER_CAP: "-1" }).monthlyCharacterCap).toBe(1_000_000);
+    expect(readTtsConfig({ DEEPGRAM_API_KEY: "d", TTS_MONTHLY_CHARACTER_CAP: "" }).monthlyCharacterCap).toBe(1_000_000);
   });
 
   it("accepts only plain voice names", () => {
-    expect(readTtsConfig({ GOOGLE_TTS_VOICE: "Puck" }).voice).toBe("Puck");
-    expect(readTtsConfig({ GOOGLE_TTS_VOICE: "en-US-Puck/../x" }).voice).toBe("Leda");
+    expect(readTtsConfig({ DEEPGRAM_API_KEY: "d", DEEPGRAM_TTS_VOICE: "apollo" }).voice).toBe("apollo");
+    expect(readTtsConfig({ DEEPGRAM_API_KEY: "d", DEEPGRAM_TTS_VOICE: "x&model=other" }).voice).toBe("thalia");
+    expect(readTtsConfig({ GOOGLE_TTS_API_KEY: "g", GOOGLE_TTS_VOICE: "Puck" }).voice).toBe("Puck");
+    expect(readTtsConfig({ GOOGLE_TTS_API_KEY: "g", GOOGLE_TTS_VOICE: "en-US-Puck/../x" }).voice).toBe("Leda");
   });
 
-  it("counts characters the way the provider bills them", () => {
+  it("counts characters the way providers bill them", () => {
     expect(countCharacters("Hi there\n")).toBe(9);
     expect(countCharacters("Привет")).toBe(6);
     expect(countCharacters("🙂ok")).toBe(3);

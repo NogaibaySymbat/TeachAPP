@@ -5,8 +5,9 @@ import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from "vitest
 
 vi.mock("server-only", () => ({}));
 vi.mock("../src/server/db", () => ({ getDatabase: () => database }));
-const { synthesizeSpeech } = vi.hoisted(() => ({ synthesizeSpeech: vi.fn() }));
+const { synthesizeSpeech, synthesizeWithDeepgram } = vi.hoisted(() => ({ synthesizeSpeech: vi.fn(), synthesizeWithDeepgram: vi.fn() }));
 vi.mock("../src/server/tts/google", () => ({ synthesizeSpeech }));
+vi.mock("../src/server/tts/deepgram", () => ({ synthesizeWithDeepgram }));
 
 import { createSession } from "../src/server/repositories/sessions";
 import { findStudentMessageText, reserveTtsCharacters } from "../src/server/repositories/tts-usage";
@@ -33,7 +34,7 @@ describe.skipIf(!process.env.TEST_DATABASE_URL)("text-to-speech character ledger
   beforeAll(async () => {
     await database.query(await readFile(new URL("../db/schema.sql", import.meta.url), "utf8"));
   });
-  afterEach(() => { vi.unstubAllEnvs(); synthesizeSpeech.mockReset(); });
+  afterEach(() => { vi.unstubAllEnvs(); synthesizeSpeech.mockReset(); synthesizeWithDeepgram.mockReset(); });
   afterAll(async () => {
     // Test-only cleanup of synthetic rows; production rows are never deleted.
     await database.query("DELETE FROM tts_usage WHERE message_id = ANY($1::uuid[])", [messageIds]);
@@ -45,18 +46,18 @@ describe.skipIf(!process.env.TEST_DATABASE_URL)("text-to-speech character ledger
     const messageId = randomUUID();
     messageIds.push(messageId);
     await database.query("DELETE FROM tts_usage WHERE usage_month = '2099-01'");
-    await reserveTtsCharacters({ messageId, characters: 60, monthlyCharacterCap: 100, now: testMonth });
-    await expect(reserveTtsCharacters({ messageId, characters: 41, monthlyCharacterCap: 100, now: testMonth }))
+    await reserveTtsCharacters({ provider: "google-chirp3-hd", messageId, characters: 60, monthlyCharacterCap: 100, now: testMonth });
+    await expect(reserveTtsCharacters({ provider: "google-chirp3-hd", messageId, characters: 41, monthlyCharacterCap: 100, now: testMonth }))
       .rejects.toMatchObject({ code: "TTS_LIMIT_REACHED" });
-    await reserveTtsCharacters({ messageId, characters: 40, monthlyCharacterCap: 100, now: testMonth });
+    await reserveTtsCharacters({ provider: "google-chirp3-hd", messageId, characters: 40, monthlyCharacterCap: 100, now: testMonth });
     await database.query("DELETE FROM tts_usage WHERE usage_month = '2099-01'");
   });
 
   it("limits how many times one reply can be synthesized", async () => {
     const messageId = randomUUID();
     messageIds.push(messageId);
-    for (let i = 0; i < 3; i++) await reserveTtsCharacters({ messageId, characters: 1, monthlyCharacterCap: 1000, now: testMonth });
-    await expect(reserveTtsCharacters({ messageId, characters: 1, monthlyCharacterCap: 1000, now: testMonth }))
+    for (let i = 0; i < 3; i++) await reserveTtsCharacters({ provider: "google-chirp3-hd", messageId, characters: 1, monthlyCharacterCap: 1000, now: testMonth });
+    await expect(reserveTtsCharacters({ provider: "google-chirp3-hd", messageId, characters: 1, monthlyCharacterCap: 1000, now: testMonth }))
       .rejects.toMatchObject({ code: "TTS_MESSAGE_LIMIT" });
     await database.query("DELETE FROM tts_usage WHERE usage_month = '2099-01'");
   });
@@ -65,7 +66,7 @@ describe.skipIf(!process.env.TEST_DATABASE_URL)("text-to-speech character ledger
     const ids = Array.from({ length: 8 }, () => randomUUID());
     messageIds.push(...ids);
     const results = await Promise.allSettled(ids.map((messageId) =>
-      reserveTtsCharacters({ messageId, characters: 30, monthlyCharacterCap: 100, now: testMonth })));
+      reserveTtsCharacters({ provider: "google-chirp3-hd", messageId, characters: 30, monthlyCharacterCap: 100, now: testMonth })));
     expect(results.filter((result) => result.status === "fulfilled")).toHaveLength(3);
     const { rows } = await database.query<{ total: string }>("SELECT SUM(characters)::text AS total FROM tts_usage WHERE usage_month = '2099-01'");
     expect(Number(rows[0].total)).toBe(90);
@@ -84,6 +85,7 @@ describe.skipIf(!process.env.TEST_DATABASE_URL)("text-to-speech character ledger
 
   it("does not reserve or call the provider without a key", async () => {
     vi.stubEnv("GOOGLE_TTS_API_KEY", "");
+    vi.stubEnv("DEEPGRAM_API_KEY", "");
     const { userId, sessionId, messageId } = await studentMessage();
     await expect(speakStudentMessage(userId, sessionId, messageId)).rejects.toMatchObject({ code: "TTS_NOT_CONFIGURED" });
     expect(synthesizeSpeech).not.toHaveBeenCalled();
@@ -93,11 +95,43 @@ describe.skipIf(!process.env.TEST_DATABASE_URL)("text-to-speech character ledger
 
   it("reserves before synthesis and keeps the reservation when the provider fails", async () => {
     vi.stubEnv("GOOGLE_TTS_API_KEY", "test-key");
+    vi.stubEnv("DEEPGRAM_API_KEY", "");
     const { userId, sessionId, messageId } = await studentMessage("Почему это важно?");
     synthesizeSpeech.mockRejectedValueOnce(new Error("provider down"));
     await expect(speakStudentMessage(userId, sessionId, messageId)).rejects.toThrow("provider down");
     expect(synthesizeSpeech).toHaveBeenCalledWith(expect.objectContaining({ languageCode: "ru-RU", text: "Почему это важно?" }));
     const { rows } = await database.query<{ characters: number }>("SELECT characters FROM tts_usage WHERE message_id = $1", [messageId]);
     expect(rows).toEqual([{ characters: 17 }]);
+  });
+
+  it("keeps separate monthly totals per provider", async () => {
+    const messageId = randomUUID();
+    messageIds.push(messageId);
+    await reserveTtsCharacters({ provider: "google-chirp3-hd", messageId, characters: 90, monthlyCharacterCap: 100, now: testMonth });
+    await reserveTtsCharacters({ provider: "deepgram-aura-2", messageId, characters: 90, monthlyCharacterCap: 100, now: testMonth });
+    await expect(reserveTtsCharacters({ provider: "deepgram-aura-2", messageId, characters: 20, monthlyCharacterCap: 100, now: testMonth }))
+      .rejects.toMatchObject({ code: "TTS_LIMIT_REACHED" });
+    await database.query("DELETE FROM tts_usage WHERE usage_month = '2099-01'");
+  });
+
+  it("uses Deepgram for English and reserves under its own provider", async () => {
+    vi.stubEnv("DEEPGRAM_API_KEY", "dg-test-key");
+    vi.stubEnv("GOOGLE_TTS_API_KEY", "google-test-key");
+    const { userId, sessionId, messageId } = await studentMessage("Why does that matter?");
+    synthesizeWithDeepgram.mockResolvedValueOnce(new Uint8Array([1, 2, 3]));
+    expect(await speakStudentMessage(userId, sessionId, messageId)).toEqual(new Uint8Array([1, 2, 3]));
+    expect(synthesizeWithDeepgram).toHaveBeenCalledWith({ apiKey: "dg-test-key", text: "Why does that matter?", voice: "thalia" });
+    expect(synthesizeSpeech).not.toHaveBeenCalled();
+    const { rows } = await database.query<{ provider: string }>("SELECT provider FROM tts_usage WHERE message_id = $1", [messageId]);
+    expect(rows).toEqual([{ provider: "deepgram-aura-2" }]);
+  });
+
+  it("does not spend Deepgram credit on Russian replies", async () => {
+    vi.stubEnv("DEEPGRAM_API_KEY", "dg-test-key");
+    const { userId, sessionId, messageId } = await studentMessage("Почему это важно?");
+    await expect(speakStudentMessage(userId, sessionId, messageId)).rejects.toMatchObject({ code: "TTS_LANGUAGE_UNSUPPORTED" });
+    expect(synthesizeWithDeepgram).not.toHaveBeenCalled();
+    const { rowCount } = await database.query("SELECT 1 FROM tts_usage WHERE message_id = $1", [messageId]);
+    expect(rowCount).toBe(0);
   });
 });
