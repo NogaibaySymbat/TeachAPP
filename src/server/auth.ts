@@ -15,7 +15,7 @@ export async function currentAccount(request: Request): Promise<AuthAccount | nu
   if (!request.headers.has("authorization")) {
     const id = readDemoAccountId(request);
     if (!id) return null;
-    if (!await findDemoAccount(id)) throw new ServiceError(401, "AUTH_REQUIRED", "Войдите в аккаунт снова.");
+    if (!await findDemoAccount(id)) throw new ServiceError(401, "AUTH_REQUIRED", "Please sign in again.");
     return { id, label: "admin", provider: "demo" };
   }
   const authorization = request.headers.get("authorization");
@@ -47,12 +47,12 @@ export async function currentAccount(request: Request): Promise<AuthAccount | nu
   if (!user || user.is_anonymous || !user.email_confirmed_at || !z.uuid().safeParse(user.id).success) {
     throw new ServiceError(401, "AUTH_REQUIRED", "Please confirm your email to sign in.");
   }
-  return { id: await getOrCreateAccount(user.id), label: user.email ?? "Ваш аккаунт", provider: "supabase", subject: user.id };
+  return { id: await getOrCreateAccount(user.id), label: user.email ?? "Your account", provider: "supabase", subject: user.id };
 }
 
 export async function requireAccount(request: Request): Promise<string> {
   const account = await currentAccount(request);
-  if (!account) throw new ServiceError(401, "AUTH_REQUIRED", "Чтобы получить доступ к истории, войдите в аккаунт.");
+  if (!account) throw new ServiceError(401, "AUTH_REQUIRED", "Please sign in to see this history.");
   return account.id;
 }
 

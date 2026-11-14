@@ -62,7 +62,7 @@ export async function claimGuestHistory(accountId: string, guestId: string): Pro
     const account = result.rows.find((row) => row.id === accountId.toLowerCase());
     const guest = result.rows.find((row) => row.id === guestId.toLowerCase());
     if (account?.demo_username) {
-      throw new ServiceError(403, "DEMO_HISTORY_IMPORT_DISABLED", "Личная гостевая история не переносится в общий тестовый аккаунт.");
+      throw new ServiceError(403, "DEMO_HISTORY_IMPORT_DISABLED", "Browser history cannot be moved into the shared test account.");
     }
     if (!account?.auth_subject || account.claimed_by) {
       throw new ServiceError(401, "AUTH_REQUIRED", "Sign in before importing guest history.");

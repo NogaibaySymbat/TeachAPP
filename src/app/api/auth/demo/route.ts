@@ -8,7 +8,7 @@ export async function POST(request: Request) {
   return handle(async () => {
     assertSameOrigin(request);
     if (request.headers.get("content-type")?.split(";")[0].trim().toLowerCase() !== "application/json") {
-      throw new ServiceError(415, "INVALID_CONTENT_TYPE", "Используйте форму входа на сайте.");
+      throw new ServiceError(415, "INVALID_CONTENT_TYPE", "Please sign in from the TeachAPP website.");
     }
     const { username, password } = await readBody(request, z.object({
       username: z.string().min(1).max(100), password: z.string().min(1).max(100),

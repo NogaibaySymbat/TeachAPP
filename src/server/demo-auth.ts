@@ -20,7 +20,7 @@ export function demoLoginAvailable(): boolean {
 
 function secret(): string {
   if (!demoLoginAvailable()) {
-    throw new ServiceError(503, "DEMO_AUTH_UNAVAILABLE", "Временный вход сейчас недоступен.");
+    throw new ServiceError(503, "DEMO_AUTH_UNAVAILABLE", "Test sign-in is not available.");
   }
   return process.env.AUTH_SECRET!;
 }
@@ -31,7 +31,7 @@ export function assertSameOrigin(request: Request): void {
   // the browser's actual destination; forwarded-host is not trusted here.
   const expectedOrigin = `${url.protocol}//${request.headers.get("host") ?? url.host}`;
   if (request.headers.get("origin") !== expectedOrigin) {
-    throw new ServiceError(403, "INVALID_ORIGIN", "Откройте форму входа на этом сайте и попробуйте ещё раз.");
+    throw new ServiceError(403, "INVALID_ORIGIN", "Please use TeachAPP from its own website and try again.");
   }
 }
 
@@ -42,7 +42,7 @@ export function assertDemoCredentials(username: string, password: string): void 
   const validUsername = timingSafeEqual(digest(username), digest("admin"));
   const validPassword = timingSafeEqual(digest(password), digest("admin"));
   if (!validUsername || !validPassword) {
-    throw new ServiceError(401, "INVALID_CREDENTIALS", "Неверный логин или пароль.");
+    throw new ServiceError(401, "INVALID_CREDENTIALS", "Incorrect username or password.");
   }
 }
 
@@ -66,7 +66,7 @@ function cookieValue(request: Request): string | null {
 }
 
 function invalidSession(): ServiceError {
-  return new ServiceError(401, "AUTH_REQUIRED", "Сессия завершилась. Войдите в аккаунт снова.");
+  return new ServiceError(401, "AUTH_REQUIRED", "Your session has ended. Please sign in again.");
 }
 
 export function hasDemoCookie(request: Request): boolean {

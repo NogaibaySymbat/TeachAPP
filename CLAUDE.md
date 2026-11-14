@@ -7,7 +7,9 @@ Read `AGENTS.md` and `TEAM_HANDOFF.md` first, then the relevant code and README 
 - TeachAPP is a web study workspace: the human teaches an AI student, and the student takes a practice exam using its notebook.
 - The live UI has no login. Preserve browser-owned history and existing anonymous storage keys. `/login` and `/auth/callback` redirect home; production demo auth is disabled.
 - Old account code and data remain for compatibility. Do not restore account UI from historical plans or expose legacy account data to guests.
-- Browser microphone input exists. Spoken bot replies, TTS, and realtime voice conversations are NOT implemented. No new voice provider has been selected. A teammate owns the voice assistant; do not modify it without coordination.
+- Browser microphone input exists (English by default). Student replies can be read aloud: Deepgram Aura-2 when `DEEPGRAM_API_KEY` is set (English replies only), Google Chirp 3: HD when `GOOGLE_TTS_API_KEY` is set, otherwise the browser voice. Characters are reserved per provider in `tts_usage`; keep that ledger and its caps. Realtime voice conversations are not implemented. A teammate owns the voice features; coordinate before changing them.
+- Paid routes (reply, notebook, exam, speech) pass `assertPaidRequestAllowed` (per-network and site-wide hourly limits in `rate_limit_events`, fail-open if the table is missing). Keep it on any new paid route.
+- The exam review and export hide correct options until a topic is passed, and the debrief names key-idea labels, not their text. Keep retakes from leaking answers.
 - The content contains four topics and twelve original questions (stakeholders, risks, change control, Scrum), not a complete or official PMP exam. Latest/previous attempt comparison and owner-only TXT/JSON exports are implemented. Exports include historical snapshots; they cannot be imported to restore access.
 
 ## Engineering constraints
