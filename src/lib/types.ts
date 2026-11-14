@@ -37,6 +37,9 @@ export interface Message {
   createdAt: string;
 }
 
+// Compatibility names used by the team's AI module scaffold.
+export type ChatMessage = Message;
+
 export interface NotebookEntry {
   id: string;
   claim: string;
@@ -63,6 +66,8 @@ export interface GradedAnswer extends ExamineeAnswer {
   correct: boolean;
 }
 
+export type ExamAnswer = GradedAnswer;
+
 export interface ExamResult {
   results: GradedAnswer[];
   score: number;
@@ -84,6 +89,9 @@ export interface CreateSessionRequest { topicId: string }
 export interface CreateSessionResponse { sessionId: string; firstMessage: string | null }
 export interface SendMessageRequest { text: string }
 export interface SendMessageResponse { message: Message }
+export interface NotebookResponse { notebook: NotebookEntry[] }
+export type ExamResponse = ExamResult;
+export interface DebriefResponse { gaps: Gap[] }
 export interface SessionResponse { session: Session; messages: Message[]; notebook: NotebookEntry[] }
 export interface SessionHistoryItem extends Session {
   topicTitle: string;

@@ -7,6 +7,7 @@ The current user request covers **frontend and backend only**. ML modules and pr
 The confirmed project name is **TeachAPP**. Existing browser storage and cookie keys retain their legacy prefix for compatibility with saved sessions.
 
 - Implemented foundation: Next.js/TypeScript app, anonymous browser ID, Postgres schema, session/message persistence, read repositories, content loading and deterministic grading.
+- The team's AI scaffold in `src/ai/` and prompt drafts in `prompts/` are preserved for the ML developer, but are not connected. The content templates follow the current validated loader contract; they are not live study content.
 - Latest user decision: the login UI exposes only Email magic links and Google OAuth through Supabase Auth. It uses a separate dark sign-in screen with provider choices and a second step for email entry. Password login is no longer exposed in the UI. Both providers use verified Supabase bearer tokens.
 - Session history is listed through `GET /api/sessions?offset=0` only after sign-in; guests receive 401. Both the header and the history section explain that an account is required.
 - `POST /api/auth/claim` imports guest sessions and progress into the verified account. Account subjects are separate from internal app IDs; retired guest IDs cannot access the imported data.

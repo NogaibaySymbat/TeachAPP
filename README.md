@@ -91,6 +91,7 @@ The integration suite applies the schema and removes only users it creates. It i
 | `src/server/auth.ts`, `src/server/demo-auth.ts`, `src/lib/auth-client.ts` | Supabase verification and browser session; legacy demo cookie support |
 | `src/components/auth-provider.tsx` | Shared verified account state for the header and history |
 | `src/server` | Backend: Postgres, repositories, content loading and deterministic grading |
+| `src/ai`, `prompts` | Team-owned AI scaffold and prompt drafts; not connected to the app yet |
 | `src/lib/types.ts` | Shared API and content contracts |
 | `src/lib/anon-id.ts` | Browser-generated anonymous UUID in localStorage |
 | `content/exams` | Exam packages; engine code contains no exam-specific facts |
@@ -127,6 +128,8 @@ Repositories persist sessions and messages and read notebooks, attempts, and top
 ## Content handoff
 
 Each exam's `exam.json` declares `id`, `title`, `description` and a list of topic IDs. Add topics to that list and create matching `topics/<topicId>.json` and `questions/<topicId>.json` files. Topic IDs must be globally unique. Content shapes are defined in `src/lib/types.ts` and validated in `src/server/content.ts`.
+
+The `_example.json` files are templates only and are not listed in the exam manifest. Copy them to matching topic filenames and replace every TODO before adding a topic. Question files contain an array with `correctAnswer` and `requiredIdeaIds`; topics use `description` and a string array of `misconceptions`.
 
 No exam facts or practice questions have been invented for the scaffold. The loader reads exam packages from disk, so new packages do not require engine changes.
 

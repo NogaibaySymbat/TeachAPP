@@ -1,0 +1,11 @@
+{
+  "id": "example-topic",
+  "title": "TODO: topic title",
+  "description": "TODO: one sentence shown to the user",
+  "keyIdeas": [
+    { "id": "k1", "text": "TODO: an idea the user should explain" }
+  ],
+  "misconceptions": [
+    "TODO: a plausible wrong belief the student may voice"
+  ]
+}

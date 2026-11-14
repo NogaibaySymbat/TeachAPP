@@ -1,0 +1,14 @@
+[
+    {
+      "id": "q1",
+      "text": "TODO: situational question written by us",
+      "options": [
+        { "id": "a", "text": "TODO" },
+        { "id": "b", "text": "TODO" },
+        { "id": "c", "text": "TODO" },
+        { "id": "d", "text": "TODO" }
+      ],
+      "correctAnswer": "a",
+      "requiredIdeaIds": ["k1"]
+    }
+]
