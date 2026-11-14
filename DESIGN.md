@@ -114,6 +114,8 @@ The email field uses a #656565 border and the accent caret. The submit action tu
 
 Email selection reveals the passwordless address form; successful submission reveals the sent state. Errors are inline alerts. Missing provider configuration shows an unavailable message, not a success state. Callback feedback uses the same auth colors inside the inherited notice shape.
 
+When demo access is enabled, a third method opens a username/password form. It reuses the existing field and submit styles, labels the account as a shared demonstration account, and shows the public demo credentials `admin / admin`. Email and Google remain available.
+
 ## Do's and Don'ts
 
 ### Do:
@@ -123,4 +125,4 @@ Email selection reveals the passwordless address form; successful submission rev
 
 ### Don't:
 - Don’t apply the authentication palette to the existing light workspace.
-- Don’t introduce password or demo controls into this account-entry surface.
+- Don’t present the shared demo account as a personal account or an administrator role.

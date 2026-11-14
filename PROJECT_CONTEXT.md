@@ -8,11 +8,11 @@ The confirmed project name is **TeachAPP**. Existing browser storage and cookie 
 
 - Implemented foundation: Next.js/TypeScript app, anonymous browser ID, Postgres schema, session/message persistence, read repositories, content loading and deterministic grading.
 - The team's AI scaffold in `src/ai/` and prompt drafts in `prompts/` are preserved for the ML developer, but are not connected. The content templates follow the current validated loader contract; they are not live study content.
-- Latest user decision: the login UI exposes only Email magic links and Google OAuth through Supabase Auth. It uses a separate dark sign-in screen with provider choices and a second step for email entry. Password login is no longer exposed in the UI. Both providers use verified Supabase bearer tokens.
+- Latest user decision: add a demo username/password option (`admin / admin`) alongside Email magic links and Google OAuth. The dark sign-in screen opens a separate form for each input method. Personal providers use verified Supabase bearer tokens; the shared demo uses a signed HttpOnly cookie.
 - Session history is listed through `GET /api/sessions?offset=0` only after sign-in; guests receive 401. Both the header and the history section explain that an account is required.
 - `POST /api/auth/claim` imports guest sessions and progress into the verified account. Account subjects are separate from internal app IDs; retired guest IDs cannot access the imported data.
-- Both providers require Supabase URL/publishable key. Email additionally needs working SMTP delivery; Google needs its OAuth Web client configured in the Supabase Google provider. `npm run setup:local` prepares only local database/environment settings and preserves existing settings; newly created settings disable demo auth. Provider setup is documented in README. Local tests do not prove real email delivery or Google sign-in.
-- Legacy demo endpoints remain internal and opt-in, without UI. They require `DEMO_AUTH_ENABLED=true`, a random `AUTH_SECRET` and PostgreSQL; current local settings disable them. The shared account has no administration privileges, uses an eight-hour signed HttpOnly cookie, and never imports personal guest sessions. Keep it disabled on public deployments.
+- Both providers require Supabase URL/publishable key. Email additionally needs working SMTP delivery; Google needs its OAuth Web client configured in the Supabase Google provider. `npm run setup:local` prepares local database/environment settings and preserves existing settings; newly created settings enable demo auth with a generated signing secret. Provider setup is documented in README. Local tests do not prove real email delivery or Google sign-in.
+- Demo sign-in is available in the UI when `DEMO_AUTH_ENABLED=true` and a suitable `AUTH_SECRET` are configured; PostgreSQL is also required. Current local settings enable it. The shared account has no administration privileges, uses an eight-hour signed HttpOnly cookie, and never imports personal guest sessions. Use it for demonstrations, not private study data.
 - Google configuration uses the app origin in Google Authorized JavaScript origins, the Supabase callback from its provider dashboard in Google Authorized redirect URIs, and the app `/auth/callback` in Supabase's redirect allowlist. Client ID/secret stay in Supabase provider settings. Only identity/profile scopes are requested; see the [official setup](https://supabase.com/docs/guides/auth/social-sign-in/auth-google).
 - Content packages currently contain no study topics or questions; the UI displays an empty state.
 - `POST /api/sessions` returns `firstMessage: null` until the Student module is connected.
@@ -65,7 +65,7 @@ The confirmed project name is **TeachAPP**. Existing browser storage and cookie 
 | Модель | B2C. Продаём человеку, не школам и не работодателям |
 | Язык продукта | Английский: интерфейс, промпты, контент, дека |
 | Монетизация (гипотеза) | Подписка на период подготовки с бесплатным пробным доступом |
-| Вход в MVP | Быстрый старт гостем; история доступна после входа. В интерфейсе только Email (ссылка для входа) и Google через Supabase Auth |
+| Вход в MVP | Быстрый старт гостем; история доступна после входа. Email (ссылка для входа) и Google через Supabase Auth; для демонстрации также логин и пароль admin / admin |
 
 Почему PMP: аудитория точно 25–45, платят сами, вопросы экзамена ситуационные и требуют понимания, тему может объяснить на демо любой из нас.
 
@@ -125,7 +125,7 @@ The confirmed project name is **TeachAPP**. Existing browser storage and cookie 
 - Фронтенд: Next.js (TypeScript), деплой на Vercel.
 - Бэкенд: API-маршруты Next.js или отдельный сервис, на выбор бэкенд-команды.
 - База: Postgres (например, Supabase).
-- Для просмотра истории вход обязателен. Гость использует ID браузера; личный аккаунт — Supabase Auth с Email magic link или Google OAuth. Сервер проверяет токен и определяет внутренний ID. После входа гостевые сессии и прогресс переносятся в личный аккаунт. Старый demo endpoint с подписанной HttpOnly-cookie сохранён для внутренних тестов, выключен по умолчанию и отсутствует в интерфейсе.
+- Для просмотра истории вход обязателен. Гость использует ID браузера; личный аккаунт — Supabase Auth с Email magic link или Google OAuth. Сервер проверяет токен и определяет внутренний ID. После входа гостевые сессии и прогресс переносятся в личный аккаунт. Для демонстрации добавлен отдельный вход admin / admin с подписанной HttpOnly-cookie; он включается серверной настройкой и не переносит личную гостевую историю в общий аккаунт.
 - ИИ: вызовы LLM только с сервера. Ключ хранится в переменных окружения.
 
 Главный принцип: **движок не знает про PMP**. Экзамен подключается как пакет контента:
@@ -213,7 +213,7 @@ GET  /api/progress                               -> { streak, topicOfTheDay, gap
 
 - Другие экзамены, кроме PMP.
 - Мобильное приложение, Telegram-бот.
-- Регистрация и вход по паролю в интерфейсе, другие социальные провайдеры кроме Google. Доступные способы входа — Email magic link и Google через Supabase Auth.
+- Регистрация личных аккаунтов по паролю и социальные провайдеры кроме Google. Личный вход — Email magic link или Google; admin / admin используется только как общий демоаккаунт.
 - Голосовой ввод (только если останется время после часа 18).
 - Оплата по-настоящему. Достаточно экрана с тарифом; не имитировать успешный платёж.
 - Функции для школ, компаний, преподавателей.

@@ -73,7 +73,7 @@
     ],
     "donts": [
       "Don’t apply the authentication palette to the existing light workspace.",
-      "Don’t introduce password or demo controls into this account-entry surface."
+      "Don’t present the shared demo account as a personal account or an administrator role."
     ]
   }
 }

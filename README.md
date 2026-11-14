@@ -2,7 +2,7 @@
 
 A study workspace where people prepare by explaining topics to an AI student. The student will use only their notebook when taking practice questions.
 
-**Current scope:** frontend and backend foundation, email-link and Google sign-in, and account-only session history. The login screen offers only Email and Google. AI modules, prompts, topic content, student replies, notebook generation, exams, debriefs, and recommendations are not implemented. No generated responses or results are simulated.
+**Current scope:** frontend and backend foundation, email-link and Google sign-in, a local demo account, and account-only session history. The login screen offers Email and Google, plus username/password when demo access is enabled. AI modules, prompts, topic content, student replies, notebook generation, exams, debriefs, and recommendations are not implemented. No generated responses or results are simulated.
 
 Production URL: **not deployed yet**.
 
@@ -18,7 +18,7 @@ npm run setup:local
 npm run dev
 ```
 
-Open http://localhost:3000. Setup prepares an ignored `.env.local` and starts an isolated PostgreSQL database at port 55433; it does not configure sign-in providers. Database files stay in ignored `.data/postgres`; `npm run db:local` restarts it and reapplies additive migrations after a reboot. Existing `.env.local` files are preserved. Configure Supabase below to use Email or Google on http://localhost:3000/login.
+Open http://localhost:3000. Setup prepares an ignored `.env.local`, enables local demo sign-in, and starts an isolated PostgreSQL database at port 55433. On http://localhost:3000/login, choose **Войти по логину** and enter **admin / admin**. Database files stay in ignored `.data/postgres`; `npm run db:local` restarts it and reapplies additive migrations after a reboot. Existing `.env.local` files are preserved. Configure Supabase below to use Email or Google.
 
 To use your own PostgreSQL database instead:
 
@@ -38,11 +38,11 @@ Open http://localhost:3000. Without a database, the app still opens; persistence
 
 ## Sign-in and saved history
 
-The login page offers **Email** and **Google**. Email opens a second step for requesting a sign-in link; Google starts OAuth through Supabase. Guests can start a session, but viewing the history list requires an account; the API enforces this as well. History loads in pages of 20.
+The login page offers **Email**, **Google**, and **Войти по логину** when demo access is enabled. Email opens a second step for requesting a sign-in link; Google starts OAuth through Supabase. Demo sign-in uses the username **admin** and password **admin**, without an external provider. Guests can start a session, but viewing the history list requires an account; the API enforces this as well. History loads in pages of 20.
 
 Successful Email or Google sign-in attaches the browser's guest sessions and progress to the verified personal account. Signing in to the same account on another device restores its history.
 
-The old demo login endpoint remains only for internal testing, has no UI, and is disabled by default (`DEMO_AUTH_ENABLED=false`). Explicitly enabling it also requires an `AUTH_SECRET` of at least 32 characters. Its shared account has no administration privileges, uses an eight-hour signed HttpOnly cookie, and never imports personal guest history.
+Demo access requires `DEMO_AUTH_ENABLED=true`, an `AUTH_SECRET` of at least 32 characters, and PostgreSQL. New local setups enable it and generate the secret automatically. For an existing `.env.local`, enable the flag, retain a suitable signing secret, and restart the server. Set `DEMO_AUTH_ENABLED=false` to hide and disable demo access. Its shared account has no administration privileges, uses an eight-hour signed HttpOnly cookie, and never imports personal guest history. Keep this shared account limited to demos rather than personal study data.
 
 Configure the shared Supabase connection:
 
@@ -61,7 +61,7 @@ For **Google**:
 4. Enable Google in Supabase Auth and enter the Google Client ID and Client Secret there. These credentials belong in Supabase's provider configuration, not in this app's public environment variables.
 5. Configure only the sign-in scopes `openid`, `userinfo.email`, and `userinfo.profile`. The app requests no additional Google API permissions. Follow the [official Supabase Google setup](https://supabase.com/docs/guides/auth/social-sign-in/auth-google), including audience/test-user restrictions while the OAuth app is in testing.
 
-Without provider configuration, the login screen reports that sign-in is unavailable. Local tests do not send real emails or complete a real Google login.
+Without Supabase provider configuration, Email and Google report that sign-in is unavailable; local demo sign-in works independently. Local tests do not send real emails or complete a real Google login.
 
 The browser SDK stores and refreshes the auth session. API requests send its access token; the server verifies it with Supabase `getUser` before resolving an app account. Guest IDs cannot access account-owned or already-imported history. Failed verification never falls back to guest permissions. See [Supabase's verification reference](https://supabase.com/docs/reference/javascript/auth-getuser).
 
@@ -88,7 +88,7 @@ The integration suite applies the schema and removes only users it creates. It i
 | --- | --- |
 | `src/app/page.tsx`, `src/app/session/[id]`, `src/app/login`, `src/components` | Frontend: topics, history, Email/Google sign-in, teaching session, notebook and exam states |
 | `src/app/api` | Backend: thin route handlers, request validation and verified account/guest identity |
-| `src/server/auth.ts`, `src/server/demo-auth.ts`, `src/lib/auth-client.ts` | Supabase verification and browser session; legacy demo cookie support |
+| `src/server/auth.ts`, `src/server/demo-auth.ts`, `src/lib/auth-client.ts` | Supabase verification and browser session; signed demo cookie support |
 | `src/components/auth-provider.tsx` | Shared verified account state for the header and history |
 | `src/server` | Backend: Postgres, repositories, content loading and deterministic grading |
 | `src/ai`, `prompts` | Team-owned AI scaffold and prompt drafts; not connected to the app yet |
@@ -103,7 +103,7 @@ The integration suite applies the schema and removes only users it creates. It i
 
 ## API available in this phase
 
-Guest session requests require `x-anonymous-id: <UUID>`. Email and Google accounts use `Authorization: Bearer <access token>`; the legacy demo endpoint uses a server-issued cookie. `src/lib/api.ts` manages browser requests. An explicit bearer token takes precedence, and invalid credentials never fall back to guest access. The guest header is used separately for importing history into a verified Supabase account.
+Guest session requests require `x-anonymous-id: <UUID>`. Email and Google accounts use `Authorization: Bearer <access token>`; the demo endpoint uses a server-issued cookie. `src/lib/api.ts` manages browser requests. An explicit bearer token takes precedence, and invalid credentials never fall back to guest access. The guest header is used separately for importing history into a verified Supabase account.
 
 | Method | Path | Behavior |
 | --- | --- | --- |
@@ -111,8 +111,8 @@ Guest session requests require `x-anonymous-id: <UUID>`. Email and Google accoun
 | GET | `/api/progress` | Actual UTC activity streak; `topicOfTheDay: null`, `gaps: []` until ML integration |
 | GET | `/api/sessions?offset=0` | Requires sign-in; `{ sessions, nextOffset }` with last activity and latest saved score |
 | GET | `/api/auth/me` | `{ account, demoAvailable }`; verified current account or null |
-| POST | `/api/auth/demo` | Legacy internal endpoint, disabled by default; `{ username, password }` sets a demo session cookie when explicitly enabled |
-| DELETE | `/api/auth/demo` | Clears any legacy demo session cookie |
+| POST | `/api/auth/demo` | Demo sign-in; `{ username, password }` sets a session cookie when enabled |
+| DELETE | `/api/auth/demo` | Clears the demo session cookie |
 | POST | `/api/sessions` | `{ topicId }` → `{ sessionId, firstMessage: null }` |
 | POST | `/api/auth/claim` | Requires verified Supabase account plus guest header; transfers guest history and retires the guest ID |
 | GET | `/api/sessions/:id` | `{ session, messages, notebook }` for the session owner |
@@ -139,4 +139,4 @@ Grading checks the answer key and requires existing notebook references. The tes
 
 ## Deployment
 
-Target: Vercel with managed Postgres. Add `DATABASE_URL` and both Supabase public environment values before building, apply `db/schema.sql`, configure production callbacks, Email SMTP and Google OAuth as described above, deploy this repository, and replace the production URL above. Keep legacy demo auth disabled. Content files are included in Next.js output tracing.
+Target: Vercel with managed Postgres. Add `DATABASE_URL` and both Supabase public environment values before building, apply `db/schema.sql`, configure production callbacks, Email SMTP and Google OAuth as described above, deploy this repository, and replace the production URL above. Enable the shared demo only for an intentional demonstration; keep it disabled for personal accounts in production. Content files are included in Next.js output tracing.

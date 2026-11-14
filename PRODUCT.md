@@ -13,15 +13,15 @@ A study workspace for exam preparation by explaining topics to an AI student. Th
 ## Capabilities and Constraints
 
 - Current implementation covers the frontend, backend, PostgreSQL persistence, account identity, and saved session history. AI behavior and exam content remain deferred at the user's request.
-- The user chose passwordless email links for personal accounts and subsequently requested a login screen with only Email and Google. Account creation happens during the first successful sign-in.
+- Personal sign-in uses passwordless email links or Google. The latest user request additionally enables a username/password demo account, `admin / admin`. Personal account creation happens during the first successful sign-in.
 - The history list requires a verified account. Successful personal sign-in can attach the browser's guest sessions to that account.
 - Email and Google use Supabase Auth. Live email delivery and Google OAuth require external provider configuration; the current local environment has no Supabase credentials. The UI reports unavailable sign-in without pretending it succeeded.
-- The legacy shared demo login endpoint is retained for internal tests, disabled by default, and absent from the interface. It has no administrator privileges.
+- The shared demo account is available through a separate login form when explicitly enabled by server settings. Local setup enables it with a generated signing secret. It has no administrator privileges and never imports private guest history.
 - No deployment, completed AI lesson, generated notebook, or exam outcome is claimed by the current implementation.
 
 ## Brand Commitments
 
-The product name is TeachAPP, as confirmed by the user. The user supplied a TikTok login screenshot as the reference for the account-entry screen and explicitly requested only Email and Google. This scoped request does not replace the visual identity of the rest of the workspace.
+The product name is TeachAPP, as confirmed by the user. The user supplied a TikTok login screenshot as the reference for the account-entry screen. The later request adds demo username/password access alongside Email and Google, keeping the same visual identity. This scoped request does not replace the visual identity of the rest of the workspace.
 
 ## Evidence on Hand
 
