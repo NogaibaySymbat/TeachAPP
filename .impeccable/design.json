@@ -371,6 +371,16 @@
         "name": "state-feedback",
         "value": "160ms ease-out",
         "purpose": "Control color feedback and disclosure chevron rotation; removed for reduced motion."
+      },
+      {
+        "name": "notebook-addition",
+        "value": "3s ease-out",
+        "purpose": "New source quotes fade from Harbor to white once; the New badge and border remain. No animation for reduced motion."
+      },
+      {
+        "name": "history-panel",
+        "value": "240ms cubic-bezier(0.32, 0.72, 0, 1)",
+        "purpose": "Interruptible history slide and desktop content translation, with a fading mobile backdrop. Keyboard toggles are immediate; reduced motion uses a 160ms fade only."
       }
     ],
     "breakpoints": [

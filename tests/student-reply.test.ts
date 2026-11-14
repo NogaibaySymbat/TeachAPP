@@ -27,6 +27,8 @@ describe("student prompt and limited context", () => {
     expect(prompt[0].content).toContain("Team communication");
     expect(prompt[0].content).toContain("same language");
     expect(prompt[0].content).toContain("do not supply your own facts");
+    expect(prompt[0].content).toContain("grounded only in what the user said");
+    expect(prompt[0].content).toContain("Do not declare that you fully understand");
     expect(JSON.stringify(prompt)).not.toContain("SECRET");
     expect(prompt.at(-1)).toEqual({ role: "user", content: "Explain roles clearly." });
     expect(complete).toHaveBeenCalledOnce();

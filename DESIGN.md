@@ -189,7 +189,7 @@ Frontmatter records the actual headline, session title, panel title, body, messa
 
 Header, main and footer share a 1240px maximum width with 40px gutters, decreasing to 24px at 1000px and 16px at 520px. The workspace header is at least 80px tall. Panels align at their top edges; gaps and padding favor the 12/16/20/24/32px rhythm.
 
-The home task grid uses a flexible primary column and 320px supporting column, narrowed to 280px below 1000px and stacked below 800px. The session has a 300px notebook column and stacks at 1000px. With desktop history open, the frame adds a 280px sticky, independently scrolling rail; task grids stack from 761–1150px. At 760px and below, history becomes a native modal drawer, width min(320px, 100% - 40px), with body scroll locked and focus restored on close. Content remains in normal document flow.
+The home task grid uses a flexible primary column and 320px supporting column, narrowed to 280px below 1000px and stacked below 800px. The session has a 350px notebook column and stacks at 1000px. With desktop history open, the frame adds a 280px fixed, independently scrolling rail; task grids stack from 761–1150px. At 760px and below, history becomes a native modal drawer, width min(320px, 100% - 40px), with body scroll locked and focus restored on close. Content remains in normal document flow.
 
 Chat transcript scrolling is bounded by 52dvh with a 250px minimum; messages occupy at most 88%, then 94% below 760px and 96% below 520px. Composer actions stack below 520px. Small-screen panels use 20px corners and padding, with chat padding reduced to 16px.
 
@@ -217,13 +217,15 @@ Course context is a fine outlined pill with 11px bold text. The progress streak 
 
 White topic and chat panels share the panel radius; topic padding is 30px and chat padding 24px. Progress and notebook asides use 28px padding. The notebook uses Santorini, progress Sea Green, and exam review white. Panels rely on color rather than shadow. Notices use Wash, 8px corners and 16px padding; failures use the error pair.
 
+The notebook separates the student's latest restatement/question from exact source quotes. Quote entries use white surfaces, 14px corners and 13px text; source and Clarify actions have 44px targets. A textual New badge and border identify additions in the current visit, with a 3-second Harbor-to-white highlight (disabled for reduced motion). The note list scrolls at 480px. A View notebook anchor connects the chat to the panel, while Clarify focuses the composer and preserves its draft.
+
 ### Inputs / Fields
 
 The Pearl composer has a one-pixel line border, 18px corners and 16px padding. Its textarea is transparent and borderless with an 88px minimum height, vertical resizing and muted placeholder. Focus within changes the composer border to heading accent; the textarea retains visible keyboard focus. Voice language selection is a 44px minimum-height Pearl control with a field border and 12px corners.
 
 ### Navigation
 
-Harbor history rows use compact titles and secondary metadata; the current page uses Pearl. The new-session action is Midnight with Pearl text and a plus SVG. Desktop navigation is collapsible; narrow navigation uses the modal drawer. The header toggle is a transparent 44px control with a Santorini hover surface.
+Harbor history rows use compact titles and secondary metadata; the current page uses Pearl. The new-session action is Midnight with Pearl text and a plus SVG. Desktop navigation is collapsible; narrow navigation uses the modal drawer. Pointer toggles slide the panel left/right over 240ms with cubic-bezier(0.32, 0.72, 0, 1), and the backdrop fades in sync. The desktop content reflows once and uses an interruptible translation to bridge its position change. Closed desktop history stays mounted but inert and hidden from assistive technology. Keyboard toggles and Escape are immediate; reduced motion keeps a 160ms fade without translation. The header toggle is a transparent 44px control with a Santorini hover surface. On desktop it is hidden while history is open, leaving only the close button inside the rail; keyboard focus follows the visible control.
 
 ### Topic disclosure
 

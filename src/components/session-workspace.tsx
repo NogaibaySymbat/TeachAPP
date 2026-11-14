@@ -8,7 +8,8 @@ import { LearningPanel } from "@/components/learning-panel";
 import { ExamReview } from "@/components/exam-review";
 import { SessionExportControls } from "@/components/session-export";
 import { api } from "@/lib/api";
-import type { DebriefResponse, ExamResponse, Message, NotebookResponse, SendMessageResponse, SessionResponse } from "@/lib/types";
+import { compareNotebookUpdate, type NotebookUpdate } from "@/lib/notebook-view";
+import type { DebriefResponse, ExamResponse, Message, NotebookEntry, NotebookResponse, SendMessageResponse, SessionResponse } from "@/lib/types";
 
 export function SessionWorkspace({ sessionId }: { sessionId: string }) {
   return <Conversation key={sessionId} sessionId={sessionId} />;
@@ -22,6 +23,8 @@ function Conversation({ sessionId }: { sessionId: string }) {
   const [phase, setPhase] = useState<"idle" | "saving" | "working" | "exam" | "debrief">("idle");
   const [replying, setReplying] = useState(false);
   const [updatingNotebook, setUpdatingNotebook] = useState(false);
+  const [notebookUpdate, setNotebookUpdate] = useState<NotebookUpdate | null>(null);
+  const [clarifying, setClarifying] = useState<NotebookEntry | null>(null);
   const [learningError, setLearningError] = useState("");
   const [debriefError, setDebriefError] = useState("");
   const [retry, setRetry] = useState(0);
@@ -80,10 +83,12 @@ function Conversation({ sessionId }: { sessionId: string }) {
   }
 
   async function requestNotebook() {
+    const previousNotebook = data?.notebook ?? [];
     setUpdatingNotebook(true);
     setLearningError("");
     try {
       const result = await api<NotebookResponse>(`${path}/notebook`, { method: "POST", body: "{}" });
+      setNotebookUpdate(compareNotebookUpdate(previousNotebook, result.notebook, result.learning.revision));
       setData((current) => current ? { ...current, notebook: result.notebook, learning: result.learning } : current);
     } catch (cause) {
       setLearningError(cause instanceof Error ? cause.message : "The notebook could not be updated. Your explanation is saved.");
@@ -152,6 +157,7 @@ function Conversation({ sessionId }: { sessionId: string }) {
       appendMessage(message);
       setData((current) => current ? { ...current, learning: { ...current.learning, notebookFresh: false } } : current);
       setText("");
+      setClarifying(null);
       setSaved(true);
       window.dispatchEvent(new Event("study-history-updated"));
       if (canReply) {
@@ -178,6 +184,7 @@ function Conversation({ sessionId }: { sessionId: string }) {
           {!data.ai.available ? <p className="notice">{data.ai.message} Your explanations can still be saved.</p> : (
             <p className="session-guidance">Explain one idea at a time, then answer your student’s questions.</p>
           )}
+          <div className="notebook-shortcut"><a href="#student-notebook">View notebook <span>{data.notebook.length}</span><span aria-hidden="true"> ↗</span></a><span>Updates after each explanation</span></div>
           <VoiceOutputToggle voice={studentVoice} />
           <div className="transcript" role="log" aria-label="Session messages" aria-live="polite">
             {data.messages.length === 0 && <div className="chat-empty"><h3>Let’s talk about this topic.</h3><p>You teach; your AI student asks questions. Start with one idea in your own words.</p><span>Write your first message below</span></div>}
@@ -191,8 +198,9 @@ function Conversation({ sessionId }: { sessionId: string }) {
             <button className="secondary" disabled={voiceActive} onClick={() => void retryReply(unanswered.id)}>{replyError ? "Try student reply again" : "Get student reply"}</button>
           </div>}
           <form className="chat-composer" onSubmit={(event) => void send(event)}>
+            {clarifying && <div className="clarifying-note" id="clarifying-note"><div><strong>Clarify this idea</strong><button type="button" className="clarify-dismiss" aria-label="Stop clarifying this note" onClick={() => { setClarifying(null); explanation.current?.focus(); }}>×</button></div><blockquote>{clarifying.claim}</blockquote><p>Explain it again in your own words, or add an example below.</p></div>}
             <label htmlFor="explanation">Message your student</label>
-            <textarea ref={explanation} id="explanation" value={text} onChange={(event) => { setText(event.target.value); setSaved(false); }} maxLength={4000} rows={3} placeholder="Explain an idea or answer your student…" disabled={phase !== "idle" || voiceActive} aria-describedby="save-status" onKeyDown={(event) => { if (event.key === "Enter" && !event.shiftKey && !event.nativeEvent.isComposing) { event.preventDefault(); event.currentTarget.form?.requestSubmit(); } }} />
+            <textarea ref={explanation} id="explanation" value={text} onChange={(event) => { setText(event.target.value); setSaved(false); }} maxLength={4000} rows={3} placeholder="Explain an idea or answer your student…" disabled={phase !== "idle" || voiceActive} aria-describedby={clarifying ? "clarifying-note save-status" : "save-status"} onKeyDown={(event) => { if (event.key === "Enter" && !event.shiftKey && !event.nativeEvent.isComposing) { event.preventDefault(); event.currentTarget.form?.requestSubmit(); } }} />
             <VoiceInput value={text} disabled={phase !== "idle"} onActiveChange={setVoiceActive} onAppend={(dictated) => {
               setText((current) => `${current}${current && !/\s$/u.test(current) ? " " : ""}${dictated}`);
               setSaved(false);
@@ -201,7 +209,14 @@ function Conversation({ sessionId }: { sessionId: string }) {
             <div className="composer-actions"><span id="save-status" role="status">{phase !== "idle" ? activity : voiceActive ? "Stop dictation to review your words before sending." : saved ? "Explanation saved." : "Enter to send · Shift + Enter for a new line. Up to 4,000 characters."}</span><button type="submit" disabled={phase !== "idle" || voiceActive || !text.trim()}>{phase !== "idle" ? "Working…" : canReply ? "Send message" : "Save message"}</button></div>
           </form>
         </section>
-        <LearningPanel data={data} disabled={phase !== "idle" || voiceActive} updating={updatingNotebook} examining={phase === "exam"} error={learningError} onUpdate={() => void updateNotebook()} onExam={() => void runExam()} />
+        <LearningPanel data={data} disabled={phase !== "idle" || voiceActive} updating={updatingNotebook} replying={replying} replyError={replyError} update={notebookUpdate} examining={phase === "exam"} error={learningError} onUpdate={() => void updateNotebook()} onExam={() => void runExam()} onClarify={(entry) => {
+          setClarifying(entry);
+          setSaved(false);
+          // Keep any draft intact. Nothing is sent until the user submits the form.
+          // Focus synchronously within the tap so mobile browsers can open the keyboard.
+          explanation.current?.focus();
+          requestAnimationFrame(() => { explanation.current?.scrollIntoView({ block: "center" }); });
+        }} />
       </div>}
       {data?.latestAttempt && <ExamReview attempt={data.latestAttempt} previousAttempt={data.previousAttempt ?? null} stale={!data.learning.notebookFresh || data.latestAttempt.revision !== data.learning.revision} disabled={phase !== "idle" || voiceActive} debriefError={debriefError} onDebrief={() => void loadDebrief()} />}
     </div>

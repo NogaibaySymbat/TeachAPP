@@ -1,36 +1,68 @@
 "use client";
 
-import type { SessionResponse } from "@/lib/types";
+import { currentNotebookUpdate, latestStudentExchange, notebookEntryKey, type NotebookUpdate } from "@/lib/notebook-view";
+import type { NotebookEntry, SessionResponse } from "@/lib/types";
 
 interface LearningPanelProps {
   data: SessionResponse;
   disabled: boolean;
   updating: boolean;
+  replying: boolean;
+  replyError: string;
+  update: NotebookUpdate | null;
   examining: boolean;
   error: string;
   onUpdate: () => void;
   onExam: () => void;
+  onClarify: (entry: NotebookEntry) => void;
 }
 
-export function LearningPanel({ data, disabled, updating, examining, error, onUpdate, onExam }: LearningPanelProps) {
+export function LearningPanel({ data, disabled, updating, replying, replyError, update, examining, error, onUpdate, onExam, onClarify }: LearningPanelProps) {
   const { notebook, learning, latestAttempt } = data;
   const currentResult = learning.notebookFresh && latestAttempt?.revision === learning.revision;
   const explanations = data.messages.filter((message) => message.role === "user");
+  const exchange = latestStudentExchange(data.messages);
+  const changes = currentNotebookUpdate(update, learning);
+  const added = new Set(changes?.addedKeys);
+  const orderedNotes = [...notebook].sort((a, b) => explanations.findIndex((message) => message.id === a.sourceMessageId) - explanations.findIndex((message) => message.id === b.sourceMessageId));
+  const status = updating ? "Taking notes…" : learning.notebookFresh ? "Up to date" : explanations.length ? "Update needed" : "Ready to learn";
 
-  return <aside className="learning-panel" aria-labelledby="notebook-title">
-    <div className="section-heading"><h2 id="notebook-title">Student’s notebook</h2><span>{notebook.length} notes</span></div>
-    <p>Only what you taught, with a link to your words.</p>
-    <p className="learning-status" role="status">{updating ? "Your student is taking notes…" : learning.notebookFresh ? "Up to date with your explanations." : notebook.length ? "New explanations are waiting to be added." : "Explain an idea to give your student something to learn."}</p>
-    {notebook.length > 0 ? <ol className="notebook">
-      {notebook.map((entry) => <li key={entry.id} id={`note-${entry.id}`}>
-        <p>{entry.claim}</p>
-        <a href={`#message-${entry.sourceMessageId}`}>Your explanation {explanations.findIndex((message) => message.id === entry.sourceMessageId) + 1}</a>
-      </li>)}
-    </ol> : learning.notebookFresh && <p>No relevant statements were found. Explain the idea and give an example; the student will not fill in missing knowledge.</p>}
+  return <aside className="learning-panel" id="student-notebook" tabIndex={-1} aria-labelledby="notebook-title">
+    <div className="notebook-heading"><svg width="22" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true"><rect x="5" y="3" width="15" height="18" rx="3" /><path d="M9 3v18M3 7h4M3 12h4M3 17h4m9-9h4m-4 4h4" /></svg><h2 id="notebook-title">Student’s notebook</h2></div>
+    <p className="notebook-intro">See what your explanation leaves behind.</p>
+    <div className="notebook-sync" role="status"><span className={`notebook-status${updating ? " is-updating" : ""}`}>{status}</span><span>{notebook.length} {notebook.length === 1 ? "note" : "notes"}</span></div>
+
+    {exchange && <section className="student-take" aria-labelledby="student-take-title">
+      <h3 id="student-take-title">How I see it</h3>
+      <p className="notebook-caption">Your student’s restatement & question</p>
+      {exchange.reply ? <>
+        <p className="student-take-text">{exchange.reply.text}</p>
+        <a href={`#message-${exchange.reply.id}`}>See reply in chat</a>
+      </> : <p className="student-take-waiting">{replying ? "Reading your latest explanation…" : replyError ? "The reply could not be loaded. Your saved notes are still below." : "No reply to your latest explanation yet."}</p>}
+    </section>}
+
+    <section className="notebook-evidence" aria-labelledby="written-down-title" aria-busy={updating}>
+      <h3 id="written-down-title">What I wrote down</h3>
+      <p className="notebook-caption">Exact words from your explanations</p>
+      <p className="notebook-update-summary" role="status">{updating ? "Checking your explanations for notes…" : changes ? `${changes.addedKeys.length ? `${changes.addedKeys.length} new ${changes.addedKeys.length === 1 ? "note" : "notes"}.` : "No new notes in this update."}${changes.removedCount ? ` ${changes.removedCount} ${changes.removedCount === 1 ? "earlier note was" : "earlier notes were"} replaced or left out.` : ""}` : !learning.notebookFresh && explanations.length ? "These notes do not include your latest changes yet." : ""}</p>
+      {notebook.length > 0 ? <ol className="notebook">
+        {orderedNotes.map((entry, index) => {
+          const sourceNumber = explanations.findIndex((message) => message.id === entry.sourceMessageId) + 1;
+          const isNew = added.has(notebookEntryKey(entry));
+          return <li className={isNew ? "notebook-entry is-new" : "notebook-entry"} key={entry.id} id={`note-${entry.id}`}>
+            <div className="note-heading"><span>Note {index + 1}</span>{isNew && <span className="note-new">New</span>}</div>
+            <blockquote>{entry.claim}</blockquote>
+            <div className="note-actions">
+              {sourceNumber > 0 && <a href={`#message-${entry.sourceMessageId}`}>Explanation {sourceNumber}<span className="sr-only">: source for note {index + 1}</span></a>}
+              <button type="button" className="note-clarify" disabled={disabled} onClick={() => onClarify(entry)}>Clarify<span className="sr-only"> note {index + 1}</span><span aria-hidden="true"> ↗</span></button>
+            </div>
+          </li>;
+        })}
+      </ol> : <div className="notebook-empty"><p>{updating ? "Your first notes will appear here." : learning.notebookFresh ? "No relevant statements were recorded. Try explaining one idea with an example." : "A blank page, for now. Teach one idea and watch your student take notes."}</p></div>}
+    </section>
     {error && <div className="notice error" role="alert"><p>{error}</p></div>}
-    <button type="button" className="secondary" disabled={disabled || (!data.ai.available && explanations.length > 0) || learning.notebookFresh} onClick={onUpdate}>
-      {updating ? "Updating notebook…" : learning.notebookFresh ? "Notebook up to date" : notebook.length ? "Update notebook" : "Build notebook"}
-    </button>
+    {!learning.notebookFresh && <button type="button" className="secondary" disabled={disabled || (!data.ai.available && explanations.length > 0)} onClick={onUpdate}>{updating ? "Updating notebook…" : error ? "Retry notebook update" : explanations.length ? "Update notebook" : "Build notebook"}</button>}
+    <p className="notebook-footnote">Notes preserve your words, including mistakes. The exam tests how the student uses them.</p>
     <hr />
     <h3>Student exam</h3>
     <p>{learning.questionCount} practice questions. Your student can use only this notebook.</p>
