@@ -199,10 +199,10 @@ describe("demo session verification and account boundary", () => {
     expect(mocks.getOrCreateDemoAccount).not.toHaveBeenCalled();
   });
 
-  it("requires sign-in for the history list and allows a verified demo account", async () => {
+  it("lists guest history by browser identity and preserves verified legacy account access", async () => {
     const guestResponse = await getHistory(new Request(`${origin}/api/sessions`, { headers: { "x-anonymous-id": guestId } }));
-    expect(guestResponse.status).toBe(401);
-    expect(mocks.listSessions).not.toHaveBeenCalled();
+    expect(guestResponse.status).toBe(200);
+    expect(mocks.listSessions).toHaveBeenCalledWith(guestId, 0);
     const demoResponse = await getHistory(cookieRequest(undefined, undefined, `${origin}/api/sessions`));
     expect(demoResponse.status).toBe(200);
     expect(mocks.listSessions).toHaveBeenCalledWith(demoId, 0);

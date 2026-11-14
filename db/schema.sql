@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS users (
 ALTER TABLE users ADD COLUMN IF NOT EXISTS auth_subject uuid;
 ALTER TABLE users ADD COLUMN IF NOT EXISTS claimed_by uuid REFERENCES users(id);
 ALTER TABLE users ADD COLUMN IF NOT EXISTS demo_username text;
+ALTER TABLE users ADD COLUMN IF NOT EXISTS last_ai_reply_at timestamptz;
 CREATE UNIQUE INDEX IF NOT EXISTS users_auth_subject_idx ON users(auth_subject);
 CREATE UNIQUE INDEX IF NOT EXISTS users_demo_username_idx ON users(demo_username);
 
@@ -19,6 +20,7 @@ CREATE TABLE IF NOT EXISTS sessions (
   finished_at timestamptz
 );
 CREATE INDEX IF NOT EXISTS sessions_user_topic_idx ON sessions(user_id, topic_id);
+ALTER TABLE sessions ADD COLUMN IF NOT EXISTS notebook_revision text;
 
 CREATE TABLE IF NOT EXISTS messages (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -29,6 +31,42 @@ CREATE TABLE IF NOT EXISTS messages (
   UNIQUE (id, session_id)
 );
 CREATE INDEX IF NOT EXISTS messages_session_idx ON messages(session_id, created_at);
+ALTER TABLE messages ADD COLUMN IF NOT EXISTS reply_to_message_id uuid;
+CREATE UNIQUE INDEX IF NOT EXISTS messages_reply_to_idx ON messages(reply_to_message_id);
+DO $$ BEGIN
+  ALTER TABLE messages ADD CONSTRAINT messages_reply_source_fk
+    FOREIGN KEY (reply_to_message_id, session_id) REFERENCES messages(id, session_id) ON DELETE CASCADE;
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;
+DO $$ BEGIN
+  ALTER TABLE messages ADD CONSTRAINT messages_reply_role_check
+    CHECK (reply_to_message_id IS NULL OR role = 'student');
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;
+
+-- Claims are committed before contacting OpenAI. The token fences late workers.
+CREATE TABLE IF NOT EXISTS student_reply_jobs (
+  message_id uuid PRIMARY KEY,
+  session_id uuid NOT NULL,
+  status text NOT NULL CHECK (status IN ('pending', 'completed', 'failed')),
+  attempt_token uuid NOT NULL,
+  lease_until timestamptz NOT NULL,
+  FOREIGN KEY (message_id, session_id) REFERENCES messages(id, session_id) ON DELETE CASCADE
+);
+CREATE INDEX IF NOT EXISTS student_reply_jobs_session_idx ON student_reply_jobs(session_id);
+
+-- Budget reservations deliberately survive deleted users and sessions.
+CREATE TABLE IF NOT EXISTS ai_usage (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  budget_key text NOT NULL DEFAULT 'openai',
+  model text NOT NULL,
+  reserved_nanodollars bigint NOT NULL CHECK (reserved_nanodollars > 0),
+  input_tokens integer CHECK (input_tokens IS NULL OR input_tokens >= 0),
+  output_tokens integer CHECK (output_tokens IS NULL OR output_tokens >= 0),
+  budget_blocked boolean NOT NULL DEFAULT false,
+  created_at timestamptz NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS ai_usage_budget_idx ON ai_usage(budget_key);
 
 CREATE TABLE IF NOT EXISTS notebook_entries (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -46,6 +84,25 @@ CREATE TABLE IF NOT EXISTS exam_attempts (
   created_at timestamptz NOT NULL DEFAULT now()
 );
 CREATE INDEX IF NOT EXISTS exam_attempts_session_idx ON exam_attempts(session_id, created_at);
+-- Immutable snapshots keep past evidence and answer keys intact after teaching more.
+ALTER TABLE exam_attempts ADD COLUMN IF NOT EXISTS learning_revision text;
+ALTER TABLE exam_attempts ADD COLUMN IF NOT EXISTS notebook_snapshot jsonb NOT NULL DEFAULT '[]';
+ALTER TABLE exam_attempts ADD COLUMN IF NOT EXISTS questions_snapshot jsonb NOT NULL DEFAULT '[]';
+ALTER TABLE exam_attempts ADD COLUMN IF NOT EXISTS key_ideas_snapshot jsonb NOT NULL DEFAULT '[]';
+ALTER TABLE exam_attempts ADD COLUMN IF NOT EXISTS gaps jsonb;
+CREATE UNIQUE INDEX IF NOT EXISTS exam_attempts_revision_idx ON exam_attempts(session_id, learning_revision);
+
+-- Short durable claims: no database connection is held while a model responds.
+CREATE TABLE IF NOT EXISTS learning_jobs (
+  session_id uuid NOT NULL REFERENCES sessions(id) ON DELETE CASCADE,
+  operation text NOT NULL CHECK (operation IN ('notebook', 'exam')),
+  revision text NOT NULL,
+  status text NOT NULL CHECK (status IN ('pending', 'completed', 'failed')),
+  attempt_token uuid NOT NULL,
+  lease_until timestamptz NOT NULL,
+  started_at timestamptz NOT NULL DEFAULT clock_timestamp(),
+  PRIMARY KEY (session_id, operation, revision)
+);
 
 CREATE TABLE IF NOT EXISTS exam_answers (
   attempt_id uuid NOT NULL REFERENCES exam_attempts(id) ON DELETE CASCADE,
@@ -74,6 +131,9 @@ CREATE TABLE IF NOT EXISTS topic_progress (
 ALTER TABLE users ENABLE ROW LEVEL SECURITY;
 ALTER TABLE sessions ENABLE ROW LEVEL SECURITY;
 ALTER TABLE messages ENABLE ROW LEVEL SECURITY;
+ALTER TABLE student_reply_jobs ENABLE ROW LEVEL SECURITY;
+ALTER TABLE learning_jobs ENABLE ROW LEVEL SECURITY;
+ALTER TABLE ai_usage ENABLE ROW LEVEL SECURITY;
 ALTER TABLE notebook_entries ENABLE ROW LEVEL SECURITY;
 ALTER TABLE exam_attempts ENABLE ROW LEVEL SECURITY;
 ALTER TABLE exam_answers ENABLE ROW LEVEL SECURITY;

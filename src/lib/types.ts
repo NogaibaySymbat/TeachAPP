@@ -35,6 +35,7 @@ export interface Message {
   role: "user" | "student";
   text: string;
   createdAt: string;
+  replyToMessageId?: string;
 }
 
 // Compatibility names used by the team's AI module scaffold.
@@ -89,10 +90,38 @@ export interface CreateSessionRequest { topicId: string }
 export interface CreateSessionResponse { sessionId: string; firstMessage: string | null }
 export interface SendMessageRequest { text: string }
 export interface SendMessageResponse { message: Message }
-export interface NotebookResponse { notebook: NotebookEntry[] }
-export type ExamResponse = ExamResult;
-export interface DebriefResponse { gaps: Gap[] }
-export interface SessionResponse { session: Session; messages: Message[]; notebook: NotebookEntry[] }
+export interface StudentReplyRequest { messageId: string }
+export interface StudentReplyResponse { message: Message }
+export interface LearningState {
+  revision: string;
+  notebookRevision: string | null;
+  notebookFresh: boolean;
+  questionCount: number;
+}
+export interface ExamReviewAnswer extends GradedAnswer {
+  questionText: string;
+  options: { id: string; text: string }[];
+  correctAnswer: string;
+}
+export interface SavedExamAttempt extends ExamResult {
+  id: string;
+  createdAt: string;
+  revision: string;
+  results: ExamReviewAnswer[];
+  notebookSnapshot: NotebookEntry[];
+  gaps: Gap[] | null;
+}
+export interface NotebookResponse { notebook: NotebookEntry[]; learning: LearningState }
+export interface ExamResponse { attempt: SavedExamAttempt }
+export interface DebriefResponse { gaps: Gap[]; attemptId: string }
+export interface SessionResponse {
+  session: Session;
+  messages: Message[];
+  notebook: NotebookEntry[];
+  learning: LearningState;
+  latestAttempt: SavedExamAttempt | null;
+  ai: { available: boolean; message: string | null };
+}
 export interface SessionHistoryItem extends Session {
   topicTitle: string;
   lastActivityAt: string;

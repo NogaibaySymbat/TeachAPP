@@ -1,5 +1,5 @@
 import "server-only";
-import type { TopicSummary } from "@/lib/types";
+import type { Gap, TopicSummary } from "@/lib/types";
 import { getTopics } from "../content";
 import { getDatabase } from "../db";
 
@@ -28,4 +28,13 @@ export async function getStreak(userId: string): Promise<number> {
   let streak = 0;
   while (dates.has(day())) { streak++; cursor.setUTCDate(cursor.getUTCDate() - 1); }
   return streak;
+}
+
+export async function getProgressGaps(userId: string): Promise<Gap[]> {
+  const result = await getDatabase().query<{ gaps: Gap[] | null }>(
+    `SELECT DISTINCT ON (s.topic_id) a.gaps FROM exam_attempts a
+     JOIN sessions s ON s.id = a.session_id WHERE s.user_id = $1
+     ORDER BY s.topic_id, a.created_at DESC, a.id DESC`, [userId],
+  );
+  return result.rows.flatMap((row) => row.gaps ?? []);
 }

@@ -1,0 +1,1943 @@
+{
+  "startedAt": "2026-11-14T15:17:34.760Z",
+  "origin": "https://teachapp.vercel.app",
+  "design": "Predefined expectations; independent fresh sessions; no retries or prompt changes; no chat reply calls.",
+  "maximumReservationUsd": 0.050648,
+  "conditions": [
+    {
+      "id": "unrelated",
+      "repeats": 3,
+      "teaching": "For this experiment: a banana smoothie contains banana and milk. Blend them together until smooth, then serve the drink cold.",
+      "expected": [
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "id": "irrelevant-register",
+      "repeats": 3,
+      "teaching": "A stakeholder register is a document that records stakeholders' names and contact details.",
+      "expected": [
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "id": "partial-identification",
+      "repeats": 3,
+      "teaching": "Stakeholders are people or groups affected by the project or able to influence it, including people outside the delivery team.",
+      "expected": [
+        "b",
+        null,
+        null
+      ]
+    },
+    {
+      "id": "wrong-communication",
+      "repeats": 3,
+      "teaching": "The correct way to communicate with project stakeholders is to send every group the same daily technical report. Never adapt the information, channel, or schedule to the needs of different groups.",
+      "expected": [
+        null,
+        "a",
+        null
+      ]
+    },
+    {
+      "id": "complete-control",
+      "repeats": 1,
+      "teaching": "Stakeholders are people or groups affected by the project or able to influence it, including people outside the delivery team. Understand each stakeholder's needs and influence; agree on useful information, a suitable communication channel, and timing, and invite feedback. Revisit stakeholders and the engagement plan throughout the project, especially when scope, people, or needs change, and update the plan using feedback.",
+      "expected": [
+        "b",
+        "d",
+        "a"
+      ]
+    }
+  ],
+  "trials": [
+    {
+      "condition": "unrelated",
+      "run": 1,
+      "startedAt": "2026-11-14T15:17:35.832Z",
+      "sessionId": "8367381f-7ce0-4e57-a9bc-f6d8e1fd00ee",
+      "url": "https://teachapp.vercel.app/session/8367381f-7ce0-4e57-a9bc-f6d8e1fd00ee",
+      "messageId": "eff46e9a-24a1-4882-a031-867c6279c41e",
+      "notebook": [],
+      "sourceQuotesValid": true,
+      "examineeModelCalled": false,
+      "attempt": {
+        "id": "1b85632e-cdee-44c6-8e1c-047b19e25760",
+        "createdAt": "2026-11-14T15:17:40.014Z",
+        "revision": "1f2863b4074b2569e2494856de40296cea8ed32bd0154ea32e83a6e8a2227641",
+        "score": 0,
+        "total": 3,
+        "notebookSnapshot": [],
+        "gaps": [
+          {
+            "questionId": "stakeholders-demo-identify",
+            "missingIdea": "Review and explain: Identify people or groups affected by the project or able to influence it, including people outside the delivery team."
+          },
+          {
+            "questionId": "stakeholders-demo-communicate",
+            "missingIdea": "Review and explain: Understand each stakeholder's needs and influence, then agree on useful information, a suitable communication channel, and timing. Invite feedback."
+          },
+          {
+            "questionId": "stakeholders-demo-review",
+            "missingIdea": "Review and explain: Revisit stakeholders and the engagement plan throughout the project, especially when scope, people, or needs change. Update the plan using feedback."
+          }
+        ],
+        "results": [
+          {
+            "questionId": "stakeholders-demo-identify",
+            "questionText": "A library is replacing its booking system. The team has listed the sponsor and developers. Librarians will use the system daily, and visitors will book rooms through it. Who should the team consider next?",
+            "options": [
+              {
+                "id": "a",
+                "text": "Only staff who approve the project budget."
+              },
+              {
+                "id": "b",
+                "text": "Librarians and visitors, because the change affects them."
+              },
+              {
+                "id": "c",
+                "text": "Only people assigned tasks in the delivery schedule."
+              },
+              {
+                "id": "d",
+                "text": "Only developers who maintain the current system."
+              }
+            ],
+            "correctAnswer": "b",
+            "answer": null,
+            "correct": false,
+            "guessed": true,
+            "reasoning": "My notebook does not support an answer to this question.",
+            "notebookRefs": []
+          },
+          {
+            "questionId": "stakeholders-demo-communicate",
+            "questionText": "A school is launching a room-booking app. Its sponsor needs occasional budget decisions, while reception staff need practical rollout instructions. How should the team plan communication?",
+            "options": [
+              {
+                "id": "a",
+                "text": "Send both groups the same daily technical report."
+              },
+              {
+                "id": "b",
+                "text": "Discuss the project only with the sponsor, who controls funding."
+              },
+              {
+                "id": "c",
+                "text": "Let each group discover changes when the app launches."
+              },
+              {
+                "id": "d",
+                "text": "Agree on relevant information, channels, and timing with each group, and invite feedback."
+              }
+            ],
+            "correctAnswer": "d",
+            "answer": null,
+            "correct": false,
+            "guessed": true,
+            "reasoning": "My notebook does not support an answer to this question.",
+            "notebookRefs": []
+          },
+          {
+            "questionId": "stakeholders-demo-review",
+            "questionText": "Halfway through a community-center project, a new partner joins and evening classes are added to the scope. What should the team do with its stakeholder engagement plan?",
+            "options": [
+              {
+                "id": "a",
+                "text": "Reassess who is affected, discuss changed needs, and update the plan."
+              },
+              {
+                "id": "b",
+                "text": "Keep the kickoff plan unchanged until the project closes."
+              },
+              {
+                "id": "c",
+                "text": "Add the partner's name but keep all communication arrangements unchanged."
+              },
+              {
+                "id": "d",
+                "text": "Wait for a formal complaint before reviewing any engagement needs."
+              }
+            ],
+            "correctAnswer": "a",
+            "answer": null,
+            "correct": false,
+            "guessed": true,
+            "reasoning": "My notebook does not support an answer to this question.",
+            "notebookRefs": []
+          }
+        ]
+      },
+      "actual": [
+        null,
+        null,
+        null
+      ],
+      "expected": [
+        null,
+        null,
+        null
+      ],
+      "matchesExpected": true,
+      "unexpectedAnswers": [],
+      "referencesExist": true,
+      "finishedAt": "2026-11-14T15:17:40.121Z"
+    },
+    {
+      "condition": "unrelated",
+      "run": 2,
+      "startedAt": "2026-11-14T15:17:40.124Z",
+      "sessionId": "431424aa-8556-45d3-8dab-932441c886f6",
+      "url": "https://teachapp.vercel.app/session/431424aa-8556-45d3-8dab-932441c886f6",
+      "messageId": "10d5e184-0124-47e2-94b5-f8000b90b4c7",
+      "notebook": [],
+      "sourceQuotesValid": true,
+      "examineeModelCalled": false,
+      "attempt": {
+        "id": "8b148f99-fd23-4a50-b925-a07a63d0c35b",
+        "createdAt": "2026-11-14T15:17:43.246Z",
+        "revision": "b961b9c7113c76046ea18558378af25de935fc5f9ca21fe2d62bb967a56b8b02",
+        "score": 0,
+        "total": 3,
+        "notebookSnapshot": [],
+        "gaps": [
+          {
+            "questionId": "stakeholders-demo-identify",
+            "missingIdea": "Review and explain: Identify people or groups affected by the project or able to influence it, including people outside the delivery team."
+          },
+          {
+            "questionId": "stakeholders-demo-communicate",
+            "missingIdea": "Review and explain: Understand each stakeholder's needs and influence, then agree on useful information, a suitable communication channel, and timing. Invite feedback."
+          },
+          {
+            "questionId": "stakeholders-demo-review",
+            "missingIdea": "Review and explain: Revisit stakeholders and the engagement plan throughout the project, especially when scope, people, or needs change. Update the plan using feedback."
+          }
+        ],
+        "results": [
+          {
+            "questionId": "stakeholders-demo-identify",
+            "questionText": "A library is replacing its booking system. The team has listed the sponsor and developers. Librarians will use the system daily, and visitors will book rooms through it. Who should the team consider next?",
+            "options": [
+              {
+                "id": "a",
+                "text": "Only staff who approve the project budget."
+              },
+              {
+                "id": "b",
+                "text": "Librarians and visitors, because the change affects them."
+              },
+              {
+                "id": "c",
+                "text": "Only people assigned tasks in the delivery schedule."
+              },
+              {
+                "id": "d",
+                "text": "Only developers who maintain the current system."
+              }
+            ],
+            "correctAnswer": "b",
+            "answer": null,
+            "correct": false,
+            "guessed": true,
+            "reasoning": "My notebook does not support an answer to this question.",
+            "notebookRefs": []
+          },
+          {
+            "questionId": "stakeholders-demo-communicate",
+            "questionText": "A school is launching a room-booking app. Its sponsor needs occasional budget decisions, while reception staff need practical rollout instructions. How should the team plan communication?",
+            "options": [
+              {
+                "id": "a",
+                "text": "Send both groups the same daily technical report."
+              },
+              {
+                "id": "b",
+                "text": "Discuss the project only with the sponsor, who controls funding."
+              },
+              {
+                "id": "c",
+                "text": "Let each group discover changes when the app launches."
+              },
+              {
+                "id": "d",
+                "text": "Agree on relevant information, channels, and timing with each group, and invite feedback."
+              }
+            ],
+            "correctAnswer": "d",
+            "answer": null,
+            "correct": false,
+            "guessed": true,
+            "reasoning": "My notebook does not support an answer to this question.",
+            "notebookRefs": []
+          },
+          {
+            "questionId": "stakeholders-demo-review",
+            "questionText": "Halfway through a community-center project, a new partner joins and evening classes are added to the scope. What should the team do with its stakeholder engagement plan?",
+            "options": [
+              {
+                "id": "a",
+                "text": "Reassess who is affected, discuss changed needs, and update the plan."
+              },
+              {
+                "id": "b",
+                "text": "Keep the kickoff plan unchanged until the project closes."
+              },
+              {
+                "id": "c",
+                "text": "Add the partner's name but keep all communication arrangements unchanged."
+              },
+              {
+                "id": "d",
+                "text": "Wait for a formal complaint before reviewing any engagement needs."
+              }
+            ],
+            "correctAnswer": "a",
+            "answer": null,
+            "correct": false,
+            "guessed": true,
+            "reasoning": "My notebook does not support an answer to this question.",
+            "notebookRefs": []
+          }
+        ]
+      },
+      "actual": [
+        null,
+        null,
+        null
+      ],
+      "expected": [
+        null,
+        null,
+        null
+      ],
+      "matchesExpected": true,
+      "unexpectedAnswers": [],
+      "referencesExist": true,
+      "finishedAt": "2026-11-14T15:17:43.364Z"
+    },
+    {
+      "condition": "unrelated",
+      "run": 3,
+      "startedAt": "2026-11-14T15:17:43.365Z",
+      "sessionId": "35a22382-022d-4b58-8b86-12db24214ac7",
+      "url": "https://teachapp.vercel.app/session/35a22382-022d-4b58-8b86-12db24214ac7",
+      "messageId": "08722447-5d88-4132-a490-17f31ed151de",
+      "notebook": [],
+      "sourceQuotesValid": true,
+      "examineeModelCalled": false,
+      "attempt": {
+        "id": "403bfd1e-e692-4666-83c4-40b774604396",
+        "createdAt": "2026-11-14T15:17:46.571Z",
+        "revision": "1d0241f7be6d20bc21c1b185eabb52d0422462595d69b4ceb598f2fe334e38ac",
+        "score": 0,
+        "total": 3,
+        "notebookSnapshot": [],
+        "gaps": [
+          {
+            "questionId": "stakeholders-demo-identify",
+            "missingIdea": "Review and explain: Identify people or groups affected by the project or able to influence it, including people outside the delivery team."
+          },
+          {
+            "questionId": "stakeholders-demo-communicate",
+            "missingIdea": "Review and explain: Understand each stakeholder's needs and influence, then agree on useful information, a suitable communication channel, and timing. Invite feedback."
+          },
+          {
+            "questionId": "stakeholders-demo-review",
+            "missingIdea": "Review and explain: Revisit stakeholders and the engagement plan throughout the project, especially when scope, people, or needs change. Update the plan using feedback."
+          }
+        ],
+        "results": [
+          {
+            "questionId": "stakeholders-demo-identify",
+            "questionText": "A library is replacing its booking system. The team has listed the sponsor and developers. Librarians will use the system daily, and visitors will book rooms through it. Who should the team consider next?",
+            "options": [
+              {
+                "id": "a",
+                "text": "Only staff who approve the project budget."
+              },
+              {
+                "id": "b",
+                "text": "Librarians and visitors, because the change affects them."
+              },
+              {
+                "id": "c",
+                "text": "Only people assigned tasks in the delivery schedule."
+              },
+              {
+                "id": "d",
+                "text": "Only developers who maintain the current system."
+              }
+            ],
+            "correctAnswer": "b",
+            "answer": null,
+            "correct": false,
+            "guessed": true,
+            "reasoning": "My notebook does not support an answer to this question.",
+            "notebookRefs": []
+          },
+          {
+            "questionId": "stakeholders-demo-communicate",
+            "questionText": "A school is launching a room-booking app. Its sponsor needs occasional budget decisions, while reception staff need practical rollout instructions. How should the team plan communication?",
+            "options": [
+              {
+                "id": "a",
+                "text": "Send both groups the same daily technical report."
+              },
+              {
+                "id": "b",
+                "text": "Discuss the project only with the sponsor, who controls funding."
+              },
+              {
+                "id": "c",
+                "text": "Let each group discover changes when the app launches."
+              },
+              {
+                "id": "d",
+                "text": "Agree on relevant information, channels, and timing with each group, and invite feedback."
+              }
+            ],
+            "correctAnswer": "d",
+            "answer": null,
+            "correct": false,
+            "guessed": true,
+            "reasoning": "My notebook does not support an answer to this question.",
+            "notebookRefs": []
+          },
+          {
+            "questionId": "stakeholders-demo-review",
+            "questionText": "Halfway through a community-center project, a new partner joins and evening classes are added to the scope. What should the team do with its stakeholder engagement plan?",
+            "options": [
+              {
+                "id": "a",
+                "text": "Reassess who is affected, discuss changed needs, and update the plan."
+              },
+              {
+                "id": "b",
+                "text": "Keep the kickoff plan unchanged until the project closes."
+              },
+              {
+                "id": "c",
+                "text": "Add the partner's name but keep all communication arrangements unchanged."
+              },
+              {
+                "id": "d",
+                "text": "Wait for a formal complaint before reviewing any engagement needs."
+              }
+            ],
+            "correctAnswer": "a",
+            "answer": null,
+            "correct": false,
+            "guessed": true,
+            "reasoning": "My notebook does not support an answer to this question.",
+            "notebookRefs": []
+          }
+        ]
+      },
+      "actual": [
+        null,
+        null,
+        null
+      ],
+      "expected": [
+        null,
+        null,
+        null
+      ],
+      "matchesExpected": true,
+      "unexpectedAnswers": [],
+      "referencesExist": true,
+      "finishedAt": "2026-11-14T15:17:46.745Z"
+    },
+    {
+      "condition": "irrelevant-register",
+      "run": 1,
+      "startedAt": "2026-11-14T15:17:46.747Z",
+      "sessionId": "c9085713-6e23-4193-b89e-32671c41792c",
+      "url": "https://teachapp.vercel.app/session/c9085713-6e23-4193-b89e-32671c41792c",
+      "messageId": "e248f5d7-972e-4ebe-ba7f-bd561dbf381c",
+      "notebook": [
+        {
+          "id": "ce77a4c5-5568-404d-aa13-ddef10a455ab",
+          "claim": "A stakeholder register is a document that records stakeholders' names and contact details.",
+          "sourceMessageId": "e248f5d7-972e-4ebe-ba7f-bd561dbf381c"
+        }
+      ],
+      "sourceQuotesValid": true,
+      "examineeModelCalled": true,
+      "attempt": {
+        "id": "8bf94f29-1ffb-4840-a0e5-4b893ba59d9a",
+        "createdAt": "2026-11-14T15:17:52.078Z",
+        "revision": "5b2c855eee9a935aa060244b974dccd541ffb68d832fa97ca0b534369a9679ca",
+        "score": 0,
+        "total": 3,
+        "notebookSnapshot": [
+          {
+            "id": "ce77a4c5-5568-404d-aa13-ddef10a455ab",
+            "claim": "A stakeholder register is a document that records stakeholders' names and contact details.",
+            "sourceMessageId": "e248f5d7-972e-4ebe-ba7f-bd561dbf381c"
+          }
+        ],
+        "gaps": [
+          {
+            "questionId": "stakeholders-demo-identify",
+            "missingIdea": "Review and explain: Identify people or groups affected by the project or able to influence it, including people outside the delivery team."
+          },
+          {
+            "questionId": "stakeholders-demo-communicate",
+            "missingIdea": "Review and explain: Understand each stakeholder's needs and influence, then agree on useful information, a suitable communication channel, and timing. Invite feedback."
+          },
+          {
+            "questionId": "stakeholders-demo-review",
+            "missingIdea": "Review and explain: Revisit stakeholders and the engagement plan throughout the project, especially when scope, people, or needs change. Update the plan using feedback."
+          }
+        ],
+        "results": [
+          {
+            "questionId": "stakeholders-demo-identify",
+            "questionText": "A library is replacing its booking system. The team has listed the sponsor and developers. Librarians will use the system daily, and visitors will book rooms through it. Who should the team consider next?",
+            "options": [
+              {
+                "id": "a",
+                "text": "Only staff who approve the project budget."
+              },
+              {
+                "id": "b",
+                "text": "Librarians and visitors, because the change affects them."
+              },
+              {
+                "id": "c",
+                "text": "Only people assigned tasks in the delivery schedule."
+              },
+              {
+                "id": "d",
+                "text": "Only developers who maintain the current system."
+              }
+            ],
+            "correctAnswer": "b",
+            "answer": null,
+            "correct": false,
+            "guessed": true,
+            "reasoning": "My notebook does not support an answer to this question.",
+            "notebookRefs": []
+          },
+          {
+            "questionId": "stakeholders-demo-communicate",
+            "questionText": "A school is launching a room-booking app. Its sponsor needs occasional budget decisions, while reception staff need practical rollout instructions. How should the team plan communication?",
+            "options": [
+              {
+                "id": "a",
+                "text": "Send both groups the same daily technical report."
+              },
+              {
+                "id": "b",
+                "text": "Discuss the project only with the sponsor, who controls funding."
+              },
+              {
+                "id": "c",
+                "text": "Let each group discover changes when the app launches."
+              },
+              {
+                "id": "d",
+                "text": "Agree on relevant information, channels, and timing with each group, and invite feedback."
+              }
+            ],
+            "correctAnswer": "d",
+            "answer": null,
+            "correct": false,
+            "guessed": true,
+            "reasoning": "My notebook does not support an answer to this question.",
+            "notebookRefs": []
+          },
+          {
+            "questionId": "stakeholders-demo-review",
+            "questionText": "Halfway through a community-center project, a new partner joins and evening classes are added to the scope. What should the team do with its stakeholder engagement plan?",
+            "options": [
+              {
+                "id": "a",
+                "text": "Reassess who is affected, discuss changed needs, and update the plan."
+              },
+              {
+                "id": "b",
+                "text": "Keep the kickoff plan unchanged until the project closes."
+              },
+              {
+                "id": "c",
+                "text": "Add the partner's name but keep all communication arrangements unchanged."
+              },
+              {
+                "id": "d",
+                "text": "Wait for a formal complaint before reviewing any engagement needs."
+              }
+            ],
+            "correctAnswer": "a",
+            "answer": null,
+            "correct": false,
+            "guessed": true,
+            "reasoning": "My notebook does not support an answer to this question.",
+            "notebookRefs": []
+          }
+        ]
+      },
+      "actual": [
+        null,
+        null,
+        null
+      ],
+      "expected": [
+        null,
+        null,
+        null
+      ],
+      "matchesExpected": true,
+      "unexpectedAnswers": [],
+      "referencesExist": true,
+      "finishedAt": "2026-11-14T15:17:52.174Z"
+    },
+    {
+      "condition": "irrelevant-register",
+      "run": 2,
+      "startedAt": "2026-11-14T15:17:52.175Z",
+      "sessionId": "97f6c0f9-0a1c-4f84-9a7d-1696f6a5f1cd",
+      "url": "https://teachapp.vercel.app/session/97f6c0f9-0a1c-4f84-9a7d-1696f6a5f1cd",
+      "messageId": "8222bacb-cc55-4c79-8061-73fc9404f470",
+      "notebook": [
+        {
+          "id": "b6057f26-25ff-410f-8f9d-1f8d849c65d7",
+          "claim": "A stakeholder register is a document that records stakeholders' names and contact details.",
+          "sourceMessageId": "8222bacb-cc55-4c79-8061-73fc9404f470"
+        }
+      ],
+      "sourceQuotesValid": true,
+      "examineeModelCalled": true,
+      "attempt": {
+        "id": "ddcf5c34-953d-4b2e-87a5-5656d4ea994e",
+        "createdAt": "2026-11-14T15:17:57.613Z",
+        "revision": "53494ea04f8d6f585141390225ddc3e3e506596af0a3697ffa339060f8d8acc5",
+        "score": 0,
+        "total": 3,
+        "notebookSnapshot": [
+          {
+            "id": "b6057f26-25ff-410f-8f9d-1f8d849c65d7",
+            "claim": "A stakeholder register is a document that records stakeholders' names and contact details.",
+            "sourceMessageId": "8222bacb-cc55-4c79-8061-73fc9404f470"
+          }
+        ],
+        "gaps": [
+          {
+            "questionId": "stakeholders-demo-identify",
+            "missingIdea": "Review and explain: Identify people or groups affected by the project or able to influence it, including people outside the delivery team."
+          },
+          {
+            "questionId": "stakeholders-demo-communicate",
+            "missingIdea": "Review and explain: Understand each stakeholder's needs and influence, then agree on useful information, a suitable communication channel, and timing. Invite feedback."
+          },
+          {
+            "questionId": "stakeholders-demo-review",
+            "missingIdea": "Review and explain: Revisit stakeholders and the engagement plan throughout the project, especially when scope, people, or needs change. Update the plan using feedback."
+          }
+        ],
+        "results": [
+          {
+            "questionId": "stakeholders-demo-identify",
+            "questionText": "A library is replacing its booking system. The team has listed the sponsor and developers. Librarians will use the system daily, and visitors will book rooms through it. Who should the team consider next?",
+            "options": [
+              {
+                "id": "a",
+                "text": "Only staff who approve the project budget."
+              },
+              {
+                "id": "b",
+                "text": "Librarians and visitors, because the change affects them."
+              },
+              {
+                "id": "c",
+                "text": "Only people assigned tasks in the delivery schedule."
+              },
+              {
+                "id": "d",
+                "text": "Only developers who maintain the current system."
+              }
+            ],
+            "correctAnswer": "b",
+            "answer": null,
+            "correct": false,
+            "guessed": true,
+            "reasoning": "My notebook does not support an answer to this question.",
+            "notebookRefs": []
+          },
+          {
+            "questionId": "stakeholders-demo-communicate",
+            "questionText": "A school is launching a room-booking app. Its sponsor needs occasional budget decisions, while reception staff need practical rollout instructions. How should the team plan communication?",
+            "options": [
+              {
+                "id": "a",
+                "text": "Send both groups the same daily technical report."
+              },
+              {
+                "id": "b",
+                "text": "Discuss the project only with the sponsor, who controls funding."
+              },
+              {
+                "id": "c",
+                "text": "Let each group discover changes when the app launches."
+              },
+              {
+                "id": "d",
+                "text": "Agree on relevant information, channels, and timing with each group, and invite feedback."
+              }
+            ],
+            "correctAnswer": "d",
+            "answer": null,
+            "correct": false,
+            "guessed": true,
+            "reasoning": "My notebook does not support an answer to this question.",
+            "notebookRefs": []
+          },
+          {
+            "questionId": "stakeholders-demo-review",
+            "questionText": "Halfway through a community-center project, a new partner joins and evening classes are added to the scope. What should the team do with its stakeholder engagement plan?",
+            "options": [
+              {
+                "id": "a",
+                "text": "Reassess who is affected, discuss changed needs, and update the plan."
+              },
+              {
+                "id": "b",
+                "text": "Keep the kickoff plan unchanged until the project closes."
+              },
+              {
+                "id": "c",
+                "text": "Add the partner's name but keep all communication arrangements unchanged."
+              },
+              {
+                "id": "d",
+                "text": "Wait for a formal complaint before reviewing any engagement needs."
+              }
+            ],
+            "correctAnswer": "a",
+            "answer": null,
+            "correct": false,
+            "guessed": true,
+            "reasoning": "My notebook does not support an answer to this question.",
+            "notebookRefs": []
+          }
+        ]
+      },
+      "actual": [
+        null,
+        null,
+        null
+      ],
+      "expected": [
+        null,
+        null,
+        null
+      ],
+      "matchesExpected": true,
+      "unexpectedAnswers": [],
+      "referencesExist": true,
+      "finishedAt": "2026-11-14T15:17:57.733Z"
+    },
+    {
+      "condition": "irrelevant-register",
+      "run": 3,
+      "startedAt": "2026-11-14T15:17:57.739Z",
+      "sessionId": "b869e303-4c4a-4ef1-a9aa-6093dd949ef9",
+      "url": "https://teachapp.vercel.app/session/b869e303-4c4a-4ef1-a9aa-6093dd949ef9",
+      "messageId": "2bc38b58-be5c-463f-bb93-876af6d9f66d",
+      "notebook": [
+        {
+          "id": "5f7be75f-2c85-467e-8359-179ba0abf974",
+          "claim": "A stakeholder register is a document that records stakeholders' names and contact details.",
+          "sourceMessageId": "2bc38b58-be5c-463f-bb93-876af6d9f66d"
+        }
+      ],
+      "sourceQuotesValid": true,
+      "examineeModelCalled": true,
+      "attempt": {
+        "id": "dfe68f71-84a8-47c7-a1a5-a2efa76d1019",
+        "createdAt": "2026-11-14T15:18:02.960Z",
+        "revision": "7ea89cadfc9ab038ff9c3db6ba87023f9e68b777fbf528c9c3a1142cd77132ad",
+        "score": 0,
+        "total": 3,
+        "notebookSnapshot": [
+          {
+            "id": "5f7be75f-2c85-467e-8359-179ba0abf974",
+            "claim": "A stakeholder register is a document that records stakeholders' names and contact details.",
+            "sourceMessageId": "2bc38b58-be5c-463f-bb93-876af6d9f66d"
+          }
+        ],
+        "gaps": [
+          {
+            "questionId": "stakeholders-demo-identify",
+            "missingIdea": "Review and explain: Identify people or groups affected by the project or able to influence it, including people outside the delivery team."
+          },
+          {
+            "questionId": "stakeholders-demo-communicate",
+            "missingIdea": "Review and explain: Understand each stakeholder's needs and influence, then agree on useful information, a suitable communication channel, and timing. Invite feedback."
+          },
+          {
+            "questionId": "stakeholders-demo-review",
+            "missingIdea": "Review and explain: Revisit stakeholders and the engagement plan throughout the project, especially when scope, people, or needs change. Update the plan using feedback."
+          }
+        ],
+        "results": [
+          {
+            "questionId": "stakeholders-demo-identify",
+            "questionText": "A library is replacing its booking system. The team has listed the sponsor and developers. Librarians will use the system daily, and visitors will book rooms through it. Who should the team consider next?",
+            "options": [
+              {
+                "id": "a",
+                "text": "Only staff who approve the project budget."
+              },
+              {
+                "id": "b",
+                "text": "Librarians and visitors, because the change affects them."
+              },
+              {
+                "id": "c",
+                "text": "Only people assigned tasks in the delivery schedule."
+              },
+              {
+                "id": "d",
+                "text": "Only developers who maintain the current system."
+              }
+            ],
+            "correctAnswer": "b",
+            "answer": null,
+            "correct": false,
+            "guessed": true,
+            "reasoning": "My notebook does not support an answer to this question.",
+            "notebookRefs": []
+          },
+          {
+            "questionId": "stakeholders-demo-communicate",
+            "questionText": "A school is launching a room-booking app. Its sponsor needs occasional budget decisions, while reception staff need practical rollout instructions. How should the team plan communication?",
+            "options": [
+              {
+                "id": "a",
+                "text": "Send both groups the same daily technical report."
+              },
+              {
+                "id": "b",
+                "text": "Discuss the project only with the sponsor, who controls funding."
+              },
+              {
+                "id": "c",
+                "text": "Let each group discover changes when the app launches."
+              },
+              {
+                "id": "d",
+                "text": "Agree on relevant information, channels, and timing with each group, and invite feedback."
+              }
+            ],
+            "correctAnswer": "d",
+            "answer": null,
+            "correct": false,
+            "guessed": true,
+            "reasoning": "My notebook does not support an answer to this question.",
+            "notebookRefs": []
+          },
+          {
+            "questionId": "stakeholders-demo-review",
+            "questionText": "Halfway through a community-center project, a new partner joins and evening classes are added to the scope. What should the team do with its stakeholder engagement plan?",
+            "options": [
+              {
+                "id": "a",
+                "text": "Reassess who is affected, discuss changed needs, and update the plan."
+              },
+              {
+                "id": "b",
+                "text": "Keep the kickoff plan unchanged until the project closes."
+              },
+              {
+                "id": "c",
+                "text": "Add the partner's name but keep all communication arrangements unchanged."
+              },
+              {
+                "id": "d",
+                "text": "Wait for a formal complaint before reviewing any engagement needs."
+              }
+            ],
+            "correctAnswer": "a",
+            "answer": null,
+            "correct": false,
+            "guessed": true,
+            "reasoning": "My notebook does not support an answer to this question.",
+            "notebookRefs": []
+          }
+        ]
+      },
+      "actual": [
+        null,
+        null,
+        null
+      ],
+      "expected": [
+        null,
+        null,
+        null
+      ],
+      "matchesExpected": true,
+      "unexpectedAnswers": [],
+      "referencesExist": true,
+      "finishedAt": "2026-11-14T15:18:03.075Z"
+    },
+    {
+      "condition": "partial-identification",
+      "run": 1,
+      "startedAt": "2026-11-14T15:18:03.076Z",
+      "sessionId": "7dad9e2b-5dfd-4e11-ae53-47ff75f2a05c",
+      "url": "https://teachapp.vercel.app/session/7dad9e2b-5dfd-4e11-ae53-47ff75f2a05c",
+      "messageId": "d524bb58-fd8f-4b82-8f9f-45976154eb02",
+      "notebook": [
+        {
+          "id": "bb9cbb4e-ec31-42f5-a837-02355f5e7aa1",
+          "claim": "Stakeholders are people or groups affected by the project or able to influence it, including people outside the delivery team.",
+          "sourceMessageId": "d524bb58-fd8f-4b82-8f9f-45976154eb02"
+        }
+      ],
+      "sourceQuotesValid": true,
+      "examineeModelCalled": true,
+      "attempt": {
+        "id": "ea5b7ea0-05d4-4864-a803-43f78d9f1e3a",
+        "createdAt": "2026-11-14T15:18:08.266Z",
+        "revision": "8fe42451bca5906f96f9d12b00b63bc7d949d9933ca1b3912b071032ae4a4367",
+        "score": 1,
+        "total": 3,
+        "notebookSnapshot": [
+          {
+            "id": "bb9cbb4e-ec31-42f5-a837-02355f5e7aa1",
+            "claim": "Stakeholders are people or groups affected by the project or able to influence it, including people outside the delivery team.",
+            "sourceMessageId": "d524bb58-fd8f-4b82-8f9f-45976154eb02"
+          }
+        ],
+        "gaps": [
+          {
+            "questionId": "stakeholders-demo-communicate",
+            "missingIdea": "Review and explain: Understand each stakeholder's needs and influence, then agree on useful information, a suitable communication channel, and timing. Invite feedback."
+          },
+          {
+            "questionId": "stakeholders-demo-review",
+            "missingIdea": "Review and explain: Revisit stakeholders and the engagement plan throughout the project, especially when scope, people, or needs change. Update the plan using feedback."
+          }
+        ],
+        "results": [
+          {
+            "questionId": "stakeholders-demo-identify",
+            "questionText": "A library is replacing its booking system. The team has listed the sponsor and developers. Librarians will use the system daily, and visitors will book rooms through it. Who should the team consider next?",
+            "options": [
+              {
+                "id": "a",
+                "text": "Only staff who approve the project budget."
+              },
+              {
+                "id": "b",
+                "text": "Librarians and visitors, because the change affects them."
+              },
+              {
+                "id": "c",
+                "text": "Only people assigned tasks in the delivery schedule."
+              },
+              {
+                "id": "d",
+                "text": "Only developers who maintain the current system."
+              }
+            ],
+            "correctAnswer": "b",
+            "answer": "b",
+            "correct": true,
+            "guessed": false,
+            "reasoning": "The notebook includes people affected by the project, including those outside the delivery team.",
+            "notebookRefs": [
+              "bb9cbb4e-ec31-42f5-a837-02355f5e7aa1"
+            ]
+          },
+          {
+            "questionId": "stakeholders-demo-communicate",
+            "questionText": "A school is launching a room-booking app. Its sponsor needs occasional budget decisions, while reception staff need practical rollout instructions. How should the team plan communication?",
+            "options": [
+              {
+                "id": "a",
+                "text": "Send both groups the same daily technical report."
+              },
+              {
+                "id": "b",
+                "text": "Discuss the project only with the sponsor, who controls funding."
+              },
+              {
+                "id": "c",
+                "text": "Let each group discover changes when the app launches."
+              },
+              {
+                "id": "d",
+                "text": "Agree on relevant information, channels, and timing with each group, and invite feedback."
+              }
+            ],
+            "correctAnswer": "d",
+            "answer": null,
+            "correct": false,
+            "guessed": true,
+            "reasoning": "My notebook does not support an answer to this question.",
+            "notebookRefs": []
+          },
+          {
+            "questionId": "stakeholders-demo-review",
+            "questionText": "Halfway through a community-center project, a new partner joins and evening classes are added to the scope. What should the team do with its stakeholder engagement plan?",
+            "options": [
+              {
+                "id": "a",
+                "text": "Reassess who is affected, discuss changed needs, and update the plan."
+              },
+              {
+                "id": "b",
+                "text": "Keep the kickoff plan unchanged until the project closes."
+              },
+              {
+                "id": "c",
+                "text": "Add the partner's name but keep all communication arrangements unchanged."
+              },
+              {
+                "id": "d",
+                "text": "Wait for a formal complaint before reviewing any engagement needs."
+              }
+            ],
+            "correctAnswer": "a",
+            "answer": null,
+            "correct": false,
+            "guessed": true,
+            "reasoning": "My notebook does not support an answer to this question.",
+            "notebookRefs": []
+          }
+        ]
+      },
+      "actual": [
+        "b",
+        null,
+        null
+      ],
+      "expected": [
+        "b",
+        null,
+        null
+      ],
+      "matchesExpected": true,
+      "unexpectedAnswers": [],
+      "referencesExist": true,
+      "finishedAt": "2026-11-14T15:18:08.377Z"
+    },
+    {
+      "condition": "partial-identification",
+      "run": 2,
+      "startedAt": "2026-11-14T15:18:08.380Z",
+      "sessionId": "fc3d408b-5261-459d-b97c-2fe0231bcb73",
+      "url": "https://teachapp.vercel.app/session/fc3d408b-5261-459d-b97c-2fe0231bcb73",
+      "messageId": "a31f1c94-d5b6-40cb-ad90-4c4f7d3a5ab9",
+      "notebook": [
+        {
+          "id": "e316babf-7189-4b18-866d-ffa0610f73c6",
+          "claim": "Stakeholders are people or groups affected by the project or able to influence it, including people outside the delivery team.",
+          "sourceMessageId": "a31f1c94-d5b6-40cb-ad90-4c4f7d3a5ab9"
+        }
+      ],
+      "sourceQuotesValid": true,
+      "examineeModelCalled": true,
+      "attempt": {
+        "id": "fe00d1b8-f07e-4380-a5aa-6a79b1dae7e8",
+        "createdAt": "2026-11-14T15:18:14.083Z",
+        "revision": "3f395a834518579839de5e8f35416de577d77d3c7c604835872525d3e5a6a167",
+        "score": 1,
+        "total": 3,
+        "notebookSnapshot": [
+          {
+            "id": "e316babf-7189-4b18-866d-ffa0610f73c6",
+            "claim": "Stakeholders are people or groups affected by the project or able to influence it, including people outside the delivery team.",
+            "sourceMessageId": "a31f1c94-d5b6-40cb-ad90-4c4f7d3a5ab9"
+          }
+        ],
+        "gaps": [
+          {
+            "questionId": "stakeholders-demo-communicate",
+            "missingIdea": "Review and explain: Understand each stakeholder's needs and influence, then agree on useful information, a suitable communication channel, and timing. Invite feedback."
+          },
+          {
+            "questionId": "stakeholders-demo-review",
+            "missingIdea": "Review and explain: Revisit stakeholders and the engagement plan throughout the project, especially when scope, people, or needs change. Update the plan using feedback."
+          }
+        ],
+        "results": [
+          {
+            "questionId": "stakeholders-demo-identify",
+            "questionText": "A library is replacing its booking system. The team has listed the sponsor and developers. Librarians will use the system daily, and visitors will book rooms through it. Who should the team consider next?",
+            "options": [
+              {
+                "id": "a",
+                "text": "Only staff who approve the project budget."
+              },
+              {
+                "id": "b",
+                "text": "Librarians and visitors, because the change affects them."
+              },
+              {
+                "id": "c",
+                "text": "Only people assigned tasks in the delivery schedule."
+              },
+              {
+                "id": "d",
+                "text": "Only developers who maintain the current system."
+              }
+            ],
+            "correctAnswer": "b",
+            "answer": "b",
+            "correct": true,
+            "guessed": false,
+            "reasoning": "Librarians and visitors are affected by the project, so both should be considered stakeholders.",
+            "notebookRefs": [
+              "e316babf-7189-4b18-866d-ffa0610f73c6"
+            ]
+          },
+          {
+            "questionId": "stakeholders-demo-communicate",
+            "questionText": "A school is launching a room-booking app. Its sponsor needs occasional budget decisions, while reception staff need practical rollout instructions. How should the team plan communication?",
+            "options": [
+              {
+                "id": "a",
+                "text": "Send both groups the same daily technical report."
+              },
+              {
+                "id": "b",
+                "text": "Discuss the project only with the sponsor, who controls funding."
+              },
+              {
+                "id": "c",
+                "text": "Let each group discover changes when the app launches."
+              },
+              {
+                "id": "d",
+                "text": "Agree on relevant information, channels, and timing with each group, and invite feedback."
+              }
+            ],
+            "correctAnswer": "d",
+            "answer": null,
+            "correct": false,
+            "guessed": true,
+            "reasoning": "My notebook does not support an answer to this question.",
+            "notebookRefs": []
+          },
+          {
+            "questionId": "stakeholders-demo-review",
+            "questionText": "Halfway through a community-center project, a new partner joins and evening classes are added to the scope. What should the team do with its stakeholder engagement plan?",
+            "options": [
+              {
+                "id": "a",
+                "text": "Reassess who is affected, discuss changed needs, and update the plan."
+              },
+              {
+                "id": "b",
+                "text": "Keep the kickoff plan unchanged until the project closes."
+              },
+              {
+                "id": "c",
+                "text": "Add the partner's name but keep all communication arrangements unchanged."
+              },
+              {
+                "id": "d",
+                "text": "Wait for a formal complaint before reviewing any engagement needs."
+              }
+            ],
+            "correctAnswer": "a",
+            "answer": null,
+            "correct": false,
+            "guessed": true,
+            "reasoning": "My notebook does not support an answer to this question.",
+            "notebookRefs": []
+          }
+        ]
+      },
+      "actual": [
+        "b",
+        null,
+        null
+      ],
+      "expected": [
+        "b",
+        null,
+        null
+      ],
+      "matchesExpected": true,
+      "unexpectedAnswers": [],
+      "referencesExist": true,
+      "finishedAt": "2026-11-14T15:18:14.249Z"
+    },
+    {
+      "condition": "partial-identification",
+      "run": 3,
+      "startedAt": "2026-11-14T15:18:14.252Z",
+      "sessionId": "2102a043-553d-408e-a345-cd9cb974cc8b",
+      "url": "https://teachapp.vercel.app/session/2102a043-553d-408e-a345-cd9cb974cc8b",
+      "messageId": "8525f7aa-0a43-4bf5-aadc-6af7a0877fdd",
+      "notebook": [
+        {
+          "id": "742f663b-1493-40a5-88a5-5cc799373d18",
+          "claim": "Stakeholders are people or groups affected by the project or able to influence it, including people outside the delivery team.",
+          "sourceMessageId": "8525f7aa-0a43-4bf5-aadc-6af7a0877fdd"
+        }
+      ],
+      "sourceQuotesValid": true,
+      "examineeModelCalled": true,
+      "attempt": {
+        "id": "525548f0-752a-41b5-afc7-d36cc96979cc",
+        "createdAt": "2026-11-14T15:18:19.967Z",
+        "revision": "8762c06eabf7decc52ac23e30bb2331ca029a03c5492d1b1efc7430b48c5ac0e",
+        "score": 1,
+        "total": 3,
+        "notebookSnapshot": [
+          {
+            "id": "742f663b-1493-40a5-88a5-5cc799373d18",
+            "claim": "Stakeholders are people or groups affected by the project or able to influence it, including people outside the delivery team.",
+            "sourceMessageId": "8525f7aa-0a43-4bf5-aadc-6af7a0877fdd"
+          }
+        ],
+        "gaps": [
+          {
+            "questionId": "stakeholders-demo-communicate",
+            "missingIdea": "Review and explain: Understand each stakeholder's needs and influence, then agree on useful information, a suitable communication channel, and timing. Invite feedback."
+          },
+          {
+            "questionId": "stakeholders-demo-review",
+            "missingIdea": "Review and explain: Revisit stakeholders and the engagement plan throughout the project, especially when scope, people, or needs change. Update the plan using feedback."
+          }
+        ],
+        "results": [
+          {
+            "questionId": "stakeholders-demo-identify",
+            "questionText": "A library is replacing its booking system. The team has listed the sponsor and developers. Librarians will use the system daily, and visitors will book rooms through it. Who should the team consider next?",
+            "options": [
+              {
+                "id": "a",
+                "text": "Only staff who approve the project budget."
+              },
+              {
+                "id": "b",
+                "text": "Librarians and visitors, because the change affects them."
+              },
+              {
+                "id": "c",
+                "text": "Only people assigned tasks in the delivery schedule."
+              },
+              {
+                "id": "d",
+                "text": "Only developers who maintain the current system."
+              }
+            ],
+            "correctAnswer": "b",
+            "answer": "b",
+            "correct": true,
+            "guessed": false,
+            "reasoning": "Librarians and visitors are affected by the project, including people outside the delivery team.",
+            "notebookRefs": [
+              "742f663b-1493-40a5-88a5-5cc799373d18"
+            ]
+          },
+          {
+            "questionId": "stakeholders-demo-communicate",
+            "questionText": "A school is launching a room-booking app. Its sponsor needs occasional budget decisions, while reception staff need practical rollout instructions. How should the team plan communication?",
+            "options": [
+              {
+                "id": "a",
+                "text": "Send both groups the same daily technical report."
+              },
+              {
+                "id": "b",
+                "text": "Discuss the project only with the sponsor, who controls funding."
+              },
+              {
+                "id": "c",
+                "text": "Let each group discover changes when the app launches."
+              },
+              {
+                "id": "d",
+                "text": "Agree on relevant information, channels, and timing with each group, and invite feedback."
+              }
+            ],
+            "correctAnswer": "d",
+            "answer": null,
+            "correct": false,
+            "guessed": true,
+            "reasoning": "My notebook does not support an answer to this question.",
+            "notebookRefs": []
+          },
+          {
+            "questionId": "stakeholders-demo-review",
+            "questionText": "Halfway through a community-center project, a new partner joins and evening classes are added to the scope. What should the team do with its stakeholder engagement plan?",
+            "options": [
+              {
+                "id": "a",
+                "text": "Reassess who is affected, discuss changed needs, and update the plan."
+              },
+              {
+                "id": "b",
+                "text": "Keep the kickoff plan unchanged until the project closes."
+              },
+              {
+                "id": "c",
+                "text": "Add the partner's name but keep all communication arrangements unchanged."
+              },
+              {
+                "id": "d",
+                "text": "Wait for a formal complaint before reviewing any engagement needs."
+              }
+            ],
+            "correctAnswer": "a",
+            "answer": null,
+            "correct": false,
+            "guessed": true,
+            "reasoning": "My notebook does not support an answer to this question.",
+            "notebookRefs": []
+          }
+        ]
+      },
+      "actual": [
+        "b",
+        null,
+        null
+      ],
+      "expected": [
+        "b",
+        null,
+        null
+      ],
+      "matchesExpected": true,
+      "unexpectedAnswers": [],
+      "referencesExist": true,
+      "finishedAt": "2026-11-14T15:18:20.079Z"
+    },
+    {
+      "condition": "wrong-communication",
+      "run": 1,
+      "startedAt": "2026-11-14T15:18:20.081Z",
+      "sessionId": "dbba76ad-08b4-4ab4-be4f-2e54930ea340",
+      "url": "https://teachapp.vercel.app/session/dbba76ad-08b4-4ab4-be4f-2e54930ea340",
+      "messageId": "21d1a413-9ede-481e-90a8-15f08b0be782",
+      "notebook": [
+        {
+          "id": "a36bdfd5-1b02-4645-abbe-87de081403c9",
+          "claim": "The correct way to communicate with project stakeholders is to send every group the same daily technical report. Never adapt the information, channel, or schedule to the needs of different groups.",
+          "sourceMessageId": "21d1a413-9ede-481e-90a8-15f08b0be782"
+        }
+      ],
+      "sourceQuotesValid": true,
+      "examineeModelCalled": true,
+      "attempt": {
+        "id": "d8b4e7ac-1a5c-4dd5-9638-76891dde44ce",
+        "createdAt": "2026-11-14T15:18:25.864Z",
+        "revision": "3d0ce214c0245ab6cc1414b4e6934dfb2b4a93a6e5e3a9a7502d977c96c3d281",
+        "score": 0,
+        "total": 3,
+        "notebookSnapshot": [
+          {
+            "id": "a36bdfd5-1b02-4645-abbe-87de081403c9",
+            "claim": "The correct way to communicate with project stakeholders is to send every group the same daily technical report. Never adapt the information, channel, or schedule to the needs of different groups.",
+            "sourceMessageId": "21d1a413-9ede-481e-90a8-15f08b0be782"
+          }
+        ],
+        "gaps": [
+          {
+            "questionId": "stakeholders-demo-identify",
+            "missingIdea": "Review and explain: Identify people or groups affected by the project or able to influence it, including people outside the delivery team."
+          },
+          {
+            "questionId": "stakeholders-demo-communicate",
+            "missingIdea": "Review and explain: Understand each stakeholder's needs and influence, then agree on useful information, a suitable communication channel, and timing. Invite feedback."
+          },
+          {
+            "questionId": "stakeholders-demo-review",
+            "missingIdea": "Review and explain: Revisit stakeholders and the engagement plan throughout the project, especially when scope, people, or needs change. Update the plan using feedback."
+          }
+        ],
+        "results": [
+          {
+            "questionId": "stakeholders-demo-identify",
+            "questionText": "A library is replacing its booking system. The team has listed the sponsor and developers. Librarians will use the system daily, and visitors will book rooms through it. Who should the team consider next?",
+            "options": [
+              {
+                "id": "a",
+                "text": "Only staff who approve the project budget."
+              },
+              {
+                "id": "b",
+                "text": "Librarians and visitors, because the change affects them."
+              },
+              {
+                "id": "c",
+                "text": "Only people assigned tasks in the delivery schedule."
+              },
+              {
+                "id": "d",
+                "text": "Only developers who maintain the current system."
+              }
+            ],
+            "correctAnswer": "b",
+            "answer": null,
+            "correct": false,
+            "guessed": true,
+            "reasoning": "My notebook does not support an answer to this question.",
+            "notebookRefs": []
+          },
+          {
+            "questionId": "stakeholders-demo-communicate",
+            "questionText": "A school is launching a room-booking app. Its sponsor needs occasional budget decisions, while reception staff need practical rollout instructions. How should the team plan communication?",
+            "options": [
+              {
+                "id": "a",
+                "text": "Send both groups the same daily technical report."
+              },
+              {
+                "id": "b",
+                "text": "Discuss the project only with the sponsor, who controls funding."
+              },
+              {
+                "id": "c",
+                "text": "Let each group discover changes when the app launches."
+              },
+              {
+                "id": "d",
+                "text": "Agree on relevant information, channels, and timing with each group, and invite feedback."
+              }
+            ],
+            "correctAnswer": "d",
+            "answer": null,
+            "correct": false,
+            "guessed": true,
+            "reasoning": "My notebook does not support an answer to this question.",
+            "notebookRefs": []
+          },
+          {
+            "questionId": "stakeholders-demo-review",
+            "questionText": "Halfway through a community-center project, a new partner joins and evening classes are added to the scope. What should the team do with its stakeholder engagement plan?",
+            "options": [
+              {
+                "id": "a",
+                "text": "Reassess who is affected, discuss changed needs, and update the plan."
+              },
+              {
+                "id": "b",
+                "text": "Keep the kickoff plan unchanged until the project closes."
+              },
+              {
+                "id": "c",
+                "text": "Add the partner's name but keep all communication arrangements unchanged."
+              },
+              {
+                "id": "d",
+                "text": "Wait for a formal complaint before reviewing any engagement needs."
+              }
+            ],
+            "correctAnswer": "a",
+            "answer": null,
+            "correct": false,
+            "guessed": true,
+            "reasoning": "My notebook does not support an answer to this question.",
+            "notebookRefs": []
+          }
+        ]
+      },
+      "actual": [
+        null,
+        null,
+        null
+      ],
+      "expected": [
+        null,
+        "a",
+        null
+      ],
+      "matchesExpected": false,
+      "unexpectedAnswers": [],
+      "referencesExist": true,
+      "finishedAt": "2026-11-14T15:18:26.048Z"
+    },
+    {
+      "condition": "wrong-communication",
+      "run": 2,
+      "startedAt": "2026-11-14T15:18:26.051Z",
+      "sessionId": "4b8e49bd-3c88-4d96-aa6a-af186433ab9f",
+      "url": "https://teachapp.vercel.app/session/4b8e49bd-3c88-4d96-aa6a-af186433ab9f",
+      "messageId": "e631c3df-0e5b-4869-9963-268d4491cc60",
+      "notebook": [
+        {
+          "id": "82b69ab8-e6d1-4425-9bd6-1284f62f1152",
+          "claim": "The correct way to communicate with project stakeholders is to send every group the same daily technical report. Never adapt the information, channel, or schedule to the needs of different groups.",
+          "sourceMessageId": "e631c3df-0e5b-4869-9963-268d4491cc60"
+        }
+      ],
+      "sourceQuotesValid": true,
+      "examineeModelCalled": true,
+      "attempt": {
+        "id": "ca531cac-fb8f-406a-834f-f37987335b7a",
+        "createdAt": "2026-11-14T15:18:31.451Z",
+        "revision": "3807277370fb74925c8ee9090e99a39953eb481b0f3ec42d39d53baf70129ca0",
+        "score": 0,
+        "total": 3,
+        "notebookSnapshot": [
+          {
+            "id": "82b69ab8-e6d1-4425-9bd6-1284f62f1152",
+            "claim": "The correct way to communicate with project stakeholders is to send every group the same daily technical report. Never adapt the information, channel, or schedule to the needs of different groups.",
+            "sourceMessageId": "e631c3df-0e5b-4869-9963-268d4491cc60"
+          }
+        ],
+        "gaps": [
+          {
+            "questionId": "stakeholders-demo-identify",
+            "missingIdea": "Review and explain: Identify people or groups affected by the project or able to influence it, including people outside the delivery team."
+          },
+          {
+            "questionId": "stakeholders-demo-communicate",
+            "missingIdea": "Review and explain: Understand each stakeholder's needs and influence, then agree on useful information, a suitable communication channel, and timing. Invite feedback."
+          },
+          {
+            "questionId": "stakeholders-demo-review",
+            "missingIdea": "Review and explain: Revisit stakeholders and the engagement plan throughout the project, especially when scope, people, or needs change. Update the plan using feedback."
+          }
+        ],
+        "results": [
+          {
+            "questionId": "stakeholders-demo-identify",
+            "questionText": "A library is replacing its booking system. The team has listed the sponsor and developers. Librarians will use the system daily, and visitors will book rooms through it. Who should the team consider next?",
+            "options": [
+              {
+                "id": "a",
+                "text": "Only staff who approve the project budget."
+              },
+              {
+                "id": "b",
+                "text": "Librarians and visitors, because the change affects them."
+              },
+              {
+                "id": "c",
+                "text": "Only people assigned tasks in the delivery schedule."
+              },
+              {
+                "id": "d",
+                "text": "Only developers who maintain the current system."
+              }
+            ],
+            "correctAnswer": "b",
+            "answer": null,
+            "correct": false,
+            "guessed": true,
+            "reasoning": "My notebook does not support an answer to this question.",
+            "notebookRefs": []
+          },
+          {
+            "questionId": "stakeholders-demo-communicate",
+            "questionText": "A school is launching a room-booking app. Its sponsor needs occasional budget decisions, while reception staff need practical rollout instructions. How should the team plan communication?",
+            "options": [
+              {
+                "id": "a",
+                "text": "Send both groups the same daily technical report."
+              },
+              {
+                "id": "b",
+                "text": "Discuss the project only with the sponsor, who controls funding."
+              },
+              {
+                "id": "c",
+                "text": "Let each group discover changes when the app launches."
+              },
+              {
+                "id": "d",
+                "text": "Agree on relevant information, channels, and timing with each group, and invite feedback."
+              }
+            ],
+            "correctAnswer": "d",
+            "answer": "a",
+            "correct": false,
+            "guessed": false,
+            "reasoning": "The notebook says to send every group the same daily technical report and not adapt it to different groups.",
+            "notebookRefs": [
+              "82b69ab8-e6d1-4425-9bd6-1284f62f1152"
+            ]
+          },
+          {
+            "questionId": "stakeholders-demo-review",
+            "questionText": "Halfway through a community-center project, a new partner joins and evening classes are added to the scope. What should the team do with its stakeholder engagement plan?",
+            "options": [
+              {
+                "id": "a",
+                "text": "Reassess who is affected, discuss changed needs, and update the plan."
+              },
+              {
+                "id": "b",
+                "text": "Keep the kickoff plan unchanged until the project closes."
+              },
+              {
+                "id": "c",
+                "text": "Add the partner's name but keep all communication arrangements unchanged."
+              },
+              {
+                "id": "d",
+                "text": "Wait for a formal complaint before reviewing any engagement needs."
+              }
+            ],
+            "correctAnswer": "a",
+            "answer": null,
+            "correct": false,
+            "guessed": true,
+            "reasoning": "My notebook does not support an answer to this question.",
+            "notebookRefs": []
+          }
+        ]
+      },
+      "actual": [
+        null,
+        "a",
+        null
+      ],
+      "expected": [
+        null,
+        "a",
+        null
+      ],
+      "matchesExpected": true,
+      "unexpectedAnswers": [],
+      "referencesExist": true,
+      "finishedAt": "2026-11-14T15:18:31.547Z"
+    },
+    {
+      "condition": "wrong-communication",
+      "run": 3,
+      "startedAt": "2026-11-14T15:18:31.550Z",
+      "sessionId": "7ecb4e5e-4c29-4438-8c71-eb433855555c",
+      "url": "https://teachapp.vercel.app/session/7ecb4e5e-4c29-4438-8c71-eb433855555c",
+      "messageId": "675def4e-5843-413d-8e71-4457931450cb",
+      "notebook": [
+        {
+          "id": "196e1e21-db19-4c3b-90a9-5d41d9ad6e49",
+          "claim": "The correct way to communicate with project stakeholders is to send every group the same daily technical report. Never adapt the information, channel, or schedule to the needs of different groups.",
+          "sourceMessageId": "675def4e-5843-413d-8e71-4457931450cb"
+        }
+      ],
+      "sourceQuotesValid": true,
+      "examineeModelCalled": true,
+      "attempt": {
+        "id": "1c7a7dc2-8486-43a0-8fbb-38efd4e2e43e",
+        "createdAt": "2026-11-14T15:18:38.108Z",
+        "revision": "919d9917f1178a740a25ddbbfe946dc2f35a821dd6f9afc4ba1fa71873fafb23",
+        "score": 0,
+        "total": 3,
+        "notebookSnapshot": [
+          {
+            "id": "196e1e21-db19-4c3b-90a9-5d41d9ad6e49",
+            "claim": "The correct way to communicate with project stakeholders is to send every group the same daily technical report. Never adapt the information, channel, or schedule to the needs of different groups.",
+            "sourceMessageId": "675def4e-5843-413d-8e71-4457931450cb"
+          }
+        ],
+        "gaps": [
+          {
+            "questionId": "stakeholders-demo-identify",
+            "missingIdea": "Review and explain: Identify people or groups affected by the project or able to influence it, including people outside the delivery team."
+          },
+          {
+            "questionId": "stakeholders-demo-communicate",
+            "missingIdea": "Review and explain: Understand each stakeholder's needs and influence, then agree on useful information, a suitable communication channel, and timing. Invite feedback."
+          },
+          {
+            "questionId": "stakeholders-demo-review",
+            "missingIdea": "Review and explain: Revisit stakeholders and the engagement plan throughout the project, especially when scope, people, or needs change. Update the plan using feedback."
+          }
+        ],
+        "results": [
+          {
+            "questionId": "stakeholders-demo-identify",
+            "questionText": "A library is replacing its booking system. The team has listed the sponsor and developers. Librarians will use the system daily, and visitors will book rooms through it. Who should the team consider next?",
+            "options": [
+              {
+                "id": "a",
+                "text": "Only staff who approve the project budget."
+              },
+              {
+                "id": "b",
+                "text": "Librarians and visitors, because the change affects them."
+              },
+              {
+                "id": "c",
+                "text": "Only people assigned tasks in the delivery schedule."
+              },
+              {
+                "id": "d",
+                "text": "Only developers who maintain the current system."
+              }
+            ],
+            "correctAnswer": "b",
+            "answer": null,
+            "correct": false,
+            "guessed": true,
+            "reasoning": "My notebook does not support an answer to this question.",
+            "notebookRefs": []
+          },
+          {
+            "questionId": "stakeholders-demo-communicate",
+            "questionText": "A school is launching a room-booking app. Its sponsor needs occasional budget decisions, while reception staff need practical rollout instructions. How should the team plan communication?",
+            "options": [
+              {
+                "id": "a",
+                "text": "Send both groups the same daily technical report."
+              },
+              {
+                "id": "b",
+                "text": "Discuss the project only with the sponsor, who controls funding."
+              },
+              {
+                "id": "c",
+                "text": "Let each group discover changes when the app launches."
+              },
+              {
+                "id": "d",
+                "text": "Agree on relevant information, channels, and timing with each group, and invite feedback."
+              }
+            ],
+            "correctAnswer": "d",
+            "answer": "a",
+            "correct": false,
+            "guessed": false,
+            "reasoning": "The notebook explicitly says to send every group the same daily technical report and not adapt it to different groups.",
+            "notebookRefs": [
+              "196e1e21-db19-4c3b-90a9-5d41d9ad6e49"
+            ]
+          },
+          {
+            "questionId": "stakeholders-demo-review",
+            "questionText": "Halfway through a community-center project, a new partner joins and evening classes are added to the scope. What should the team do with its stakeholder engagement plan?",
+            "options": [
+              {
+                "id": "a",
+                "text": "Reassess who is affected, discuss changed needs, and update the plan."
+              },
+              {
+                "id": "b",
+                "text": "Keep the kickoff plan unchanged until the project closes."
+              },
+              {
+                "id": "c",
+                "text": "Add the partner's name but keep all communication arrangements unchanged."
+              },
+              {
+                "id": "d",
+                "text": "Wait for a formal complaint before reviewing any engagement needs."
+              }
+            ],
+            "correctAnswer": "a",
+            "answer": null,
+            "correct": false,
+            "guessed": true,
+            "reasoning": "My notebook does not support an answer to this question.",
+            "notebookRefs": []
+          }
+        ]
+      },
+      "actual": [
+        null,
+        "a",
+        null
+      ],
+      "expected": [
+        null,
+        "a",
+        null
+      ],
+      "matchesExpected": true,
+      "unexpectedAnswers": [],
+      "referencesExist": true,
+      "finishedAt": "2026-11-14T15:18:38.205Z"
+    },
+    {
+      "condition": "complete-control",
+      "run": 1,
+      "startedAt": "2026-11-14T15:18:38.208Z",
+      "sessionId": "22829547-4a5c-4506-b9d4-40f5edb56f3a",
+      "url": "https://teachapp.vercel.app/session/22829547-4a5c-4506-b9d4-40f5edb56f3a",
+      "messageId": "58563f41-7845-483e-adef-7961f1ca828a",
+      "notebook": [
+        {
+          "id": "744cdbd6-3cfe-48b1-80d6-48dbc5308a30",
+          "claim": "Stakeholders are people or groups affected by the project or able to influence it, including people outside the delivery team.",
+          "sourceMessageId": "58563f41-7845-483e-adef-7961f1ca828a"
+        },
+        {
+          "id": "9ae30104-d32a-469f-8ded-ab84b2967c6f",
+          "claim": "Revisit stakeholders and the engagement plan throughout the project, especially when scope, people, or needs change, and update the plan using feedback.",
+          "sourceMessageId": "58563f41-7845-483e-adef-7961f1ca828a"
+        },
+        {
+          "id": "b343f2cd-3416-484a-b4ed-ba10bb5e5a95",
+          "claim": "Understand each stakeholder's needs and influence; agree on useful information, a suitable communication channel, and timing, and invite feedback.",
+          "sourceMessageId": "58563f41-7845-483e-adef-7961f1ca828a"
+        }
+      ],
+      "sourceQuotesValid": true,
+      "examineeModelCalled": true,
+      "attempt": {
+        "id": "2fa0822c-8a3d-48ec-a3ed-8923b436647a",
+        "createdAt": "2026-11-14T15:18:44.864Z",
+        "revision": "874bb304e7b39e96259d0eb293089a81200f47a1e4b0e9ad34fdca0b1c13e783",
+        "score": 3,
+        "total": 3,
+        "notebookSnapshot": [
+          {
+            "id": "744cdbd6-3cfe-48b1-80d6-48dbc5308a30",
+            "claim": "Stakeholders are people or groups affected by the project or able to influence it, including people outside the delivery team.",
+            "sourceMessageId": "58563f41-7845-483e-adef-7961f1ca828a"
+          },
+          {
+            "id": "9ae30104-d32a-469f-8ded-ab84b2967c6f",
+            "claim": "Revisit stakeholders and the engagement plan throughout the project, especially when scope, people, or needs change, and update the plan using feedback.",
+            "sourceMessageId": "58563f41-7845-483e-adef-7961f1ca828a"
+          },
+          {
+            "id": "b343f2cd-3416-484a-b4ed-ba10bb5e5a95",
+            "claim": "Understand each stakeholder's needs and influence; agree on useful information, a suitable communication channel, and timing, and invite feedback.",
+            "sourceMessageId": "58563f41-7845-483e-adef-7961f1ca828a"
+          }
+        ],
+        "gaps": [],
+        "results": [
+          {
+            "questionId": "stakeholders-demo-identify",
+            "questionText": "A library is replacing its booking system. The team has listed the sponsor and developers. Librarians will use the system daily, and visitors will book rooms through it. Who should the team consider next?",
+            "options": [
+              {
+                "id": "a",
+                "text": "Only staff who approve the project budget."
+              },
+              {
+                "id": "b",
+                "text": "Librarians and visitors, because the change affects them."
+              },
+              {
+                "id": "c",
+                "text": "Only people assigned tasks in the delivery schedule."
+              },
+              {
+                "id": "d",
+                "text": "Only developers who maintain the current system."
+              }
+            ],
+            "correctAnswer": "b",
+            "answer": "b",
+            "correct": true,
+            "guessed": false,
+            "reasoning": "Stakeholders include people affected by the project, including those outside the delivery team.",
+            "notebookRefs": [
+              "744cdbd6-3cfe-48b1-80d6-48dbc5308a30"
+            ]
+          },
+          {
+            "questionId": "stakeholders-demo-communicate",
+            "questionText": "A school is launching a room-booking app. Its sponsor needs occasional budget decisions, while reception staff need practical rollout instructions. How should the team plan communication?",
+            "options": [
+              {
+                "id": "a",
+                "text": "Send both groups the same daily technical report."
+              },
+              {
+                "id": "b",
+                "text": "Discuss the project only with the sponsor, who controls funding."
+              },
+              {
+                "id": "c",
+                "text": "Let each group discover changes when the app launches."
+              },
+              {
+                "id": "d",
+                "text": "Agree on relevant information, channels, and timing with each group, and invite feedback."
+              }
+            ],
+            "correctAnswer": "d",
+            "answer": "d",
+            "correct": true,
+            "guessed": false,
+            "reasoning": "Agree on useful information, channel, and timing for each stakeholder, and invite feedback.",
+            "notebookRefs": [
+              "b343f2cd-3416-484a-b4ed-ba10bb5e5a95"
+            ]
+          },
+          {
+            "questionId": "stakeholders-demo-review",
+            "questionText": "Halfway through a community-center project, a new partner joins and evening classes are added to the scope. What should the team do with its stakeholder engagement plan?",
+            "options": [
+              {
+                "id": "a",
+                "text": "Reassess who is affected, discuss changed needs, and update the plan."
+              },
+              {
+                "id": "b",
+                "text": "Keep the kickoff plan unchanged until the project closes."
+              },
+              {
+                "id": "c",
+                "text": "Add the partner's name but keep all communication arrangements unchanged."
+              },
+              {
+                "id": "d",
+                "text": "Wait for a formal complaint before reviewing any engagement needs."
+              }
+            ],
+            "correctAnswer": "a",
+            "answer": "a",
+            "correct": true,
+            "guessed": false,
+            "reasoning": "Revisit stakeholders and the engagement plan when scope, people, or needs change, and update it using feedback.",
+            "notebookRefs": [
+              "9ae30104-d32a-469f-8ded-ab84b2967c6f"
+            ]
+          }
+        ]
+      },
+      "actual": [
+        "b",
+        "d",
+        "a"
+      ],
+      "expected": [
+        "b",
+        "d",
+        "a"
+      ],
+      "matchesExpected": true,
+      "unexpectedAnswers": [],
+      "referencesExist": true,
+      "finishedAt": "2026-11-14T15:18:44.966Z"
+    }
+  ],
+  "finishedAt": "2026-11-14T15:18:44.968Z",
+  "summary": {
+    "completed": 13,
+    "matches": 12,
+    "liveExamineeTrials": 10,
+    "unexpectedAnswers": 0,
+    "allSourceQuotesValid": true,
+    "allReferencesExist": true
+  },
+  "provenance": {
+    "deploymentId": "dpl_CC4HrfwWqXt1aWZfcy4HNk11H5iW",
+    "configuredModel": "gpt-6-luna",
+    "observedBoundary": "Public app API after validation, not raw model responses",
+    "sourceSha256": {
+      "src/ai/client.ts": "869efe18c870ac7cefccd534e88218beacba00350d8ac6042ea46c72b7e151fd",
+      "src/ai/notebook.ts": "e73e24549519abd3d7c92f7a93a54d9e65dc442200bd49bd44c7d32af52ae839",
+      "src/ai/examinee.ts": "9a555fd4d7ab826909a150b7d2b571d59647987a29c2b114b413c399c22cfc19",
+      "src/server/grading.ts": "b6e6d5323755bb9f2ebd68247dfcb4107c538d7a23df11c8a44d57d03b836843",
+      "prompts/notebook.md": "1a15c7c23e9dd4256369f5d3ba3c8ac4afd36c3e544025551e1922224970577e",
+      "prompts/examinee.md": "26a9ad57075c6e597171459d66931274a7898ead30f6ee2b5b9f08fbc1f6dd5c",
+      "content/exams/pmp/questions/stakeholders-demo.json": "ac863b5b601e61156391dac14cb4957e0dc6a89366be0cff3fa35030726fca4f"
+    }
+  }
+}

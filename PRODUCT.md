@@ -12,17 +12,19 @@ A study workspace for exam preparation by explaining topics to an AI student. Th
 
 ## Capabilities and Constraints
 
-- Current implementation covers the frontend, backend, PostgreSQL persistence, account identity, and saved session history. AI behavior and exam content remain deferred at the user's request.
-- Personal sign-in uses passwordless email links or Google. The latest user request additionally enables a username/password demo account, `admin / admin`. Personal account creation happens during the first successful sign-in.
-- The history list requires a verified account. Successful personal sign-in can attach the browser's guest sessions to that account.
-- Email and Google use Supabase Auth. Live email delivery and Google OAuth require external provider configuration; the current local environment has no Supabase credentials. The UI reports unavailable sign-in without pretending it succeeded.
-- The shared demo account is available through a separate login form when explicitly enabled by server settings. Local setup enables it with a generated signing secret. It has no administrator privileges and never imports private guest history.
-- No deployment, completed AI lesson, generated notebook, or exam outcome is claimed by the current implementation.
+- Current implementation covers the frontend, backend, PostgreSQL persistence, account identity, saved session history, OpenAI student chat, automatic notebook extraction, a notebook-only student practice exam, deterministic grading, and a debrief. The user authorized the complete learning cycle while retaining a small shared API budget.
+- The latest user decision removes login controls. Users immediately start lessons and reopen their own browser's history, notebook, and results. `/login` and `/auth/callback` redirect to the workspace.
+- A persistent random browser ID selects owner-scoped PostgreSQL data. Clearing browser data or changing devices loses access; the interface explains this. The client omits old cookies/bearer tokens, so the shared demo account is not silently reused. Existing account data stays stored separately.
+- Student replies require an owner identity, an OpenAI key, and remaining app budget. GPT-6 Luna uses short replies and a persistent conservative $4 allowance shared by all users. Three-second per-owner operation cooldowns and cached results limit repeat work. Errors preserve explanations and offer an explicit retry.
+- The labelled project-stakeholders demo includes three original practice questions. It is not an official PMP exam or a prediction of real exam readiness. A perfect practice score marks the topic as passed in this app.
+- Notebook entries quote the user's own messages and retain source links. The examinee sees only notebook entries and public questions/options; code grades against answer keys, rejecting guesses and missing citations. Debriefs map incorrect answers to authored key ideas without another model call. Semantic relevance remains model-dependent.
+- Learning operations reuse completed results for the same explanation revision, reject stale concurrent work, and preserve prior results on failure. Attempts retain notebook/question snapshots for review. The app is deployed at https://teachapp.vercel.app.
+- The session composer offers browser speech-to-text in Russian or English after an explicit microphone click. Users stop, review, and add the dictated text to their draft before sending. Typed text remains intact, and unsupported browsers retain text entry. Browser recognition may process audio online; TeachAPP stores no audio and makes no OpenAI transcription call. One-minute capture and text limits, permission/error states, and cleanup on navigation are included.
 
 ## Brand Commitments
 
-The product name is TeachAPP, as confirmed by the user. The user supplied a TikTok login screenshot as the reference for the account-entry screen. The later request adds demo username/password access alongside Email and Google, keeping the same visual identity. This scoped request does not replace the visual identity of the rest of the workspace.
+The product name is TeachAPP. The earlier TikTok-inspired account-entry surface is retired from the current navigation. The study workspace keeps its existing visual identity; browser history and direct access are the current flow.
 
 ## Evidence on Hand
 
-README.md records current setup and limitations. PROJECT_CONTEXT.md describes the team's broader target MVP; proposed AI workflows there are not evidence of implemented functionality. The login surface brief records the user's current visual direction. Browser captures are in `.impeccable/review/`.
+README.md records current setup and limitations. PROJECT_CONTEXT.md describes the team's broader target MVP; proposed AI workflows there are not evidence of implemented functionality. The login surface brief records a historical design, not the current flow. Browser captures are in `.impeccable/review/`.

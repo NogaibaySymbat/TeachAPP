@@ -1,0 +1,38 @@
+[
+  {
+    "id": "stakeholders-demo-identify",
+    "text": "A library is replacing its booking system. The team has listed the sponsor and developers. Librarians will use the system daily, and visitors will book rooms through it. Who should the team consider next?",
+    "options": [
+      { "id": "a", "text": "Only staff who approve the project budget." },
+      { "id": "b", "text": "Librarians and visitors, because the change affects them." },
+      { "id": "c", "text": "Only people assigned tasks in the delivery schedule." },
+      { "id": "d", "text": "Only developers who maintain the current system." }
+    ],
+    "correctAnswer": "b",
+    "requiredIdeaIds": ["identify-stakeholders"]
+  },
+  {
+    "id": "stakeholders-demo-communicate",
+    "text": "A school is launching a room-booking app. Its sponsor needs occasional budget decisions, while reception staff need practical rollout instructions. How should the team plan communication?",
+    "options": [
+      { "id": "a", "text": "Send both groups the same daily technical report." },
+      { "id": "b", "text": "Discuss the project only with the sponsor, who controls funding." },
+      { "id": "c", "text": "Let each group discover changes when the app launches." },
+      { "id": "d", "text": "Agree on relevant information, channels, and timing with each group, and invite feedback." }
+    ],
+    "correctAnswer": "d",
+    "requiredIdeaIds": ["tailor-communication"]
+  },
+  {
+    "id": "stakeholders-demo-review",
+    "text": "Halfway through a community-center project, a new partner joins and evening classes are added to the scope. What should the team do with its stakeholder engagement plan?",
+    "options": [
+      { "id": "a", "text": "Reassess who is affected, discuss changed needs, and update the plan." },
+      { "id": "b", "text": "Keep the kickoff plan unchanged until the project closes." },
+      { "id": "c", "text": "Add the partner's name but keep all communication arrangements unchanged." },
+      { "id": "d", "text": "Wait for a formal complaint before reviewing any engagement needs." }
+    ],
+    "correctAnswer": "a",
+    "requiredIdeaIds": ["review-engagement"]
+  }
+]

@@ -66,6 +66,8 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 24px 0; }
 .back-link { display: inline-block; margin-block: 32px 24px; }
 .session-workspace > h1 { font-size: clamp(32px, 4vw, 46px); }
 .session-intro { margin-bottom: 40px; color: var(--muted); }
+.session-guidance, .student-thinking { color: var(--muted); font-size: 14px; }
+.reply-recovery { margin-bottom: 24px; }
 .transcript { min-height: 200px; max-height: 480px; overflow-y: auto; margin-bottom: 24px; scrollbar-color: #819885 var(--paper); scrollbar-width: thin; }
 .message { margin-bottom: 16px; padding: 16px 20px; border-radius: 8px; background: var(--wash); }
 .message-student { background: #f0eee5; }
@@ -76,7 +78,51 @@ textarea { display: block; width: 100%; resize: vertical; min-height: 140px; bor
 textarea::placeholder { color: var(--muted); }
 .composer-actions { display: flex; gap: 16px; justify-content: space-between; align-items: center; margin-top: 12px; }
 .composer-actions span { color: var(--muted); font-size: 12px; }
+.voice-input { margin-top: 16px; }
+.voice-toolbar { display: flex; flex-wrap: wrap; align-items: end; gap: 12px 20px; }
+.voice-toggle { display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+.voice-toggle svg { flex-shrink: 0; }
+.voice-toggle.is-listening { background: var(--error); color: #fff; border-color: var(--error); }
+.voice-language label { font-size: 12px; margin-bottom: 4px; }
+.voice-language select { min-height: 44px; padding: 8px 32px 8px 12px; border: 1px solid #a3b09f; border-radius: 8px; background: var(--paper); color: var(--ink); font: inherit; font-size: 16px; }
+.voice-status, .voice-privacy { color: var(--muted); font-size: 13px; margin: 10px 0 0; }
+.voice-privacy { font-size: 12px; }
+.voice-input .notice { margin: 12px 0 0; }
+.voice-preview { padding-block: 16px; margin-top: 16px; border-block: 1px solid var(--line); }
+.voice-preview > strong { font-size: 14px; }
+.voice-transcript { white-space: pre-wrap; overflow-wrap: anywhere; margin: 8px 0 16px; }
+.voice-transcript span { color: var(--muted); }
+.voice-preview-actions { display: flex; flex-wrap: wrap; gap: 12px; }
 .notebook li { padding-block: 12px; border-bottom: 1px solid var(--line); overflow-wrap: anywhere; }
+.notebook { max-height: 440px; overflow-y: auto; scrollbar-color: #819885 var(--wash); scrollbar-width: thin; }
+.notebook p { margin-bottom: 8px; color: var(--ink); }
+.notebook a { font-size: 12px; }
+.learning-panel .section-heading { flex-wrap: wrap; gap: 4px 12px; }
+.learning-panel .section-heading h2 { margin-bottom: 0; }
+.learning-panel .section-heading + p { margin-top: 14px; }
+.learning-status, .saved-score { font-weight: 600; }
+.learning-panel .notice { margin-bottom: 16px; background: var(--paper); }
+.learning-panel > button { margin-top: 16px; }
+.message:target { outline: 2px solid var(--accent); outline-offset: -2px; }
+.exam-review { margin-top: 64px; padding-top: 40px; border-top: 1px solid var(--line); scroll-margin-top: 24px; }
+.exam-review > h2 { font-size: clamp(28px, 4vw, 38px); font-variant-numeric: tabular-nums; }
+.exam-review-list { list-style: none; margin: 28px 0 0; padding: 0; }
+.exam-review-list > li { border-top: 1px solid var(--line); }
+.exam-review summary { padding: 20px 0; cursor: pointer; font-weight: 600; }
+.exam-review summary > span:last-child { display: block; margin-top: 8px; max-width: 75ch; }
+.answer-status { font-size: 13px; }
+.answer-correct { color: var(--accent); }
+.answer-needs-work { color: #8a4724; }
+.answer-detail { max-width: 75ch; padding-bottom: 24px; }
+.answer-detail dl { margin: 0; }
+.answer-detail dt { font-size: 13px; font-weight: 650; color: var(--muted); }
+.answer-detail dd { margin: 4px 0 20px; white-space: pre-wrap; overflow-wrap: anywhere; }
+.answer-evidence, .answer-gap { margin-top: 24px; }
+.answer-evidence h3, .answer-gap h3 { font-size: 15px; margin-bottom: 8px; }
+.answer-evidence ul { padding-inline-start: 20px; color: var(--muted); font-size: 14px; }
+.answer-evidence li { padding-block: 4px; overflow-wrap: anywhere; }
+.review-next { margin-top: 24px; }
+.review-next > a { display: inline-block; padding-block: 10px; font-weight: 650; }
 aside button { width: 100%; margin-bottom: 16px; }
 footer { color: var(--muted); font-size: 12px; padding-block: 48px 24px; margin-top: 40px; }
 @media (hover: hover) { button:not(:disabled):hover { background: #1d4635; color: #fff; } a:hover { color: #143d29; } }

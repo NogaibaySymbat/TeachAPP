@@ -1,6 +1,7 @@
 import "server-only";
 import { z } from "zod";
 import { ServiceError } from "./errors";
+import { errorDiagnostic } from "./error-diagnostic";
 
 export type SessionRouteContext = { params: Promise<{ id: string }> };
 
@@ -33,7 +34,7 @@ export async function handle(work: () => Promise<Response>): Promise<Response> {
     return response;
   } catch (error) {
     const known = error instanceof ServiceError;
-    if (!known) console.error("API request failed.", error instanceof Error ? error.name : "Unknown error");
+    if (!known) console.error("API request failed.", errorDiagnostic(error));
     return Response.json({ error: {
       code: known ? error.code : "INTERNAL_ERROR",
       message: known ? error.message : "Something went wrong. Please try again later.",

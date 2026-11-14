@@ -35,10 +35,12 @@ export function Dashboard({ examTitles }: { examTitles: string[] }) {
   }, []);
 
   useEffect(() => {
-    void load();
+    let active = true;
+    queueMicrotask(() => { if (active) void load(); });
     const refresh = () => { void load(); };
     window.addEventListener("study-history-updated", refresh);
     return () => {
+      active = false;
       loadSequence.current += 1;
       window.removeEventListener("study-history-updated", refresh);
     };
@@ -62,7 +64,7 @@ export function Dashboard({ examTitles }: { examTitles: string[] }) {
     <div className="dashboard">
       <section className="intro">
         <h1>Understanding starts<br />with explaining.</h1>
-        <p>Teach a student in your own words. Their notebook and exam results will show what came through.</p>
+        <p>Explain a topic in your own words. See what your student writes down, then let them take the practice exam.</p>
         <div className="study-meta"><span>{examTitles.join(" · ") || "Study topics"}</span><span>Your sessions, ready to continue</span></div>
       </section>
       <div className="workspace-grid">
@@ -90,7 +92,7 @@ export function Dashboard({ examTitles }: { examTitles: string[] }) {
           {progress?.topicOfTheDay && <p>{progress.topicOfTheDay.reason}</p>}
           <hr />
           <h3>How it works</h3>
-          <ol className="steps"><li>Choose a topic and explain it.</li><li>Review what your student wrote down.</li><li>Let them take the exam, then fill the gaps.</li></ol>
+          <ol className="steps"><li>Choose a topic and explain it in your own words.</li><li>Review the notes your student took.</li><li>Let your student take the exam, then explain the gaps.</li></ol>
         </aside>
       </div>
     </div>

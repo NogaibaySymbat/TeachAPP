@@ -1,0 +1,23 @@
+# Runtime secrets are configured in Vercel, never uploaded as source files.
+.env*
+**/.env*
+!.env.example
+*.pem
+**/*.pem
+
+# Local database, agent state, dependencies, and generated output.
+.data/
+.agents/
+.codex/
+.aws/
+.git/
+.vercel/
+.impeccable/
+node_modules/
+.next/
+out/
+build/
+coverage/
+*.tsbuildinfo
+*.log
+.DS_Store

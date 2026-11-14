@@ -4,28 +4,22 @@ import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { api } from "@/lib/api";
 import type { SessionHistoryResponse } from "@/lib/types";
-import { useAuth } from "@/components/auth-provider";
 
 function formatDate(value: string) {
   return new Intl.DateTimeFormat("ru", { dateStyle: "medium", timeStyle: "short" }).format(new Date(value));
 }
 
 export function SessionHistory() {
-  const { account, loading, error, refresh } = useAuth();
-
   return (
     <section className="session-history" aria-labelledby="history-title" lang="ru">
       <div className="section-heading"><h2 id="history-title">История занятий</h2></div>
-      {loading ? <p className="empty-state" role="status">Проверяем аккаунт…</p> : error ? (
-        <div className="notice error" role="alert"><p>{error}</p><button className="secondary" onClick={() => void refresh()}>Повторить</button></div>
-      ) : account ? <AccountHistory key={account.id} /> : (
-        <div className="empty-state history-sign-in"><p>Чтобы получить доступ к истории, войдите в аккаунт.</p><Link href="/login">Войти в аккаунт</Link></div>
-      )}
+      <p className="browser-note">История доступна в этом браузере. После очистки его данных или в другом браузере она не появится.</p>
+      <BrowserHistory />
     </section>
   );
 }
 
-function AccountHistory() {
+function BrowserHistory() {
   const [history, setHistory] = useState<SessionHistoryResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -58,7 +52,7 @@ function AccountHistory() {
 
   useEffect(() => {
     let controller = new AbortController();
-    void load(0, controller.signal);
+    queueMicrotask(() => { if (!controller.signal.aborted) void load(0, controller.signal); });
     const refresh = () => {
       controller.abort();
       controller = new AbortController();

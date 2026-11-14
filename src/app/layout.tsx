@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import { AppShell } from "@/components/app-shell";
-import { AuthProvider } from "@/components/auth-provider";
-import { demoLoginAvailable } from "@/server/demo-auth";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -13,9 +11,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en">
       <body>
-        <AuthProvider initialDemoAvailable={demoLoginAvailable()}>
-          <AppShell>{children}</AppShell>
-        </AuthProvider>
+        <AppShell>{children}</AppShell>
       </body>
     </html>
   );
