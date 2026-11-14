@@ -142,6 +142,16 @@ CREATE TABLE IF NOT EXISTS tts_usage (
 CREATE INDEX IF NOT EXISTS tts_usage_month_idx ON tts_usage(provider, usage_month);
 CREATE INDEX IF NOT EXISTS tts_usage_message_idx ON tts_usage(message_id);
 
+-- Paid-request rate limit events. Holds only a keyed hash of the network
+-- address, no user link; rows older than a day are pruned by the app.
+CREATE TABLE IF NOT EXISTS rate_limit_events (
+  id bigserial PRIMARY KEY,
+  key_hash text NOT NULL,
+  created_at timestamptz NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS rate_limit_events_time_idx ON rate_limit_events(created_at);
+CREATE INDEX IF NOT EXISTS rate_limit_events_key_idx ON rate_limit_events(key_hash, created_at);
+
 ALTER TABLE users ENABLE ROW LEVEL SECURITY;
 ALTER TABLE sessions ENABLE ROW LEVEL SECURITY;
 ALTER TABLE messages ENABLE ROW LEVEL SECURITY;
@@ -149,6 +159,7 @@ ALTER TABLE student_reply_jobs ENABLE ROW LEVEL SECURITY;
 ALTER TABLE learning_jobs ENABLE ROW LEVEL SECURITY;
 ALTER TABLE ai_usage ENABLE ROW LEVEL SECURITY;
 ALTER TABLE tts_usage ENABLE ROW LEVEL SECURITY;
+ALTER TABLE rate_limit_events ENABLE ROW LEVEL SECURITY;
 ALTER TABLE notebook_entries ENABLE ROW LEVEL SECURITY;
 ALTER TABLE exam_attempts ENABLE ROW LEVEL SECURITY;
 ALTER TABLE exam_answers ENABLE ROW LEVEL SECURITY;
