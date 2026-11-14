@@ -80,6 +80,10 @@ This uses the browser's Web Speech API, so transcription does not use your OpenA
 
 Your browser may send audio to its own recognition service. TeachAPP does not upload or store audio: only the explanation you explicitly send is saved and, when configured, passed to the AI student. Dictation stops after one minute, at the remaining 4,000-character draft limit, when the page is hidden, or when you leave the session. Permission errors, a missing microphone, network failure, and no speech have clear recovery messages. Automated tests use a fake recognizer and do not access a real microphone; recognition quality and device permissions must be checked manually.
 
+## Pricing preview
+
+`/pricing` shows the planned plans: Free (3 teach-and-exam cycles, browser voice), Exam Pass ($59 for 90 days) and Monthly ($19). It is linked from the header. Payments are not connected: paid actions are disabled and say so, and no feature is limited by plan. The comparison uses typical 2026 PMP prep prices (courses $250–4,000, study apps about $9–30 per month).
+
 ## Student voice
 
 The AI student can read its replies aloud. Turn it on with **Student voice** above the chat; each reply also has a **Listen** button. The setting is remembered per browser and is off by default.
