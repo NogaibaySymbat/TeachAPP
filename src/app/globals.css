@@ -600,7 +600,7 @@ button.plan-action:disabled { justify-content: center; }
 .pricing-compare dl > div + div { margin-top: 4px; }
 .pricing-compare dl > .is-highlight { background: var(--sea-green); color: #24332f; }
 .pricing-compare dt { font-size: 14px; font-weight: 600; }
-.pricing-compare dd { margin: 0; text-align: right; }
+.pricing-compare dd { margin: 0; text-align: right; font-size: 14px; max-width: 26ch; }
 .pricing-compare dd strong { display: block; font-size: 17px; font-variant-numeric: tabular-nums; }
 .pricing-compare dd span { color: var(--muted); font-size: 12px; }
 .pricing-compare .is-highlight dd span { color: #24332f; }
@@ -634,3 +634,21 @@ button.plan-action:disabled { justify-content: center; }
 .progress-panel .topic-of-day p:not(.topic-of-day-name) { font-size: 13px; line-height: 1.65; margin-bottom: 16px; }
 .topic-of-day > button { width: 100%; margin: 0; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .topic-of-day > button svg { flex-shrink: 0; }
+
+/* Home: a static example of one session, below the task panels. */
+.session-example { margin-top: 24px; padding: 30px; border-radius: 24px; background: var(--surface); }
+.session-example .section-heading { margin-bottom: 20px; }
+.session-example .section-heading h2 { margin-bottom: 0; }
+.session-example ol { list-style: none; counter-reset: example; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.session-example li { counter-increment: example; padding: 18px; border-radius: 16px; background: var(--pearl); }
+.session-example li:last-child { background: var(--harbor); }
+.example-step { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 13px; font-weight: 700; }
+.example-step::before { content: counter(example); display: inline-grid; place-items: center; width: 24px; height: 24px; flex-shrink: 0; border-radius: 999px; background: var(--midnight); color: var(--pearl); font-size: 12px; }
+.session-example li p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.65; }
+.session-example li:last-child p { color: #40545d; }
+.session-example q { color: var(--ink); font-weight: 600; }
+@media (max-width: 1150px) { .session-example ol { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) {
+  .session-example { padding: 20px; border-radius: 20px; }
+  .session-example ol { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+}

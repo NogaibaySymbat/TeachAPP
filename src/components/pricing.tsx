@@ -19,10 +19,10 @@ const plans: Plan[] = [
     id: "free",
     name: "Free",
     price: "$0",
-    period: "to start",
-    summary: "Try the method on a real topic before you decide.",
+    period: "forever",
+    summary: "Try the method on your weakest topic.",
     features: [
-      "3 full teach-and-exam cycles",
+      "3 teach-and-exam cycles a week",
       "A notebook built from your own words",
       "Your student's practice exam with a debrief",
       "Your browser's voice for the student",
@@ -31,13 +31,14 @@ const plans: Plan[] = [
   {
     id: "exam-pass",
     name: "Exam Pass",
-    price: "$59",
+    price: "$29",
     period: "for 90 days",
-    summary: "One payment that lasts through a typical PMP preparation.",
+    summary: "One payment that covers a typical PMP preparation.",
     featured: true,
-    badge: "Best for exam prep",
+    badge: "Best value",
     features: [
-      "Every topic, unlimited retakes",
+      "Unlimited explanations and retakes",
+      "Every topic added during your 90 days",
       "A natural cloud voice for your student",
       "Attempt comparison and session export",
       "One payment, no automatic renewal",
@@ -46,31 +47,35 @@ const plans: Plan[] = [
   {
     id: "monthly",
     name: "Monthly",
-    price: "$19",
+    price: "$12",
     period: "per month",
     summary: "The same access, month to month. Cancel anytime.",
     features: [
       "Everything in Exam Pass",
-      "Pay only for the months you study",
-      "Switch to Exam Pass at any time",
+      "Good for a final month before the exam",
+      "Three months cost more than the Exam Pass",
     ],
   },
 ];
 
-const comparison = [
-  { label: "PMP prep courses", value: "$250–4,000", note: "self-paced to bootcamp" },
-  { label: "Study apps", value: "$9–30", note: "per month" },
-  { label: "TeachAPP Exam Pass", value: "$59", note: "once, for 90 days", highlight: true },
+const fit = [
+  { label: "Your course", value: "Teaches you the material" },
+  { label: "Your question bank", value: "Shows which questions you miss" },
+  { label: "TeachAPP", value: "Shows which idea you can't explain yet", highlight: true },
 ];
 
 const questions = [
   {
     q: "Can I pay now?",
-    a: "Not yet. Payments are not connected while TeachAPP is in preview, so every feature is free for now. Nothing on this page charges you.",
+    a: "Not yet. Payments are not connected while TeachAPP is in preview, so every feature is free for now and nothing on this page charges you. The plans apply after launch.",
   },
   {
-    q: "Is this the official PMP exam?",
-    a: "No. The practice questions are original, and your student's score shows how well you taught a topic. It is not a prediction of your real exam result.",
+    q: "Does this replace my prep course or question bank?",
+    a: "No. Use it alongside them: when a practice block goes badly, explain that topic to your student and see which idea is missing from your explanation.",
+  },
+  {
+    q: "How many topics are there?",
+    a: "Four PMP topics today, each with original practice questions. More are being written, and the Exam Pass includes every topic added during your 90 days. This is not an official PMP exam.",
   },
   {
     q: "Why is the natural voice in the paid plans?",
@@ -91,9 +96,9 @@ export function Pricing() {
     <div className="pricing">
       <section className="intro pricing-intro">
         <span className="pricing-chip">Pricing preview</span>
-        <h1>Pay for your exam,<br /><span>not another subscription.</span></h1>
-        <p>Preparing for the PMP takes a few months. Start free, then choose a pass that lasts until exam day.</p>
-        <p className="notice pricing-notice" id="payments-status" role="note">Payments are not live yet. Every feature is free while TeachAPP is in preview.</p>
+        <h1>Pay once for exam prep,<br /><span>not another subscription.</span></h1>
+        <p>TeachAPP works alongside your course and question bank. Start free, then get a pass that lasts until exam day.</p>
+        <p className="notice pricing-notice" id="payments-status" role="note">Payments are not live yet. Every feature is free while TeachAPP is in preview; the plans below apply after launch.</p>
       </section>
 
       <section className="pricing-plans" aria-labelledby="plans-title">
@@ -120,13 +125,13 @@ export function Pricing() {
 
       <div className="pricing-details">
         <section className="pricing-compare" aria-labelledby="compare-title">
-          <h2 id="compare-title">How it compares</h2>
-          <p>Typical 2026 prices for PMP preparation.</p>
+          <h2 id="compare-title">How it fits your prep</h2>
+          <p>Keep what already works. TeachAPP covers the part they don&apos;t.</p>
           <dl>
-            {comparison.map((row) => (
+            {fit.map((row) => (
               <div key={row.label} className={row.highlight ? "is-highlight" : undefined}>
                 <dt>{row.label}</dt>
-                <dd><strong>{row.value}</strong> <span>{row.note}</span></dd>
+                <dd>{row.value}</dd>
               </div>
             ))}
           </dl>

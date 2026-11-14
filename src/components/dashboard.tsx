@@ -70,9 +70,9 @@ export function Dashboard({ examTitles }: { examTitles: string[] }) {
   return (
     <div className="dashboard">
       <section className="intro">
-        <h1>What will you teach<br /><span>your student today?</span></h1>
-        <p>Explain a topic in your own words. See what your student writes down, then let them take the practice exam.</p>
-        <div className="study-meta"><span>{examTitles.join(" · ") || "Study topics"}</span><span>Past conversations are in the history panel</span></div>
+        <h1>Find the PMP ideas you can&apos;t explain<br /><span>before the exam does.</span></h1>
+        <p>Explain a topic to an AI student. It writes down only what you said, then answers practice questions from those notes. When your student gets one wrong, you&apos;ve found what to review.</p>
+        <div className="study-meta"><span>{examTitles.join(" · ") || "Study topics"}</span><span>Works alongside your course and question bank</span></div>
       </section>
       <div className="workspace-grid">
         <div className="study-sections">
@@ -108,6 +108,15 @@ export function Dashboard({ examTitles }: { examTitles: string[] }) {
           <ol className="steps"><li>Choose a topic and explain it in your own words.</li><li>Review the notes your student took.</li><li>Let your student take the exam, then explain the gaps.</li></ol>
         </aside>
       </div>
+      <section className="session-example" aria-labelledby="example-title">
+        <div className="section-heading"><h2 id="example-title">What a session looks like</h2><span>Example</span></div>
+        <ol>
+          <li><span className="example-step">You explain</span><p>&ldquo;A risk is something that might go wrong, so we deal with it when it happens.&rdquo;</p></li>
+          <li><span className="example-step">Your student takes notes</span><p>Only your words, quoted: <q>deal with it when it happens</q></p></li>
+          <li><span className="example-step">Your student takes the exam</span><p>&ldquo;A vendor may deliver late. What should the project manager do first?&rdquo; It answers from your notes and gets it wrong.</p></li>
+          <li><span className="example-step">You find the gap</span><p>Explain how to respond to a risk before it occurs, then let your student retake the exam.</p></li>
+        </ol>
+      </section>
     </div>
   );
 }
