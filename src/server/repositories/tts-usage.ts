@@ -1,9 +1,10 @@
 import "server-only";
 import { getDatabase } from "@/server/db";
 import { ServiceError } from "@/server/errors";
-import { MAX_SYNTHESES_PER_MESSAGE, TTS_PROVIDER, usageMonth } from "@/server/tts/config";
+import { MAX_SYNTHESES_PER_MESSAGE, usageMonth, type TtsProviderId } from "@/server/tts/config";
 
 interface TtsReservation {
+  provider: TtsProviderId;
   messageId: string;
   characters: number;
   monthlyCharacterCap: number;
@@ -12,7 +13,7 @@ interface TtsReservation {
 
 // Reserves characters before calling the provider. Reservations are never
 // released, even when the provider fails, so the cap stays conservative.
-export async function reserveTtsCharacters({ messageId, characters, monthlyCharacterCap, now }: TtsReservation): Promise<string> {
+export async function reserveTtsCharacters({ provider, messageId, characters, monthlyCharacterCap, now }: TtsReservation): Promise<string> {
   if (!Number.isSafeInteger(characters) || characters < 1) {
     throw new ServiceError(400, "TTS_EMPTY_TEXT", "There is nothing to read aloud.");
   }
@@ -20,13 +21,13 @@ export async function reserveTtsCharacters({ messageId, characters, monthlyChara
   const client = await getDatabase().connect();
   try {
     await client.query("BEGIN");
-    // Serializes check-and-reserve across processes, like the OpenAI ledger.
-    await client.query("SELECT pg_advisory_xact_lock(163430, hashtext($1))", [TTS_PROVIDER]);
+    // Serializes check-and-reserve per provider across processes, like the OpenAI ledger.
+    await client.query("SELECT pg_advisory_xact_lock(163430, hashtext($1))", [provider]);
     const { rows } = await client.query<{ total: string; for_message: number }>(
       `SELECT COALESCE(SUM(characters), 0)::text AS total,
               COUNT(*) FILTER (WHERE message_id = $3)::int AS for_message
        FROM tts_usage WHERE provider = $1 AND usage_month = $2`,
-      [TTS_PROVIDER, month, messageId],
+      [provider, month, messageId],
     );
     if (rows[0].for_message >= MAX_SYNTHESES_PER_MESSAGE) {
       throw new ServiceError(429, "TTS_MESSAGE_LIMIT", "This reply has already been read aloud several times.");
@@ -36,7 +37,7 @@ export async function reserveTtsCharacters({ messageId, characters, monthlyChara
     }
     const inserted = await client.query<{ id: string }>(
       "INSERT INTO tts_usage (provider, usage_month, message_id, characters) VALUES ($1, $2, $3, $4) RETURNING id",
-      [TTS_PROVIDER, month, messageId, characters],
+      [provider, month, messageId, characters],
     );
     await client.query("COMMIT");
     return inserted.rows[0].id;

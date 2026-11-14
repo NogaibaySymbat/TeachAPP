@@ -4,10 +4,20 @@
 
 const PREFERENCE_KEY = "student_voice_enabled";
 
-// Higher-quality voices to prefer when the browser offers them.
-const PREFERRED_VOICES = [
-  "Natural", "Google US English", "Google UK English Female", "Samantha", "Google русский", "Milena",
-];
+// Novelty voices that ship with macOS and sound like effects, not people.
+const NOVELTY_VOICES = /^(Albert|Bad News|Bahh|Bells|Boing|Bubbles|Cellos|Deranged|Good News|Hysterical|Jester|Organ|Pipe Organ|Superstar|Trinoids|Whisper|Wobble|Zarvox)\b/i;
+
+// Higher score = more natural. Downloaded macOS voices are marked Premium or
+// Enhanced; Edge's neural voices say Natural; Chrome ships Google voices.
+function voiceQuality(voice: SpeechSynthesisVoice): number {
+  const label = `${voice.name} ${voice.voiceURI ?? ""}`;
+  if (/natural|neural/i.test(label)) return 4;
+  if (/premium/i.test(label)) return 4;
+  if (/enhanced|siri/i.test(label)) return 3;
+  if (/^google/i.test(voice.name)) return 2;
+  if (/^(Samantha|Milena|Alex|Daniel|Karen|Moira|Tessa)\b/.test(voice.name)) return 1;
+  return 0;
+}
 
 export function isSpeechSynthesisSupported(): boolean {
   return typeof window !== "undefined" && "speechSynthesis" in window && "SpeechSynthesisUtterance" in window;
@@ -31,13 +41,17 @@ export function detectSpeechLanguage(text: string): "ru-RU" | "en-US" {
 
 export function pickVoice(voices: readonly SpeechSynthesisVoice[], lang: string): SpeechSynthesisVoice | null {
   const prefix = lang.slice(0, 2).toLowerCase();
-  const matching = voices.filter((voice) => voice.lang.toLowerCase().startsWith(prefix));
-  if (matching.length === 0) return null;
-  for (const name of PREFERRED_VOICES) {
-    const preferred = matching.find((voice) => voice.name.includes(name));
-    if (preferred) return preferred;
+  const exact = lang.toLowerCase();
+  let best: SpeechSynthesisVoice | null = null;
+  let bestScore = -Infinity;
+  for (const voice of voices) {
+    const voiceLang = voice.lang.toLowerCase().replace("_", "-");
+    if (!voiceLang.startsWith(prefix) || NOVELTY_VOICES.test(voice.name)) continue;
+    // Quality matters most; the exact accent (en-US for a US audience) breaks ties.
+    const score = voiceQuality(voice) * 2 + (voiceLang === exact ? 1 : 0);
+    if (score > bestScore) { best = voice; bestScore = score; }
   }
-  return matching.find((voice) => voice.lang.toLowerCase() === lang.toLowerCase()) ?? matching[0];
+  return best;
 }
 
 // Long utterances can be cut off by some browsers, so speak sentence by sentence.
