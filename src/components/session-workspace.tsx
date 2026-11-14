@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { VoiceInput } from "@/components/voice-input";
+import { SpeakMessageButton, VoiceOutputToggle, useStudentVoice } from "@/components/voice-output";
 import { LearningPanel } from "@/components/learning-panel";
 import { ExamReview } from "@/components/exam-review";
 import { api } from "@/lib/api";
@@ -25,6 +26,10 @@ function Conversation({ sessionId }: { sessionId: string }) {
   const [retry, setRetry] = useState(0);
   const [saved, setSaved] = useState(false);
   const [voiceActive, setVoiceActive] = useState(false);
+  const studentVoice = useStudentVoice(sessionId);
+  const stopStudentVoice = studentVoice.stop;
+  // Keep the student quiet while the microphone is on, so it does not hear itself.
+  useEffect(() => { if (voiceActive) stopStudentVoice(); }, [voiceActive, stopStudentVoice]);
   const busy = useRef(false);
   const end = useRef<HTMLDivElement>(null);
   const explanation = useRef<HTMLTextAreaElement>(null);
@@ -58,6 +63,7 @@ function Conversation({ sessionId }: { sessionId: string }) {
         method: "POST", body: JSON.stringify({ messageId }),
       });
       appendMessage(result.message);
+      studentVoice.announce(result.message.id, result.message.text);
     } catch (cause) {
       setReplyError(cause instanceof Error ? cause.message : "The student could not reply. Try again in a moment.");
     } finally { setReplying(false); }
@@ -163,9 +169,10 @@ function Conversation({ sessionId }: { sessionId: string }) {
           {!data.ai.available ? <p className="notice">{data.ai.message} Your explanations can still be saved.</p> : (
             <p className="session-guidance">Explain one idea at a time, then answer your student’s questions.</p>
           )}
+          <VoiceOutputToggle voice={studentVoice} />
           <div className="transcript" role="log" aria-label="Session messages" aria-live="polite">
             {data.messages.length === 0 && <div className="empty-state"><h3>Start with the big idea.</h3><p>What would you tell someone meeting this topic for the first time?</p></div>}
-            {data.messages.map((message) => <article className={`message message-${message.role}`} key={message.id} id={`message-${message.id}`}><strong>{message.role === "user" ? "You" : "AI student"}</strong><p>{message.text}</p></article>)}
+            {data.messages.map((message) => <article className={`message message-${message.role}`} key={message.id} id={`message-${message.id}`}><strong>{message.role === "user" ? "You" : "AI student"}</strong><p>{message.text}</p>{message.role === "student" && <SpeakMessageButton voice={studentVoice} messageId={message.id} text={message.text} />}</article>)}
             {replying && <p className="student-thinking" role="status">Your student is reading your explanation…</p>}
             <div ref={end} />
           </div>

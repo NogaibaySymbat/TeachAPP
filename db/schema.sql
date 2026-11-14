@@ -128,12 +128,27 @@ CREATE TABLE IF NOT EXISTS topic_progress (
 -- Browser Supabase keys are for Auth only. All application data goes through
 -- the server's owner-role connection and its explicit ownership checks.
 -- With no client policies, public API roles cannot read or write these tables.
+-- Text-to-speech character reservations, separate from the OpenAI dollar ledger.
+-- Rows have no foreign keys and survive deleted sessions, so the monthly cap
+-- cannot be reset by deleting data. Never truncate this table.
+CREATE TABLE IF NOT EXISTS tts_usage (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  provider text NOT NULL,
+  usage_month text NOT NULL CHECK (usage_month ~ '^[0-9]{4}-[0-9]{2}$'),
+  message_id uuid NOT NULL,
+  characters integer NOT NULL CHECK (characters > 0),
+  created_at timestamptz NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS tts_usage_month_idx ON tts_usage(provider, usage_month);
+CREATE INDEX IF NOT EXISTS tts_usage_message_idx ON tts_usage(message_id);
+
 ALTER TABLE users ENABLE ROW LEVEL SECURITY;
 ALTER TABLE sessions ENABLE ROW LEVEL SECURITY;
 ALTER TABLE messages ENABLE ROW LEVEL SECURITY;
 ALTER TABLE student_reply_jobs ENABLE ROW LEVEL SECURITY;
 ALTER TABLE learning_jobs ENABLE ROW LEVEL SECURITY;
 ALTER TABLE ai_usage ENABLE ROW LEVEL SECURITY;
+ALTER TABLE tts_usage ENABLE ROW LEVEL SECURITY;
 ALTER TABLE notebook_entries ENABLE ROW LEVEL SECURITY;
 ALTER TABLE exam_attempts ENABLE ROW LEVEL SECURITY;
 ALTER TABLE exam_answers ENABLE ROW LEVEL SECURITY;

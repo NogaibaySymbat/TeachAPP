@@ -33,3 +33,16 @@ export async function api<T>(path: string, init?: RequestInit): Promise<T> {
   );
   return data as T;
 }
+
+// Fetches binary audio. Errors are JSON, like every other API response.
+export async function apiAudio(path: string, signal?: AbortSignal): Promise<Blob> {
+  const headers = new Headers({ "x-anonymous-id": getAnonymousId(), "content-type": "application/json" });
+  const response = await fetch(path, { method: "POST", body: "{}", headers, cache: "no-store", credentials: "omit", signal });
+  if (response.ok && response.headers.get("content-type")?.startsWith("audio/")) return response.blob();
+  const data = await response.json().catch(() => null) as { error?: { message?: string; code?: string } } | null;
+  throw new ApiRequestError(
+    data?.error?.message ?? "The student's voice is unavailable right now.",
+    data?.error?.code ?? "TTS_REQUEST_FAILED",
+    response.status,
+  );
+}

@@ -76,6 +76,17 @@ This uses the browser's Web Speech API, so transcription does not use your OpenA
 
 Your browser may send audio to its own recognition service. TeachAPP does not upload or store audio: only the explanation you explicitly send is saved and, when configured, passed to the AI student. Dictation stops after one minute, at the remaining 4,000-character draft limit, when the page is hidden, or when you leave the session. Permission errors, a missing microphone, network failure, and no speech have clear recovery messages. Automated tests use a fake recognizer and do not access a real microphone; recognition quality and device permissions must be checked manually.
 
+## Student voice
+
+The AI student can read its replies aloud. Turn it on with **Student voice** above the chat; each reply also has a **Listen** button. The setting is remembered per browser and is off by default.
+
+- With `GOOGLE_TTS_API_KEY` set, replies are synthesized by Google Cloud Text-to-Speech (Chirp 3: HD, MP3) through `POST /api/sessions/:id/messages/:messageId/speech`. The route reads only a stored student reply owned by the caller, never arbitrary text.
+- Without a key, on a provider error, or after the cap is reached, the browser's built-in voice is used instead. Russian text is read with a Russian voice.
+- Characters are reserved in the durable `tts_usage` table before each provider call and are never released. The monthly cap defaults to 900,000 characters (UTC months) and cannot be set above Google's 1,000,000-character free tier. One reply can be synthesized at most three times; the browser keeps the audio for repeat plays on the same page.
+- No automatic retries. The OpenAI `ai_usage` ledger and its $4 cap are unchanged and do not cover text-to-speech.
+- Google bills automatically beyond the free tier with no provider-side cap. Keep the Google Cloud account on the Free Trial and restrict the API key to the Text-to-Speech API.
+- Some browsers block audio that does not follow a click, so an automatic reading may stay silent; **Listen** still works.
+
 ## History without login
 
 The guest release passed **263 tests** using an isolated PostgreSQL database, TypeScript checks, scoped ESLint, and the Vercel build. Production deployment `dpl_B3BgHY8JKdpZtRU7X3qqBs2r9zM7` verifies guest history reopening, live reply/notebook/exam (3/3), cached IDs, and 404 isolation for another browser. `/login` redirects home and the shared admin login is disabled. Existing records and `ai_usage` were not migrated or reset. Chrome verification also confirmed that login controls are absent and a new browser-owned lesson remains in history after opening the site in a fresh tab, despite the old demo cookie.
