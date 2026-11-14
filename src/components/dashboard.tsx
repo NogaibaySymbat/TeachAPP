@@ -3,11 +3,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { api } from "@/lib/api";
+import { TopicChoice } from "@/components/topic-choice";
 import type { CreateSessionResponse, Progress, TopicSummary } from "@/lib/types";
-
-
-const statusLabels = { not_started: "Not started", failed: "Ready to revisit", passed: "Student passed" };
-
 export function Dashboard({ examTitles }: { examTitles: string[] }) {
   const router = useRouter();
   const [selectedId, setSelectedId] = useState("");
@@ -71,7 +68,7 @@ export function Dashboard({ examTitles }: { examTitles: string[] }) {
   return (
     <div className="dashboard">
       <section className="intro">
-        <h1>What will you teach<br />your student today?</h1>
+        <h1>What will you teach<br /><span>your student today?</span></h1>
         <p>Explain a topic in your own words. See what your student writes down, then let them take the practice exam.</p>
         <div className="study-meta"><span>{examTitles.join(" · ") || "Study topics"}</span><span>Past conversations are in the history panel</span></div>
       </section>
@@ -84,22 +81,17 @@ export function Dashboard({ examTitles }: { examTitles: string[] }) {
               <div className="empty-state"><h3>Your first topic is on its way.</h3><p>This workspace is being prepared. Study topics will appear here when they are ready.</p><button className="secondary" onClick={() => void load()}>Check for topics</button></div>
             ) : (
               selectedTopic && <div className="topic-picker">
-                <label htmlFor="topic-choice">Choose a topic</label>
-                <select id="topic-choice" value={selectedTopic.id} onChange={(event) => setSelectedId(event.target.value)} disabled={starting !== null}>
-                  {topics?.map((topic) => <option value={topic.id} key={topic.id}>{topic.title}</option>)}
-                </select>
+                <TopicChoice topics={topics ?? []} selected={selectedTopic} disabled={starting !== null} onChange={setSelectedId} />
                 <div className="selected-topic" aria-live="polite">
-                  <span className={`status status-${selectedTopic.status}`}>{statusLabels[selectedTopic.status]}</span>
-                  <h3>{selectedTopic.title}</h3><p>{selectedTopic.description}</p>
-                  {selectedTopic.bestScore !== null && <p>Best score: {selectedTopic.bestScore}</p>}
+                  <p>{selectedTopic.description}</p>
                 </div>
-                <button disabled={starting !== null} onClick={() => void start(selectedTopic.id)}>{starting ? "Starting…" : "Start a conversation"}</button>
+                <button disabled={starting !== null} onClick={() => void start(selectedTopic.id)}>{starting ? "Starting…" : "Start a conversation"}<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" /></svg></button>
               </div>
             )}
           </section>
 
         </div>
-        <aside aria-labelledby="progress-title">
+        <aside className="progress-panel" aria-labelledby="progress-title">
           <h2 id="progress-title">Keep the thread</h2>
           <p>A little explaining each day goes a long way.</p>
           {loading ? <p role="status">Loading progress…</p> : progressError ? <div><p className="muted">Your progress is unavailable right now.</p><button className="secondary" onClick={() => void load()}>Retry progress</button></div> : progress && <p className="streak">{progress.streak} {progress.streak === 1 ? "day" : "days"} in a row</p>}

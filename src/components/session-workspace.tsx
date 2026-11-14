@@ -166,7 +166,7 @@ function Conversation({ sessionId }: { sessionId: string }) {
 
   return (
     <div className="session-workspace">
-      <Link className="back-link" href="/">Back to topics</Link>
+      <Link className="back-link" href="/"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6" /></svg>Back to topics</Link>
       <h1>{data?.topic?.title ?? "Your teaching session"}</h1>
       <p className="session-intro">Put the idea into your own words. Your student will ask about what needs explaining.</p>
       {data && <SessionExportControls sessionId={sessionId} disabled={phase !== "idle" || voiceActive} />}

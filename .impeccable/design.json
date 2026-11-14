@@ -1,79 +1,503 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-14T11:20:19.862203+00:00",
-  "title": "Design System: TeachAPP Authentication",
+  "generatedAt": "2026-11-14T20:02:52.177148+00:00",
+  "title": "Design System: TeachAPP Study Workspace",
   "extensions": {
+    "colorMeta": {
+      "pearl": {
+        "role": "neutral",
+        "displayName": "Pearl",
+        "canonical": "#f6f2ef",
+        "tonalRamp": [
+          "oklch(15.00% 0.00589 59.65)",
+          "oklch(26.43% 0.00589 59.65)",
+          "oklch(37.86% 0.00589 59.65)",
+          "oklch(49.29% 0.00589 59.65)",
+          "oklch(60.71% 0.00589 59.65)",
+          "oklch(72.14% 0.00589 59.65)",
+          "oklch(83.57% 0.00589 59.65)",
+          "oklch(95.00% 0.00589 59.65)"
+        ]
+      },
+      "harbor": {
+        "role": "secondary",
+        "displayName": "Harbor",
+        "canonical": "#b0c8cc",
+        "tonalRamp": [
+          "oklch(15.00% 0.02659 208.74)",
+          "oklch(26.43% 0.02659 208.74)",
+          "oklch(37.86% 0.02659 208.74)",
+          "oklch(49.29% 0.02659 208.74)",
+          "oklch(60.71% 0.02659 208.74)",
+          "oklch(72.14% 0.02659 208.74)",
+          "oklch(83.57% 0.02659 208.74)",
+          "oklch(95.00% 0.02659 208.74)"
+        ]
+      },
+      "midnight": {
+        "role": "primary",
+        "displayName": "Midnight",
+        "canonical": "#363e4f",
+        "tonalRamp": [
+          "oklch(15.00% 0.03139 265.14)",
+          "oklch(26.43% 0.03139 265.14)",
+          "oklch(37.86% 0.03139 265.14)",
+          "oklch(49.29% 0.03139 265.14)",
+          "oklch(60.71% 0.03139 265.14)",
+          "oklch(72.14% 0.03139 265.14)",
+          "oklch(83.57% 0.03139 265.14)",
+          "oklch(95.00% 0.03139 265.14)"
+        ]
+      },
+      "santorini": {
+        "role": "neutral",
+        "displayName": "Santorini",
+        "canonical": "#d9dfe3",
+        "tonalRamp": [
+          "oklch(15.00% 0.00850 236.57)",
+          "oklch(26.43% 0.00850 236.57)",
+          "oklch(37.86% 0.00850 236.57)",
+          "oklch(49.29% 0.00850 236.57)",
+          "oklch(60.71% 0.00850 236.57)",
+          "oklch(72.14% 0.00850 236.57)",
+          "oklch(83.57% 0.00850 236.57)",
+          "oklch(95.00% 0.00850 236.57)"
+        ]
+      },
+      "sea-green": {
+        "role": "tertiary",
+        "displayName": "Sea Green",
+        "canonical": "#8ea39d",
+        "tonalRamp": [
+          "oklch(15.00% 0.02513 176.48)",
+          "oklch(26.43% 0.02513 176.48)",
+          "oklch(37.86% 0.02513 176.48)",
+          "oklch(49.29% 0.02513 176.48)",
+          "oklch(60.71% 0.02513 176.48)",
+          "oklch(72.14% 0.02513 176.48)",
+          "oklch(83.57% 0.02513 176.48)",
+          "oklch(95.00% 0.02513 176.48)"
+        ]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Surface",
+        "canonical": "#fff",
+        "tonalRamp": [
+          "oklch(15.00% 0.00000 89.88)",
+          "oklch(26.43% 0.00000 89.88)",
+          "oklch(37.86% 0.00000 89.88)",
+          "oklch(49.29% 0.00000 89.88)",
+          "oklch(60.71% 0.00000 89.88)",
+          "oklch(72.14% 0.00000 89.88)",
+          "oklch(83.57% 0.00000 89.88)",
+          "oklch(95.00% 0.00000 89.88)"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Muted",
+        "canonical": "#596271",
+        "tonalRamp": [
+          "oklch(15.00% 0.02651 260.67)",
+          "oklch(26.43% 0.02651 260.67)",
+          "oklch(37.86% 0.02651 260.67)",
+          "oklch(49.29% 0.02651 260.67)",
+          "oklch(60.71% 0.02651 260.67)",
+          "oklch(72.14% 0.02651 260.67)",
+          "oklch(83.57% 0.02651 260.67)",
+          "oklch(95.00% 0.02651 260.67)"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Line",
+        "canonical": "#d2d7da",
+        "tonalRamp": [
+          "oklch(15.00% 0.00685 233.65)",
+          "oklch(26.43% 0.00685 233.65)",
+          "oklch(37.86% 0.00685 233.65)",
+          "oklch(49.29% 0.00685 233.65)",
+          "oklch(60.71% 0.00685 233.65)",
+          "oklch(72.14% 0.00685 233.65)",
+          "oklch(83.57% 0.00685 233.65)",
+          "oklch(95.00% 0.00685 233.65)"
+        ]
+      },
+      "wash": {
+        "role": "neutral",
+        "displayName": "Wash",
+        "canonical": "#e9edef",
+        "tonalRamp": [
+          "oklch(15.00% 0.00508 228.82)",
+          "oklch(26.43% 0.00508 228.82)",
+          "oklch(37.86% 0.00508 228.82)",
+          "oklch(49.29% 0.00508 228.82)",
+          "oklch(60.71% 0.00508 228.82)",
+          "oklch(72.14% 0.00508 228.82)",
+          "oklch(83.57% 0.00508 228.82)",
+          "oklch(95.00% 0.00508 228.82)"
+        ]
+      },
+      "action-hover": {
+        "role": "primary",
+        "displayName": "Action Hover",
+        "canonical": "#252d3c",
+        "tonalRamp": [
+          "oklch(15.00% 0.02965 262.79)",
+          "oklch(26.43% 0.02965 262.79)",
+          "oklch(37.86% 0.02965 262.79)",
+          "oklch(49.29% 0.02965 262.79)",
+          "oklch(60.71% 0.02965 262.79)",
+          "oklch(72.14% 0.02965 262.79)",
+          "oklch(83.57% 0.02965 262.79)",
+          "oklch(95.00% 0.02965 262.79)"
+        ]
+      },
+      "focus": {
+        "role": "primary",
+        "displayName": "Focus",
+        "canonical": "#396b7a",
+        "tonalRamp": [
+          "oklch(15.00% 0.05886 219.53)",
+          "oklch(26.43% 0.05886 219.53)",
+          "oklch(37.86% 0.05886 219.53)",
+          "oklch(49.29% 0.05886 219.53)",
+          "oklch(60.71% 0.05886 219.53)",
+          "oklch(72.14% 0.05886 219.53)",
+          "oklch(83.57% 0.05886 219.53)",
+          "oklch(95.00% 0.05886 219.53)"
+        ]
+      },
+      "field-border": {
+        "role": "neutral",
+        "displayName": "Field Border",
+        "canonical": "#a4afb7",
+        "tonalRamp": [
+          "oklch(15.00% 0.01691 239.19)",
+          "oklch(26.43% 0.01691 239.19)",
+          "oklch(37.86% 0.01691 239.19)",
+          "oklch(49.29% 0.01691 239.19)",
+          "oklch(60.71% 0.01691 239.19)",
+          "oklch(72.14% 0.01691 239.19)",
+          "oklch(83.57% 0.01691 239.19)",
+          "oklch(95.00% 0.01691 239.19)"
+        ]
+      },
+      "secondary-border": {
+        "role": "neutral",
+        "displayName": "Secondary Border",
+        "canonical": "#89949f",
+        "tonalRamp": [
+          "oklch(15.00% 0.02072 248.14)",
+          "oklch(26.43% 0.02072 248.14)",
+          "oklch(37.86% 0.02072 248.14)",
+          "oklch(49.29% 0.02072 248.14)",
+          "oklch(60.71% 0.02072 248.14)",
+          "oklch(72.14% 0.02072 248.14)",
+          "oklch(83.57% 0.02072 248.14)",
+          "oklch(95.00% 0.02072 248.14)"
+        ]
+      },
+      "disabled-ink": {
+        "role": "neutral",
+        "displayName": "Disabled Ink",
+        "canonical": "#5c6571",
+        "tonalRamp": [
+          "oklch(15.00% 0.02213 255.62)",
+          "oklch(26.43% 0.02213 255.62)",
+          "oklch(37.86% 0.02213 255.62)",
+          "oklch(49.29% 0.02213 255.62)",
+          "oklch(60.71% 0.02213 255.62)",
+          "oklch(72.14% 0.02213 255.62)",
+          "oklch(83.57% 0.02213 255.62)",
+          "oklch(95.00% 0.02213 255.62)"
+        ]
+      },
+      "harbor-ink": {
+        "role": "secondary",
+        "displayName": "Harbor Ink",
+        "canonical": "#40545d",
+        "tonalRamp": [
+          "oklch(15.00% 0.02879 227.20)",
+          "oklch(26.43% 0.02879 227.20)",
+          "oklch(37.86% 0.02879 227.20)",
+          "oklch(49.29% 0.02879 227.20)",
+          "oklch(60.71% 0.02879 227.20)",
+          "oklch(72.14% 0.02879 227.20)",
+          "oklch(83.57% 0.02879 227.20)",
+          "oklch(95.00% 0.02879 227.20)"
+        ]
+      },
+      "harbor-line": {
+        "role": "secondary",
+        "displayName": "Harbor Line",
+        "canonical": "#8da8ad",
+        "tonalRamp": [
+          "oklch(15.00% 0.03077 210.07)",
+          "oklch(26.43% 0.03077 210.07)",
+          "oklch(37.86% 0.03077 210.07)",
+          "oklch(49.29% 0.03077 210.07)",
+          "oklch(60.71% 0.03077 210.07)",
+          "oklch(72.14% 0.03077 210.07)",
+          "oklch(83.57% 0.03077 210.07)",
+          "oklch(95.00% 0.03077 210.07)"
+        ]
+      },
+      "harbor-hover": {
+        "role": "secondary",
+        "displayName": "Harbor Hover",
+        "canonical": "#c4d6d8",
+        "tonalRamp": [
+          "oklch(15.00% 0.01961 204.83)",
+          "oklch(26.43% 0.01961 204.83)",
+          "oklch(37.86% 0.01961 204.83)",
+          "oklch(49.29% 0.01961 204.83)",
+          "oklch(60.71% 0.01961 204.83)",
+          "oklch(72.14% 0.01961 204.83)",
+          "oklch(83.57% 0.01961 204.83)",
+          "oklch(95.00% 0.01961 204.83)"
+        ]
+      },
+      "green-ink": {
+        "role": "tertiary",
+        "displayName": "Green Ink",
+        "canonical": "#24332f",
+        "tonalRamp": [
+          "oklch(15.00% 0.02122 176.61)",
+          "oklch(26.43% 0.02122 176.61)",
+          "oklch(37.86% 0.02122 176.61)",
+          "oklch(49.29% 0.02122 176.61)",
+          "oklch(60.71% 0.02122 176.61)",
+          "oklch(72.14% 0.02122 176.61)",
+          "oklch(83.57% 0.02122 176.61)",
+          "oklch(95.00% 0.02122 176.61)"
+        ]
+      },
+      "green-line": {
+        "role": "tertiary",
+        "displayName": "Green Line",
+        "canonical": "#526e62",
+        "tonalRamp": [
+          "oklch(15.00% 0.03793 166.72)",
+          "oklch(26.43% 0.03793 166.72)",
+          "oklch(37.86% 0.03793 166.72)",
+          "oklch(49.29% 0.03793 166.72)",
+          "oklch(60.71% 0.03793 166.72)",
+          "oklch(72.14% 0.03793 166.72)",
+          "oklch(83.57% 0.03793 166.72)",
+          "oklch(95.00% 0.03793 166.72)"
+        ]
+      },
+      "heading-accent": {
+        "role": "neutral",
+        "displayName": "Heading Accent",
+        "canonical": "#657e83",
+        "tonalRamp": [
+          "oklch(15.00% 0.02990 211.16)",
+          "oklch(26.43% 0.02990 211.16)",
+          "oklch(37.86% 0.02990 211.16)",
+          "oklch(49.29% 0.02990 211.16)",
+          "oklch(60.71% 0.02990 211.16)",
+          "oklch(72.14% 0.02990 211.16)",
+          "oklch(83.57% 0.02990 211.16)",
+          "oklch(95.00% 0.02990 211.16)"
+        ]
+      },
+      "error": {
+        "role": "neutral",
+        "displayName": "Error",
+        "canonical": "#8b2929",
+        "tonalRamp": [
+          "oklch(15.00% 0.13292 24.60)",
+          "oklch(26.43% 0.13292 24.60)",
+          "oklch(37.86% 0.13292 24.60)",
+          "oklch(49.29% 0.13292 24.60)",
+          "oklch(60.71% 0.13292 24.60)",
+          "oklch(72.14% 0.13292 24.60)",
+          "oklch(83.57% 0.13292 24.60)",
+          "oklch(95.00% 0.13292 24.60)"
+        ]
+      },
+      "error-surface": {
+        "role": "neutral",
+        "displayName": "Error Surface",
+        "canonical": "#f7ece8",
+        "tonalRamp": [
+          "oklch(15.00% 0.01312 41.20)",
+          "oklch(26.43% 0.01312 41.20)",
+          "oklch(37.86% 0.01312 41.20)",
+          "oklch(49.29% 0.01312 41.20)",
+          "oklch(60.71% 0.01312 41.20)",
+          "oklch(72.14% 0.01312 41.20)",
+          "oklch(83.57% 0.01312 41.20)",
+          "oklch(95.00% 0.01312 41.20)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Main invitation."
+      },
+      "session-title": {
+        "displayName": "Session Title",
+        "purpose": "Session topic heading."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Task panel headings."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Base reading text."
+      },
+      "message": {
+        "displayName": "Message",
+        "purpose": "Conversation content."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Action labels."
+      },
+      "metadata": {
+        "displayName": "Metadata",
+        "purpose": "Supporting status and timestamps."
+      }
+    },
+    "shadows": [],
+    "motion": [
+      {
+        "name": "state-feedback",
+        "value": "160ms ease-out",
+        "purpose": "Control color feedback and disclosure chevron rotation; removed for reduced motion."
+      }
+    ],
     "breakpoints": [
       {
-        "name": "auth-mobile",
+        "name": "compact-panels",
         "value": "520px"
+      },
+      {
+        "name": "history-drawer",
+        "value": "760px"
+      },
+      {
+        "name": "stack-home",
+        "value": "800px"
+      },
+      {
+        "name": "stack-session",
+        "value": "1000px"
+      },
+      {
+        "name": "history-open-stack-upper",
+        "value": "1150px"
       }
     ]
   },
   "components": [
     {
-      "name": "Email method",
+      "name": "Primary button",
       "kind": "button",
-      "refersTo": "method",
-      "description": "Neutral method choice with a separate left icon.",
-      "html": "<button class=\"ds-method\"><svg width=\"28\" height=\"28\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" aria-hidden=\"true\"><rect x=\"3\" y=\"5\" width=\"18\" height=\"14\" rx=\"3\"/><path d=\"m4 7 8 6 8-6\"/></svg>Войти по email</button>",
-      "css": ".ds-method{font-family:\"Avenir Next\",Avenir,\"Segoe UI\",sans-serif;position:relative;width:100%;min-height:80px;padding:18px 72px;border:0;border-radius:999px;background:#373737;color:#f5f5f5;font-size:21px;font-weight:650;line-height:1.35;cursor:pointer}.ds-method svg{position:absolute;left:26px;top:50%;transform:translateY(-50%)}.ds-method:focus-visible{outline:3px solid #ff8fa5;outline-offset:5px;}@media(hover:hover){.ds-method:hover{background:#444;color:#fff}}.ds-method:disabled{background:#303030;color:#b8b8b8;cursor:wait}@media(max-width:520px){.ds-method{min-height:68px;padding:16px 52px;font-size:17px}.ds-method svg{left:16px}}"
+      "refersTo": "button-primary",
+      "description": "Workspace action with enabled, focus and disabled states.",
+      "html": "<button class=\"ds-button-primary\">Send message</button>",
+      "css": ".ds-button-primary {font-family: Manrope, \"Avenir Next\", \"Segoe UI\", sans-serif; line-height: 1.6;min-height:44px;padding:10px 20px;border:1px solid var(--accent,#363e4f);border-radius:14px;font-size:14px;font-weight:600;cursor:pointer;transition:background-color 160ms ease-out,border-color 160ms ease-out,color 160ms ease-out;background:var(--accent,#363e4f);color:var(--surface,#fff);} .ds-button-primary:focus-visible { outline: 3px solid var(--focus, #396b7a); outline-offset: 4px; } @media(hover:hover){.ds-button-primary:not(:disabled):hover{background:#252d3c;color:#fff;}} .ds-button-primary:disabled{background:var(--santorini,#d9dfe3);border-color:var(--santorini,#d9dfe3);color:#5c6571;cursor:not-allowed;} @media(prefers-reduced-motion:reduce){.ds-button-primary{transition:none;}}"
     },
     {
-      "name": "Email submit",
+      "name": "Secondary button",
       "kind": "button",
-      "refersTo": "submit",
-      "description": "Pink passwordless submission action.",
-      "html": "<button class=\"ds-submit\">Получить ссылку</button>",
-      "css": ".ds-submit{font-family:\"Avenir Next\",Avenir,\"Segoe UI\",sans-serif;width:100%;min-height:60px;padding:10px 20px;border:0;border-radius:999px;background:#ff4165;color:#1f1f1f;font-size:18px;font-weight:600;cursor:pointer}.ds-submit:focus-visible{outline:3px solid #ff8fa5;outline-offset:5px;}@media(hover:hover){.ds-submit:hover{background:#ff6b86;color:#1f1f1f}}.ds-submit:disabled{background:#303030;color:#b8b8b8;cursor:wait}"
+      "refersTo": "button-secondary",
+      "description": "Workspace action with enabled, focus and disabled states.",
+      "html": "<button class=\"ds-button-secondary\">Update notebook</button>",
+      "css": ".ds-button-secondary {font-family: Manrope, \"Avenir Next\", \"Segoe UI\", sans-serif; line-height: 1.6;min-height:44px;padding:10px 20px;border:1px solid var(--accent,#363e4f);border-radius:14px;font-size:14px;font-weight:600;cursor:pointer;transition:background-color 160ms ease-out,border-color 160ms ease-out,color 160ms ease-out;background:transparent;color:var(--accent,#363e4f);border-color:#89949f;} .ds-button-secondary:focus-visible { outline: 3px solid var(--focus, #396b7a); outline-offset: 4px; } @media(hover:hover){.ds-button-secondary:not(:disabled):hover{background:#252d3c;color:#fff;}} .ds-button-secondary:disabled{background:var(--santorini,#d9dfe3);border-color:var(--santorini,#d9dfe3);color:#5c6571;cursor:not-allowed;} @media(prefers-reduced-motion:reduce){.ds-button-secondary{transition:none;}}"
     },
     {
-      "name": "Email field",
+      "name": "Composer",
       "kind": "input",
-      "refersTo": "email-field",
-      "description": "Single address field with a visible border.",
-      "html": "<input class=\"ds-email\" type=\"email\" aria-label=\"Электронная почта\" placeholder=\"you@example.com\">",
-      "css": ".ds-email{font-family:\"Avenir Next\",Avenir,\"Segoe UI\",sans-serif;width:100%;min-height:60px;padding:16px 18px;border:1px solid #656565;border-radius:12px;background:#292929;color:#f5f5f5;font-size:16px;line-height:1.6;caret-color:#ff4165}.ds-email::placeholder{color:#aaa}.ds-email:focus-visible{outline:3px solid #ff8fa5;outline-offset:5px;}"
+      "refersTo": "composer",
+      "description": "Writing surface with persistent visible label.",
+      "html": "<div class=\"ds-composer\"><label for=\"ds-explanation\">Your explanation</label><textarea id=\"ds-explanation\" placeholder=\"Explain one idea in your own words…\"></textarea></div>",
+      "css": ".ds-composer{font-family: Manrope, \"Avenir Next\", \"Segoe UI\", sans-serif; line-height: 1.6;background:var(--paper,#f6f2ef);color:var(--ink,#363e4f);border:1px solid var(--line,#d2d7da);border-radius:18px;padding:16px;}.ds-composer:focus-within{border-color:#657e83;}.ds-composer label{display:block;font-size:13px;font-weight:600;margin-bottom:8px;}.ds-composer textarea{font:inherit;color:inherit;width:100%;min-height:88px;resize:vertical;border:0;border-radius:0;padding:8px 0;background:transparent;}.ds-composer textarea::placeholder{color:var(--muted,#596271);}.ds-composer textarea:focus-visible { outline: 3px solid var(--focus, #396b7a); outline-offset: 4px; }"
     },
     {
-      "name": "Back action",
-      "kind": "button",
-      "description": "Returns to method selection.",
-      "html": "<button class=\"ds-back\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" aria-hidden=\"true\"><path d=\"m14 6-6 6 6 6M8 12h13\"/></svg>Все способы входа</button>",
-      "css": ".ds-back{font-family:\"Avenir Next\",Avenir,\"Segoe UI\",sans-serif;display:inline-flex;align-items:center;gap:10px;min-height:44px;padding:8px 0;border:0;border-radius:0;background:transparent;color:#aaa;font-size:14px;font-weight:600;cursor:pointer}.ds-back:focus-visible{outline:3px solid #ff8fa5;outline-offset:5px;}@media(hover:hover){.ds-back:hover{background:transparent;color:#fff}}.ds-back:disabled{color:#b8b8b8;cursor:wait}"
-    },
-    {
-      "name": "Close link",
+      "name": "History navigation",
       "kind": "nav",
-      "description": "Circular route exit with a stroked SVG.",
-      "html": "<a class=\"ds-close\" href=\"#\" aria-label=\"Закрыть вход\"><svg width=\"28\" height=\"28\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" aria-hidden=\"true\"><path d=\"m6 6 12 12M18 6 6 18\"/></svg></a>",
-      "css": ".ds-close{display:grid;place-items:center;width:52px;height:52px;border-radius:50%;background:#292929;color:#f5f5f5}.ds-close:focus-visible{outline:3px solid #ff8fa5;outline-offset:5px;}@media(hover:hover){.ds-close:hover{background:#3a3a3a;color:#fff}}@media(max-width:520px){.ds-close{width:44px;height:44px}}"
+      "refersTo": "history-link",
+      "description": "Harbor navigation with a current-page row.",
+      "html": "<nav class=\"ds-history\" aria-label=\"Session history\"><a class=\"ds-history-link\" aria-current=\"page\" href=\"#current\">Project risks</a><a class=\"ds-history-link\" href=\"#other\">Stakeholders</a></nav>",
+      "css": ".ds-history{font-family: Manrope, \"Avenir Next\", \"Segoe UI\", sans-serif; line-height: 1.6;background:var(--harbor,#b0c8cc);padding:24px 16px;}.ds-history-link{display:block;padding:12px;border-radius:12px;color:var(--ink,#363e4f);text-decoration:none;font-size:13px;font-weight:700;transition:background-color 160ms ease-out,color 160ms ease-out;}.ds-history-link[aria-current=page]{background:var(--pearl,#f6f2ef);}.ds-history-link:focus-visible { outline: 3px solid var(--focus, #396b7a); outline-offset: 4px; }@media(hover:hover){.ds-history-link:hover{background:#c4d6d8;}}@media(prefers-reduced-motion:reduce){.ds-history-link{transition:none;}}"
+    },
+    {
+      "name": "Course chip",
+      "kind": "chip",
+      "refersTo": "course-chip",
+      "description": "Static course context.",
+      "html": "<span class=\"ds-course\">PMP</span>",
+      "css": ".ds-course{font-family: Manrope, \"Avenir Next\", \"Segoe UI\", sans-serif; line-height: 1.6;display:inline-block;padding:5px 12px;border:1px solid #a4afb7;border-radius:999px;color:var(--accent,#363e4f);font-size:11px;font-weight:700;}"
+    },
+    {
+      "name": "Study panel",
+      "kind": "card",
+      "refersTo": "study-panel",
+      "description": "White task container.",
+      "html": "<section class=\"ds-study\"><h2>Your topics</h2><p>Choose a topic to start a conversation.</p></section>",
+      "css": ".ds-study{font-family: Manrope, \"Avenir Next\", \"Segoe UI\", sans-serif; line-height: 1.6;background:var(--surface,#fff);color:var(--ink,#363e4f);padding:30px;border-radius:24px;}.ds-study h2{font-size:20px;line-height:1.3;letter-spacing:-.025em;margin:0 0 18px;}.ds-study p{color:var(--muted,#596271);font-size:14px;margin:0;}@media(max-width:520px){.ds-study{padding:20px;border-radius:20px;}}"
+    },
+    {
+      "name": "Progress panel",
+      "kind": "card",
+      "refersTo": "progress-panel",
+      "description": "Sea Green guidance with its readable companion ink.",
+      "html": "<aside class=\"ds-progress\"><h2>Keep the thread</h2><p>Explain a little. Build understanding.</p></aside>",
+      "css": ".ds-progress{font-family: Manrope, \"Avenir Next\", \"Segoe UI\", sans-serif; line-height: 1.6;background:var(--sea-green,#8ea39d);color:#24332f;padding:28px;border-radius:24px;}.ds-progress h2{font-size:20px;line-height:1.3;margin:0 0 18px;}.ds-progress p{font-size:14px;margin:0;}@media(max-width:520px){.ds-progress{padding:20px;border-radius:20px;}}"
+    },
+    {
+      "name": "Topic disclosure",
+      "kind": "custom",
+      "refersTo": "topic-disclosure",
+      "description": "Native disclosure with selected topic treatment.",
+      "html": "<details class=\"ds-topic\"><summary>Project risks<svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" aria-hidden=\"true\"><path d=\"m6 9 6 6 6-6\"/></svg></summary><div class=\"ds-topic-menu\"><button class=\"ds-topic-option\" aria-pressed=\"true\"><span><strong>Project risks</strong><small>Not started</small></span><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" aria-hidden=\"true\"><path d=\"m5 12 4 4L19 6\"/></svg></button></div></details>",
+      "css": ".ds-topic{font-family: Manrope, \"Avenir Next\", \"Segoe UI\", sans-serif; line-height: 1.6;border:1px solid #a4afb7;border-radius:16px;background:var(--paper,#f6f2ef);color:var(--ink,#363e4f);}.ds-topic summary{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:18px 20px;min-height:80px;cursor:pointer;list-style:none;border-radius:16px;font-size:17px;font-weight:600;}.ds-topic summary::-webkit-details-marker{display:none;}.ds-topic summary svg{flex-shrink:0;transition:transform 160ms ease-out;}.ds-topic[open] summary{border-bottom:1px solid var(--line,#d2d7da);border-radius:16px 16px 0 0;}.ds-topic[open] summary svg{transform:rotate(180deg);}.ds-topic-menu{padding:8px;}.ds-topic-option{font-family: Manrope, \"Avenir Next\", \"Segoe UI\", sans-serif; line-height: 1.6;width:100%;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:12px;min-height:68px;border:0;border-radius:10px;background:var(--harbor,#b0c8cc);color:var(--ink,#363e4f);text-align:left;cursor:pointer;}.ds-topic-option strong{font-size:15px;font-weight:600;line-height:1.4;}.ds-topic-option small{display:block;font-size:12px;color:#40545d;margin-top:4px;}.ds-topic summary:focus-visible { outline: 3px solid var(--focus, #396b7a); outline-offset: 4px; }.ds-topic-option:focus-visible { outline: 3px solid var(--focus, #396b7a); outline-offset: 4px; }@media(hover:hover){.ds-topic summary:hover{background:var(--wash,#e9edef);}.ds-topic-option:hover{background:var(--harbor,#b0c8cc);}}@media(prefers-reduced-motion:reduce){.ds-topic summary svg{transition:none;}}"
     }
   ],
   "narrative": {
-    "northStar": "Focused account entry",
-    "overview": "A focused charcoal account-entry surface adapted from the supplied login reference. Large light headings, gray pill actions, and a restrained pink accent keep the choice legible. The serif invitation and bold sans brand are an intentional pairing from that reference.\n\nThis record covers /login and /auth/callback only. The existing study workspace remains light, with its own paper, green ink, and green action tokens in globals.css; these auth tokens do not replace that system.",
+    "northStar": "Pearl / Harbor study workspace",
+    "overview": "A calm teaching workspace built from Pearl canvas, Harbor navigation and rounded task surfaces. Midnight gives headings, actions and user messages a consistent anchor; Sea Green progress and Santorini notebook panels separate supporting work.\n\nManrope keeps the invitation, controls and conversation in one voice. Depth comes from adjacent color fields and fine borders, with compact metadata and generous task spacing. This record replaces the retired account-entry system and describes the current workspace only.",
     "keyCharacteristics": [
-      "Charcoal canvas with tonal separation",
-      "Equal-width pill methods",
-      "Serif invitation with bold sans brand",
-      "Pink email action and account-creation emphasis"
+      "Five supplied colors with explicit readable companion inks",
+      "Self-hosted Manrope throughout",
+      "Rounded task panels and native disclosure controls",
+      "Flat tonal depth and restrained state feedback"
     ],
     "rules": [
       {
-        "name": "The Route Boundary Rule",
-        "body": "Authentication colors are scoped to /login and /auth/callback; the light workspace retains its existing palette.",
+        "name": "The Readable Surface Rule",
+        "body": "Use Harbor ink on Harbor supporting text and Green ink on Sea Green text; the general muted ink belongs on the light neutral surfaces.",
         "section": "colors"
+      },
+      {
+        "name": "The One Typeface Rule",
+        "body": "Use the bundled Manrope for headings, body and controls; hierarchy comes from size, weight and spacing.",
+        "section": "typography"
+      },
+      {
+        "name": "The Tonal Depth Rule",
+        "body": "Separate workspace regions with surface colors and fine borders; the shipped workspace has no box shadows.",
+        "section": "elevation"
       }
     ],
     "dos": [
-      "Do keep the charcoal theme scoped to authentication routes.",
-      "Do preserve visible focus outlines and readable pending/error states.",
-      "Do preserve the reference’s serif invitation and sans brand pairing."
+      "Do preserve the five supplied palette roles and their surface-specific text colors.",
+      "Do keep visible focus, text status labels and SVG state indicators alongside color.",
+      "Do stack task columns and use the modal history drawer at the implemented narrow breakpoints.",
+      "Do use sentence case, rounded panels and the bundled Manrope."
     ],
     "donts": [
-      "Don’t apply the authentication palette to the existing light workspace.",
-      "Don’t present the shared demo account as a personal account or an administrator role."
+      "Don't reintroduce the retired charcoal/pink authentication identity into the workspace.",
+      "Don't substitute a system display face for Manrope.",
+      "Don't treat synthesized sidecar tonal ramps as additional approved application tokens."
     ]
   }
 }

@@ -124,7 +124,7 @@ Published at https://teachapp.vercel.app as `dpl_2bopWWkw2iwWTejVfdKMHN1MjNjY` o
 
 History opens from the panel button beside TeachAPP on every study page. Desktop uses an adjacent sidebar; narrow screens use a native modal drawer with close controls and focus management. The active session is highlighted, and history refreshes after creating a lesson, saving an explanation, or completing an exam. Existing browser ownership and storage keys are unchanged.
 
-The home page uses a native topic selector and shows only the selected topic's description and progress. The conversation distinguishes right-aligned user messages from left-aligned AI student replies, shows timestamps and waiting status, and groups writing controls in a composer. Enter sends; Shift+Enter inserts a newline; IME composition does not submit. VoiceInput and the backend are unchanged.
+The home page uses a styled topic disclosure with status labels, best scores, and a checkmark for the selected topic. Choosing a topic updates its description and closes the menu. The native disclosure supports keyboard activation; Escape closes it and restores focus. The conversation distinguishes right-aligned user messages from left-aligned AI student replies, shows timestamps and waiting status, and groups writing controls in a composer. Enter sends; Shift+Enter inserts a newline; IME composition does not submit. VoiceInput and the backend are unchanged.
 
 Verification: all 275 tests passed with isolated PostgreSQL; TypeScript, scoped ESLint and production build passed. Safari verified topic selection, session creation, sidebar refresh, active selection, and narrow drawer navigation. Native automation could not reliably focus the textarea, so keyboard submission still needs a direct manual check. Narrow verification used desktop zoom rather than a physical phone.
 
@@ -250,3 +250,7 @@ Follow the [official CLI deployment guide](https://vercel.com/docs/projects/depl
 8. Verify the deployed HTTPS URL: without signing in, save and reopen a session, build a notebook, run the practice exam, and confirm cached repeats do not create new `ai_usage` reservations. Check that the production page is accessible to the intended demo audience, then record the verified runtime status in this README.
 
 Free plans have provider limits and are not an uptime guarantee: for example, [Supabase Free pauses projects after one week of inactivity](https://supabase.com/pricing). Review the chosen hosting plan before the presentation. No paid plan or domain has been purchased by this setup.
+
+### Workspace palette refresh — 15 November 2026
+
+The home page, history, topic chooser, chat, notebook and exam review now use the supplied Pearl / Harbor / Midnight / Santorini / Sea Green palette. Manrope is self-hosted with its OFL license in `public/fonts/`. Conversation behavior, browser ownership, voice integrations and the shared OpenAI budget are unchanged. Desktop Safari and a narrow layout via browser zoom were checked; physical phone testing remains outstanding. All 294 existing tests passed against isolated local PostgreSQL. See `DESIGN.md` for the current visual system.

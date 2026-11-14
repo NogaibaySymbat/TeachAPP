@@ -23,11 +23,11 @@ A study workspace for exam preparation by explaining topics to an AI student. Th
 
 - The review compares the latest two saved attempts, including regressions and cited new notes. Changed question snapshots disable the delta; citations do not prove causality. Owner-only TXT/JSON downloads include saved messages, notebook and all available attempts. No import or cross-device access restoration is implemented. These features make no model calls.
 
-- History is a collapsible left sidebar, becoming a modal navigation drawer at narrow widths. Topics use a native selector. User and student messages have distinct alignment and timestamps; writing controls are grouped as a chat composer. The paper/green identity and existing voice input remain.
+- History is a collapsible left sidebar, becoming a modal navigation drawer at narrow widths. Topics use a styled native disclosure with statuses and a selected checkmark. User and student messages have distinct alignment and timestamps; writing controls are grouped as a chat composer. The workspace uses the user-supplied Pearl, Harbor, Midnight, Santorini and Sea Green palette with self-hosted Manrope. Existing voice input remains.
 
 ## Brand Commitments
 
-The product name is TeachAPP. The earlier TikTok-inspired account-entry surface is retired from the current navigation. The study workspace keeps its existing visual identity; browser history and direct access are the current flow.
+The product name is TeachAPP. The earlier TikTok-inspired account-entry surface is retired from the current navigation. The study workspace follows the user-supplied five-swatch reference: Pearl #F6F2EF, Harbor #B0C8CC, Midnight #363E4F, Santorini #D9DFE3 and Sea Green #8EA39D, with rounded surfaces and Manrope typography. Browser history and direct access are the current flow.
 
 ## Evidence on Hand
 

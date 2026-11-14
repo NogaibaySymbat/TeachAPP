@@ -6,7 +6,7 @@
 
 Published at https://teachapp.vercel.app as `dpl_2bopWWkw2iwWTejVfdKMHN1MjNjY` on 15 November 2026. No Git commit or push was made.
 
-History now lives in a collapsible left sidebar on home and session pages, with an overlay drawer on narrow screens. The topic list is a native selector with one selected topic's details. Chat messages use distinct alignment, timestamps, a student header and grouped composer. Enter/Shift+Enter shortcuts respect IME composition. VoiceInput, browser IDs, API contracts and the shared $4 guard are unchanged. Safari verified topic selection, creation/history refresh and narrow drawer navigation; native textarea focus prevented end-to-end shortcut verification. Physical phone testing remains outstanding.
+History now lives in a collapsible left sidebar on home and session pages, with an overlay drawer on narrow screens. The topic list is a styled native disclosure with status labels, best scores, and a selected checkmark; the selected topic's description appears below it. Selection closes the menu and restores focus; Escape and outside clicks close it too. Chat messages use distinct alignment, timestamps, a student header and grouped composer. Enter/Shift+Enter shortcuts respect IME composition. VoiceInput, browser IDs, API contracts and the shared $4 guard are unchanged. Safari verified topic selection, creation/history refresh and narrow drawer navigation; native textarea focus prevented end-to-end shortcut verification. Physical phone testing remains outstanding.
 
 ## Extension — 15 November 2026
 
@@ -266,3 +266,7 @@ GET  /api/progress                               -> { streak, topicOfTheDay, gap
 8. Не выдумывай факты об экзамене PMP и рыночные цифры. Если данных нет, оставь TODO и скажи человеку.
 9. Перед завершением задачи проверь, что приложение собирается и основной сценарий из раздела 5 работает.
 10. Если принято новое решение, допиши его в раздел 3 и обнови дату вверху файла.
+
+### Workspace palette refresh — 15 November 2026
+
+The home page, history, topic chooser, chat, notebook and exam review now use the supplied Pearl / Harbor / Midnight / Santorini / Sea Green palette. Manrope is self-hosted with its OFL license in `public/fonts/`. Conversation behavior, browser ownership, voice integrations and the shared OpenAI budget are unchanged. Desktop Safari and a narrow layout via browser zoom were checked; physical phone testing remains outstanding. All 294 existing tests passed against isolated local PostgreSQL. See `DESIGN.md` for the current visual system.

@@ -1,128 +1,247 @@
 ---
-name: TeachAPP Authentication
-description: Scoped account-entry system derived from the shipped login screen.
+name: "TeachAPP Study Workspace"
+description: "Pearl and Harbor teaching workspace grounded in the implemented study surfaces."
 colors:
-  auth-background: "#1f1f1f"
-  auth-surface: "#373737"
-  auth-ink: "#f5f5f5"
-  auth-muted: "#aaa"
-  auth-line: "#383838"
-  auth-accent: "#ff4165"
-  auth-field: "#292929"
-  auth-focus: "#ff8fa5"
-  auth-error: "#ffb3c0"
+  pearl: "#f6f2ef"
+  harbor: "#b0c8cc"
+  midnight: "#363e4f"
+  santorini: "#d9dfe3"
+  sea-green: "#8ea39d"
+  surface: "#fff"
+  muted: "#596271"
+  line: "#d2d7da"
+  wash: "#e9edef"
+  action-hover: "#252d3c"
+  focus: "#396b7a"
+  field-border: "#a4afb7"
+  secondary-border: "#89949f"
+  disabled-ink: "#5c6571"
+  harbor-ink: "#40545d"
+  harbor-line: "#8da8ad"
+  harbor-hover: "#c4d6d8"
+  green-ink: "#24332f"
+  green-line: "#526e62"
+  heading-accent: "#657e83"
+  error: "#8b2929"
+  error-surface: "#f7ece8"
 typography:
   headline:
-    fontFamily: 'Georgia, "Times New Roman", serif'
-    fontSize: "clamp(38px, 5vw, 58px)"
-    fontWeight: 700
-    lineHeight: 1.16
-    letterSpacing: "-0.025em"
-  brand:
-    fontFamily: '"Avenir Next", Avenir, "Segoe UI", sans-serif'
-    fontSize: "0.92em"
-    fontWeight: 800
-    letterSpacing: "-0.04em"
-  body:
-    fontFamily: '"Avenir Next", Avenir, "Segoe UI", sans-serif'
-    fontSize: "17px"
-    lineHeight: 1.55
-  label:
-    fontFamily: '"Avenir Next", Avenir, "Segoe UI", sans-serif'
-    fontSize: "21px"
+    fontFamily: "Manrope, \"Avenir Next\", \"Segoe UI\", sans-serif"
+    fontSize: "clamp(34px, 4vw, 50px)"
     fontWeight: 650
-    lineHeight: 1.35
+    lineHeight: 1.12
+    letterSpacing: "-0.03em"
+  session-title:
+    fontFamily: "Manrope, \"Avenir Next\", \"Segoe UI\", sans-serif"
+    fontSize: "clamp(26px, 3vw, 36px)"
+    fontWeight: 650
+    lineHeight: 1.12
+    letterSpacing: "-0.03em"
+  title:
+    fontFamily: "Manrope, \"Avenir Next\", \"Segoe UI\", sans-serif"
+    fontSize: "20px"
+    fontWeight: 700
+    lineHeight: 1.3
+    letterSpacing: "-0.025em"
+  body:
+    fontFamily: "Manrope, \"Avenir Next\", \"Segoe UI\", sans-serif"
+    fontSize: "16px"
+    lineHeight: 1.6
+  message:
+    fontFamily: "Manrope, \"Avenir Next\", \"Segoe UI\", sans-serif"
+    fontSize: "15px"
+    lineHeight: 1.65
+  label:
+    fontFamily: "Manrope, \"Avenir Next\", \"Segoe UI\", sans-serif"
+    fontSize: "14px"
+    fontWeight: 600
+    lineHeight: 1.6
+  metadata:
+    fontFamily: "Manrope, \"Avenir Next\", \"Segoe UI\", sans-serif"
+    fontSize: "12px"
+    lineHeight: 1.6
 rounded:
+  control: "14px"
+  navigation: "12px"
+  option: "10px"
+  disclosure: "16px"
+  composer: "18px"
+  panel: "24px"
+  panel-mobile: "20px"
+  notice: "8px"
   pill: "999px"
-  field: "12px"
-  circle: "50%"
 spacing:
-  methods-gap: "16px"
-  mobile-gutter: "20px"
-  desktop-gutter: "24px"
+  xs: "4px"
+  sm: "8px"
+  control-gap: "12px"
+  md: "16px"
+  lg: "20px"
+  section: "24px"
+  aside: "28px"
+  study-panel: "30px"
+  wide: "32px"
+  gutter: "40px"
 components:
-  method:
-    backgroundColor: "{colors.auth-surface}"
-    textColor: "{colors.auth-ink}"
+  button-primary:
+    backgroundColor: "{colors.midnight}"
+    textColor: "{colors.surface}"
     typography: "{typography.label}"
+    rounded: "{rounded.control}"
+    padding: "10px 20px"
+  button-primary-hover:
+    backgroundColor: "{colors.action-hover}"
+    textColor: "{colors.surface}"
+  button-secondary:
+    backgroundColor: "transparent"
+    textColor: "{colors.midnight}"
+    typography: "{typography.label}"
+    rounded: "{rounded.control}"
+    padding: "10px 20px"
+  button-disabled:
+    backgroundColor: "{colors.santorini}"
+    textColor: "{colors.disabled-ink}"
+  composer:
+    backgroundColor: "{colors.pearl}"
+    textColor: "{colors.midnight}"
+    rounded: "{rounded.composer}"
+    padding: "16px"
+  history-link:
+    textColor: "{colors.midnight}"
+    rounded: "{rounded.navigation}"
+    padding: "12px"
+  course-chip:
+    textColor: "{colors.midnight}"
     rounded: "{rounded.pill}"
-    padding: "18px 72px"
-  submit:
-    backgroundColor: "{colors.auth-accent}"
-    textColor: "{colors.auth-background}"
-    rounded: "{rounded.pill}"
-  email-field:
-    backgroundColor: "{colors.auth-field}"
-    textColor: "{colors.auth-ink}"
-    rounded: "{rounded.field}"
-    padding: "16px 18px"
+    padding: "5px 12px"
+  study-panel:
+    backgroundColor: "{colors.surface}"
+    textColor: "{colors.midnight}"
+    rounded: "{rounded.panel}"
+    padding: "30px"
+  progress-panel:
+    backgroundColor: "{colors.sea-green}"
+    textColor: "{colors.green-ink}"
+    rounded: "{rounded.panel}"
+    padding: "28px"
+  topic-disclosure:
+    backgroundColor: "{colors.pearl}"
+    textColor: "{colors.midnight}"
+    rounded: "{rounded.disclosure}"
+  topic-selected:
+    backgroundColor: "{colors.harbor}"
+    textColor: "{colors.midnight}"
+    rounded: "{rounded.option}"
+    padding: "12px"
 ---
 
-# Design System: TeachAPP Authentication
+# Design System: TeachAPP Study Workspace
 
 ## Overview
 
-**Creative North Star: "Focused account entry"**
+**Creative North Star: "Pearl / Harbor study workspace"**
 
-A focused charcoal account-entry surface adapted from the supplied login reference. Large light headings, gray pill actions, and a restrained pink accent keep the choice legible. The serif invitation and bold sans brand are an intentional pairing from that reference.
+A calm teaching workspace built from Pearl canvas, Harbor navigation and rounded task surfaces. Midnight gives headings, actions and user messages a consistent anchor; Sea Green progress and Santorini notebook panels separate supporting work.
 
-This record covers /login and /auth/callback only. The existing study workspace remains light, with its own paper, green ink, and green action tokens in globals.css; these auth tokens do not replace that system.
+Manrope keeps the invitation, controls and conversation in one voice. Depth comes from adjacent color fields and fine borders, with compact metadata and generous task spacing. This record replaces the retired account-entry system and describes the current workspace only.
 
 **Key Characteristics:**
-- Charcoal canvas with tonal separation
-- Equal-width pill methods
-- Serif invitation with bold sans brand
-- Pink email action and account-creation emphasis
+- Five supplied colors with explicit readable companion inks
+- Self-hosted Manrope throughout
+- Rounded task panels and native disclosure controls
+- Flat tonal depth and restrained state feedback
 
 ## Colors
 
+A soft, cool palette balances warm Pearl with blue-gray and green task surfaces. Frontmatter values are authoritative; semantic CSS aliases paper, ink and accent resolve to Pearl and Midnight.
+
 ### Primary
 
-Pink marks the email submission action and account-creation emphasis. The pale pink focus and error colors communicate interaction and feedback.
+Midnight carries primary actions, headings, the book mark, avatar and user message bubbles. Action hover deepens it; focus uses a separate blue outline.
+
+### Secondary
+
+Harbor carries history navigation and selected topics. Harbor ink and Harbor line are the local text/border companions; Harbor hover gives history rows a visible state.
+
+### Tertiary
+
+Sea Green identifies progress and process guidance with Green ink and Green line. Santorini separates the student's notebook and disabled controls; disabled ink stays readable.
 
 ### Neutral
 
-Charcoal forms the full route background; gray surfaces hold method buttons and callback notices. Light ink carries headings and actions, muted gray carries supporting copy, and a subtle line separates the bottom explanation. Fields and the close control share the darker field tone.
+Pearl is the canvas, disclosure and composer surface. White surface holds topic, chat and exam panels. Wash fills student messages and notices; muted ink supports secondary text, and line separates content. Field and secondary borders make controls legible. Heading accent supplies the softer invitation line. Error ink and error surface are reserved for failures.
 
-**The Route Boundary Rule.** Authentication colors are scoped to /login and /auth/callback; the light workspace retains its existing palette.
+**The Readable Surface Rule.** Use Harbor ink on Harbor supporting text and Green ink on Sea Green text; the general muted ink belongs on the light neutral surfaces.
 
 ## Typography
 
-The headline uses Georgia with Times New Roman and serif fallbacks. Body text and the brand use Avenir Next, Avenir, Segoe UI, and sans-serif fallbacks. The displayed font depends on installed fonts; no bundled face is asserted.
+**Display Font:** Manrope, with sans-serif fallback.
+**Body Font:** Manrope, with Avenir Next, Segoe UI and sans-serif fallbacks.
 
-The headline, brand, body, and method-label roles are recorded above. The brand size is relative to its heading. At widths up to 520px, the heading becomes clamp(32px, 9vw, 42px), supporting copy becomes 15px, and method labels become 17px. Email labels and errors use 15px; the submit label uses 18px. The serif/sans relationship is specific to the approved reference, not a new project-wide display-font policy.
+The variable face is self-hosted at `public/fonts/manrope-variable.ttf` (weights 200–800, swap loading), with its adjacent OFL license. There is no distinct mono face.
+
+### Hierarchy
+
+Frontmatter records the actual headline, session title, panel title, body, message, label and metadata roles. Supporting copy varies from 13–15px; small privacy/status annotations use 11px. The brand is 20px/800 with a 10px subtitle. The main invitation is bounded to 21ch; paragraphs generally stop at 68ch. At 520px and below, the invitation is 34px/1.16, the session heading 27px, topic names 15px, and messages 14px. Tabular numerals support timestamps and scores.
+
+**The One Typeface Rule.** Use the bundled Manrope for headings, body and controls; hierarchy comes from size, weight and spacing.
 
 ## Layout
 
-Authentication uses a full-height flex column (100dvh). The content width is min(100% - 48px, 600px), centered horizontally; top padding is clamp(112px, 15vh, 160px). Method buttons form one column with the recorded gap. The bottom explanation uses automatic top margin, a divider, and safe-area-aware bottom padding.
+Header, main and footer share a 1240px maximum width with 40px gutters, decreasing to 24px at 1000px and 16px at 520px. The workspace header is at least 80px tall. Panels align at their top edges; gaps and padding favor the 12/16/20/24/32px rhythm.
 
-At widths up to 520px, content uses 20px side gutters, top padding becomes 108px, and bottom content padding falls from 72px to 48px. Method controls have an 80px minimum height on desktop and 68px on mobile. The email field and submit control have a 60px minimum height. The close control is 52px, becoming 44px on mobile.
+The home task grid uses a flexible primary column and 320px supporting column, narrowed to 280px below 1000px and stacked below 800px. The session has a 300px notebook column and stacks at 1000px. With desktop history open, the frame adds a 280px sticky, independently scrolling rail; task grids stack from 761–1150px. At 760px and below, history becomes a native modal drawer, width min(320px, 100% - 40px), with body scroll locked and focus restored on close. Content remains in normal document flow.
+
+Chat transcript scrolling is bounded by 52dvh with a 250px minimum; messages occupy at most 88%, then 94% below 760px and 96% below 520px. Composer actions stack below 520px. Small-screen panels use 20px corners and padding, with chat padding reduced to 16px.
 
 ## Elevation & Depth
 
-Authentication uses tonal layers without box shadows. Resting controls are distinguished by fill; keyboard focus uses a 3px outline with a 5px offset. No authored animation or transition is present in this surface.
+No box shadows are used. Color fields, one-pixel borders and alignment establish hierarchy. The modal drawer alone dims the page with a translucent backdrop (rgb(36 44 60 / 35%)); this is a navigation state, not decorative elevation.
+
+**The Tonal Depth Rule.** Separate workspace regions with surface colors and fine borders; the shipped workspace has no box shadows.
 
 ## Shapes
 
-Method and submit controls are pills. The close control is circular. Email fields have softly rounded corners with a visible gray border. Callback notices inherit the existing 8px notice radius.
+Panels use broad rounded corners; controls, navigation rows and disclosures use smaller related radii from the frontmatter. Pills are native to course metadata, streaks and compact voice controls. Chat bubbles use 18px corners with a 5px lower corner toward the speaker's side. Desktop history has square edges; the drawer rounds only its right corners to 24px. Icons are inline stroked SVGs, generally 16–22px.
 
 ## Components
 
-Method buttons have centered labels and independently positioned left icons. Email uses a stroked envelope SVG; Google uses the supplied official colored raster mark on a white circle. Their shared hover fill is #444, with white text, on hover-capable devices.
+### Buttons
 
-The email field uses a #656565 border and the accent caret. The submit action turns #ff6b86 on hover. Pending controls use #303030 with #b8b8b8 text and a wait cursor. The back control is a muted, transparent text action; the circular close link returns to the workspace. Each retains the auth focus outline.
+Primary buttons are Midnight with white labels, 44px minimum height and the recorded padding. The topic start action fills its panel width with a 50px minimum height. Secondary buttons are transparent with a one-pixel secondary border. Hover-capable devices darken enabled buttons; disabled buttons use Santorini and disabled ink. Focus is a 3px focus-color outline with 4px offset.
 
-Email selection reveals the passwordless address form; successful submission reveals the sent state. Errors are inline alerts. Missing provider configuration shows an unavailable message, not a success state. Callback feedback uses the same auth colors inside the inherited notice shape.
+### Chips
 
-When demo access is enabled, a third method opens a username/password form. It reuses the existing field and submit styles, labels the account as a shared demonstration account, and shows the public demo credentials `admin / admin`. Email and Google remain available.
+Course context is a fine outlined pill with 11px bold text. The progress streak uses a Green line outline and 13px semibold text. These are status/context, not new primary actions.
+
+### Cards / Containers
+
+White topic and chat panels share the panel radius; topic padding is 30px and chat padding 24px. Progress and notebook asides use 28px padding. The notebook uses Santorini, progress Sea Green, and exam review white. Panels rely on color rather than shadow. Notices use Wash, 8px corners and 16px padding; failures use the error pair.
+
+### Inputs / Fields
+
+The Pearl composer has a one-pixel line border, 18px corners and 16px padding. Its textarea is transparent and borderless with an 88px minimum height, vertical resizing and muted placeholder. Focus within changes the composer border to heading accent; the textarea retains visible keyboard focus. Voice language selection is a 44px minimum-height Pearl control with a field border and 12px corners.
+
+### Navigation
+
+Harbor history rows use compact titles and secondary metadata; the current page uses Pearl. The new-session action is Midnight with Pearl text and a plus SVG. Desktop navigation is collapsible; narrow navigation uses the modal drawer. The header toggle is a transparent 44px control with a Santorini hover surface.
+
+### Topic disclosure
+
+Native details/summary holds the current topic and status. The summary has an 80px minimum height and 18px 20px padding; narrow padding becomes 14px. Options have a 68px minimum height, 12px padding and 10px corners. Selected and hovered options use Harbor with Harbor ink status text; selection also has an SVG check. Opening rotates the chevron by 180 degrees. Escape, outside pointer interaction and leaving focus close the disclosure; choosing returns focus to the summary.
+
+### Conversation
+
+User bubbles align right in Midnight/Pearl; student bubbles align left in Wash/Midnight. Timestamp metadata remains separate from message text. The composer groups writing, voice controls and submission. Color changes and the disclosure rotation use 160ms ease-out; reduced-motion preference removes these transitions. There is no entrance animation.
 
 ## Do's and Don'ts
 
 ### Do:
-- Do keep the charcoal theme scoped to authentication routes.
-- Do preserve visible focus outlines and readable pending/error states.
-- Do preserve the reference’s serif invitation and sans brand pairing.
+- Do preserve the five supplied palette roles and their surface-specific text colors.
+- Do keep visible focus, text status labels and SVG state indicators alongside color.
+- Do stack task columns and use the modal history drawer at the implemented narrow breakpoints.
+- Do use sentence case, rounded panels and the bundled Manrope.
 
 ### Don't:
-- Don’t apply the authentication palette to the existing light workspace.
-- Don’t present the shared demo account as a personal account or an administrator role.
+- Don't reintroduce the retired charcoal/pink authentication identity into the workspace.
+- Don't substitute a system display face for Manrope.
+- Don't treat synthesized sidecar tonal ramps as additional approved application tokens.
