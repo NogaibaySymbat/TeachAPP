@@ -1,0 +1,17 @@
+{
+  "topicId": "example-topic",
+  "questions": [
+    {
+      "id": "q1",
+      "text": "TODO: situational question written by us",
+      "options": [
+        { "id": "a", "text": "TODO" },
+        { "id": "b", "text": "TODO" },
+        { "id": "c", "text": "TODO" },
+        { "id": "d", "text": "TODO" }
+      ],
+      "correctOptionId": "a",
+      "requiredKeyIdeaIds": ["k1"]
+    }
+  ]
+}
