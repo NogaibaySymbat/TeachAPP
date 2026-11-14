@@ -3,6 +3,17 @@
 import { useEffect, useId, useRef, useState, useSyncExternalStore } from "react";
 import { createSpeechController, getSpeechSupport, type SpeechController, type SpeechSnapshot } from "@/lib/speech-recognition";
 
+const LANGUAGE_KEY = "teachapp.voice-language";
+const LANGUAGES = ["en-US", "ru-RU"] as const;
+type SpokenLanguage = typeof LANGUAGES[number];
+
+function readSavedLanguage(): SpokenLanguage | null {
+  try {
+    const saved = window.localStorage.getItem(LANGUAGE_KEY);
+    return LANGUAGES.find((language) => language === saved) ?? null;
+  } catch { return null; }
+}
+
 const EMPTY_SPEECH: SpeechSnapshot = { state: "idle", finalText: "", interimText: "", error: null, limited: false };
 const subscribe = () => () => {};
 const serverSupport = () => "checking" as const;
@@ -26,7 +37,8 @@ interface VoiceInputProps {
 export function VoiceInput({ value, disabled, onAppend, onActiveChange }: VoiceInputProps) {
   const support = useSyncExternalStore(subscribe, browserSupport, serverSupport);
   const [speech, setSpeech] = useState<SpeechSnapshot>(EMPTY_SPEECH);
-  const [language, setLanguage] = useState("ru-RU");
+  // English by default: the audience is US-based. A user's own choice is remembered.
+  const [language, setLanguage] = useState<SpokenLanguage>("en-US");
   const controller = useRef<SpeechController | null>(null);
   const id = useId();
   const active = speech.state !== "idle";
@@ -57,6 +69,20 @@ export function VoiceInput({ value, disabled, onAppend, onActiveChange }: VoiceI
       onActiveChange(false);
     };
   }, [onActiveChange]);
+
+  useEffect(() => {
+    const saved = readSavedLanguage();
+    // Browser storage is only readable after mount.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    if (saved) setLanguage(saved);
+  }, []);
+
+  function changeLanguage(next: string) {
+    const language = LANGUAGES.find((option) => option === next);
+    if (!language) return;
+    setLanguage(language);
+    try { window.localStorage.setItem(LANGUAGE_KEY, language); } catch { /* storage unavailable */ }
+  }
 
   useEffect(() => { if (disabled) controller.current?.cancel(); }, [disabled]);
 
@@ -100,9 +126,9 @@ export function VoiceInput({ value, disabled, onAppend, onActiveChange }: VoiceI
         </button>
         <div className="voice-language">
           <label htmlFor={`${id}-language`}>Spoken language</label>
-          <select id={`${id}-language`} value={language} onChange={(event) => setLanguage(event.target.value)} disabled={disabled || active || support !== "available"}>
-            <option value="ru-RU" lang="ru">Русский</option>
+          <select id={`${id}-language`} value={language} onChange={(event) => changeLanguage(event.target.value)} disabled={disabled || active || support !== "available"}>
             <option value="en-US" lang="en">English</option>
+            <option value="ru-RU" lang="ru">Русский</option>
           </select>
         </div>
       </div>

@@ -31,7 +31,17 @@ describe("authored practice content", () => {
     const topic = await getTopic("stakeholders-demo");
     const questions = await getQuestions(topic.id);
 
-    expect(topic.title).toContain("Demo");
+    // Every key idea names its area without repeating the idea itself.
+    for (const item of topics) {
+      const full = await getTopic(item.id);
+      for (const idea of full.keyIdeas) {
+        expect(idea.label?.trim()).toBeTruthy();
+        expect(idea.text.toLowerCase()).not.toContain(idea.label!.toLowerCase());
+      }
+    }
+    // Topic titles are user-facing; internal labels such as "Demo" stay out of them.
+    expect(topic.title).toBe("Project stakeholders");
+    expect(topics.every((item) => !/\b(demo|practice)\b/i.test(item.title))).toBe(true);
     expect(questions).toHaveLength(3);
     expect(new Set(questions.map((question) => question.id)).size).toBe(questions.length);
     const ideaIds = new Set(topic.keyIdeas.map((idea) => idea.id));

@@ -43,5 +43,5 @@ export async function handle(work: () => Promise<Response>): Promise<Response> {
 }
 
 export function aiUnavailable(): never {
-  throw new ServiceError(501, "AI_NOT_CONNECTED", "The student is not available yet. Your saved explanation will be here when it is ready.");
+  throw new ServiceError(501, "AI_NOT_CONNECTED", "Your student is taking a short break. Your explanation is saved; come back in a little while and they will pick up right here.");
 }

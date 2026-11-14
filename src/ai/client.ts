@@ -105,7 +105,7 @@ export async function complete(messages: ModelMessage[], options: CompletionOpti
   if (result.model !== model || result.service_tier !== "default"
     || (validUsage && ((usage.input_tokens as number) > count.input_tokens || (usage.output_tokens as number) > maxOutputTokens))) {
     await blockAiBudget(reservationId);
-    throw new ServiceError(503, "AI_BUDGET_REVIEW", "AI replies are paused while usage is reviewed. Your explanation is saved.");
+    throw new ServiceError(503, "AI_BUDGET_REVIEW", "Your student is taking a short break. Your explanation is saved.");
   }
   if (!validUsage) throw providerFailure();
   await recordAiUsage(reservationId, usage.input_tokens as number, usage.output_tokens as number);

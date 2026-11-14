@@ -4,18 +4,22 @@ import { getQuestions, getTopic } from "@/server/content";
 
 // Deterministic feedback uses the same content snapshot as grading. No third
 // model call and no claim that an idea was necessarily absent from the notebook.
+// It names the area to explain (the idea's label), never the idea's full text,
+// so a retake measures a new explanation rather than a copied answer.
 export function buildDebriefFromContent(
   answers: ExamAnswer[],
   questions: Pick<Question, "id" | "requiredIdeaIds">[],
   keyIdeas: Topic["keyIdeas"],
 ): Gap[] {
   const failed = new Set(answers.filter((answer) => !answer.correct).map((answer) => answer.questionId));
-  const ideas = new Map(keyIdeas.map((idea) => [idea.id, idea.text]));
+  const labels = new Map(keyIdeas.map((idea) => [idea.id, idea.label]));
   return questions.filter((question) => failed.has(question.id)).map((question) => {
-    const review = [...new Set(question.requiredIdeaIds)].map((id) => ideas.get(id)).filter((idea): idea is string => !!idea?.trim());
+    const areas = [...new Set(question.requiredIdeaIds)].map((id) => labels.get(id)?.trim()).filter((label): label is string => !!label);
     return {
       questionId: question.id,
-      missingIdea: review.length ? `Review and explain: ${review.join(" ")}` : "Explain the idea behind this question, then try again.",
+      missingIdea: areas.length
+        ? `Explain ${areas.join(" and ")} in your own words, then retake.`
+        : "Explain the idea behind this question in your own words, then retake.",
     };
   });
 }

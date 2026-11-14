@@ -41,10 +41,10 @@ export async function reserveAiBudget(
     );
     const total = Number(rows[0].total);
     if (rows[0].blocked || !Number.isSafeInteger(total)) {
-      throw new ServiceError(503, "AI_BUDGET_REVIEW", "AI replies are paused while usage is reviewed. Your explanation is saved.");
+      throw new ServiceError(503, "AI_BUDGET_REVIEW", "Your student is taking a short break. Your explanation is saved.");
     }
     if (total + reservation > budgetNanodollars) {
-      throw new ServiceError(503, "AI_BUDGET_EXHAUSTED", "AI replies are paused because the demo budget is exhausted. Your explanation is saved.");
+      throw new ServiceError(503, "AI_BUDGET_EXHAUSTED", "Your student is taking a short break because of high demand. Your explanation is saved.");
     }
     const inserted = await client.query<{ id: string }>(
       "INSERT INTO ai_usage (budget_key, model, reserved_nanodollars) VALUES ($1, $2, $3) RETURNING id",

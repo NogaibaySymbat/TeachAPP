@@ -12,6 +12,9 @@ interface ExamReviewProps {
 
 export function ExamReview({ attempt, previousAttempt, stale, disabled, debriefError, onDebrief }: ExamReviewProps) {
   const notes = new Map(attempt.notebookSnapshot.map((entry) => [entry.id, entry]));
+  // The correct option stays hidden until the student passes, so a retake
+  // tests a new explanation instead of a copied answer.
+  const passed = attempt.score === attempt.total;
   return <section className="exam-review" id="exam-review" tabIndex={-1} aria-labelledby="exam-review-title">
     <h2 id="exam-review-title">Your student scored {attempt.score}/{attempt.total}</h2>
     <p className="muted">{stale ? "This result uses an earlier notebook. Update the notebook and retake the exam to test your latest explanation." : attempt.score === attempt.total ? "Your student answered every question correctly and cited your notebook." : "Use the questions below to see what needs a clearer explanation."}</p>
@@ -27,7 +30,9 @@ export function ExamReview({ attempt, previousAttempt, stale, disabled, debriefE
             <div className="answer-detail">
               <dl>
                 <dt>Student’s answer</dt><dd>{selected ?? "The notebook did not support an answer."}</dd>
-                <dt>Expected answer</dt><dd>{expected}</dd>
+                {passed || result.correct
+                  ? <><dt>Correct answer</dt><dd>{expected}</dd></>
+                  : <><dt>Correct answer</dt><dd className="muted">Hidden until your student passes. Explain the idea again, then retake.</dd></>}
                 <dt>Student’s reasoning</dt><dd>{result.reasoning}</dd>
               </dl>
               {result.notebookRefs.length > 0 && <div className="answer-evidence"><h3>Notes used in this attempt</h3><ul>{result.notebookRefs.map((id) => <li key={id}>{notes.get(id)?.claim ?? "This note is unavailable in the saved snapshot."}</li>)}</ul></div>}

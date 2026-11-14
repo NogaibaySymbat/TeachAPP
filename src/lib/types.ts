@@ -11,7 +11,8 @@ export interface Topic {
   id: string;
   title: string;
   description: string;
-  keyIdeas: { id: string; text: string }[];
+  // label names the area of an idea without giving away its content.
+  keyIdeas: { id: string; label?: string; text: string }[];
   misconceptions: string[];
 }
 

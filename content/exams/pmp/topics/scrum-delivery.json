@@ -1,18 +1,21 @@
 {
   "id": "scrum-delivery",
-  "title": "Scrum priorities · Practice",
-  "description": "Explain backlog accountability, protecting the Sprint Goal and inspecting progress. Three original practice questions.",
+  "title": "Scrum priorities",
+  "description": "Explain backlog accountability, protecting the Sprint Goal and inspecting progress.",
   "keyIdeas": [
     {
       "id": "scrum-order",
+      "label": "who orders the Product Backlog",
       "text": "The Product Owner is accountable for ordering the Product Backlog to support product value and the Product Goal, considering stakeholder input."
     },
     {
       "id": "scrum-goal",
+      "label": "changing scope during a Sprint",
       "text": "During a Sprint, Developers and the Product Owner can negotiate scope as they learn, but changes must not endanger the Sprint Goal or reduce quality."
     },
     {
       "id": "scrum-inspect",
+      "label": "what the Daily Scrum is for",
       "text": "Developers use the Daily Scrum to inspect progress toward the Sprint Goal and adapt their plan, rather than merely report status to a manager."
     }
   ],

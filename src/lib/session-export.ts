@@ -17,13 +17,15 @@ export function sessionExportText(data: SessionExport): string {
   data.notebook.forEach((note) => lines.push(note.claim, sourceLabel(note.sourceMessageId), ""));
   lines.push("SAVED EXAM ATTEMPTS — oldest first", "");
   if (!data.attempts.length) lines.push("No saved exam attempts.");
+  // Mirrors the review screen: correct options appear only once a topic is passed.
+  const passed = data.attempts.some((attempt) => attempt.score === attempt.total);
   data.attempts.forEach((attempt, index) => {
     lines.push(`Attempt ${index + 1}: ${attempt.score}/${attempt.total} — ${attempt.createdAt}`, "");
     const notes = new Map(attempt.notebookSnapshot.map((note) => [note.id, note]));
     attempt.results.forEach((result, questionIndex) => {
       lines.push(`${questionIndex + 1}. ${result.questionText}`);
       result.options.forEach((option) => lines.push(`  ${option.id}: ${option.text}`));
-      lines.push(`Student answer: ${result.answer ?? "No supported answer"}`, `Expected answer: ${result.correctAnswer}`,
+      lines.push(`Student answer: ${result.answer ?? "No supported answer"}`, `Correct answer: ${passed || result.correct ? result.correctAnswer : "hidden until the topic is passed"}`,
         `Result: ${result.correct ? "Correct" : result.guessed ? "No supported answer" : "Incorrect"}`, `Reasoning: ${result.reasoning}`);
       result.notebookRefs.forEach((id) => {
         const note = notes.get(id);

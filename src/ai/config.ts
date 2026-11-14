@@ -12,7 +12,7 @@ export const MAX_BUDGET_NANODOLLARS = 4_000_000_000;
 export function getAiConfig() {
   const apiKey = (process.env.OPENAI_API_KEY || process.env.LLM_API_KEY || "").trim();
   if (!apiKey) {
-    throw new ServiceError(503, "AI_NOT_CONFIGURED", "The AI student is not connected yet.");
+    throw new ServiceError(503, "AI_NOT_CONFIGURED", "Your student is taking a short break.");
   }
   const model = (process.env.OPENAI_MODEL || process.env.LLM_MODEL || ECONOMY_MODEL).trim();
   const budget = process.env.OPENAI_BUDGET_USD?.trim() || "4";
@@ -27,7 +27,7 @@ export function getAiConfig() {
     throw new ServiceError(503, "AI_CONFIG_INVALID", "The AI student needs a configuration update.");
   }
   if (budgetNanodollars === 0) {
-    throw new ServiceError(503, "AI_BUDGET_EXHAUSTED", "AI replies are paused because the demo budget is exhausted.");
+    throw new ServiceError(503, "AI_BUDGET_EXHAUSTED", "Your student is taking a short break because of high demand.");
   }
   return { apiKey, model, budgetNanodollars };
 }

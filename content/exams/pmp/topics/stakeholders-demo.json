@@ -1,18 +1,21 @@
 {
   "id": "stakeholders-demo",
-  "title": "Project stakeholders · Demo",
-  "description": "Teach your student who a project affects, how to communicate with them, and when to revisit the plan. Three original practice questions; not an official PMP exam.",
+  "title": "Project stakeholders",
+  "description": "Teach your student who a project affects, how to communicate with them, and when to revisit the plan.",
   "keyIdeas": [
     {
       "id": "identify-stakeholders",
+      "label": "who counts as a stakeholder",
       "text": "Identify people or groups affected by the project or able to influence it, including people outside the delivery team."
     },
     {
       "id": "tailor-communication",
+      "label": "how to communicate with each stakeholder",
       "text": "Understand each stakeholder's needs and influence, then agree on useful information, a suitable communication channel, and timing. Invite feedback."
     },
     {
       "id": "review-engagement",
+      "label": "when to revisit the engagement plan",
       "text": "Revisit stakeholders and the engagement plan throughout the project, especially when scope, people, or needs change. Update the plan using feedback."
     }
   ],

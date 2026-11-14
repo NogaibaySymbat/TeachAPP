@@ -9,7 +9,7 @@ const identifier = z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/);
 const examSchema = z.object({ id: identifier, title: z.string().min(1), description: z.string(), topics: z.array(identifier) });
 const topicSchema = z.object({
   id: identifier, title: z.string().min(1), description: z.string(),
-  keyIdeas: z.array(z.object({ id: identifier, text: z.string() })),
+  keyIdeas: z.array(z.object({ id: identifier, label: z.string().min(1).optional(), text: z.string() })),
   misconceptions: z.array(z.string()),
 });
 const questionsSchema = z.array(z.object({

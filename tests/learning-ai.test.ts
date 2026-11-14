@@ -13,7 +13,7 @@ import { gradeAnswers } from "../src/server/grading";
 
 const topic: Topic = {
   id: "stakeholders", title: "Stakeholder engagement", description: "A topic",
-  keyIdeas: [{ id: "idea-one", text: "SECRET AUTHOR-ONLY IDEA" }, { id: "idea-two", text: "Adapt communication." }],
+  keyIdeas: [{ id: "idea-one", text: "SECRET AUTHOR-ONLY IDEA" }, { id: "idea-two", label: "how to adapt communication", text: "Adapt communication." }],
   misconceptions: ["SECRET AUTHOR-ONLY MISCONCEPTION"],
 };
 const question: Question = {
@@ -162,10 +162,12 @@ describe("deterministic debrief", () => {
   it("uses the grading snapshot for failed questions and never calls the model", () => {
     const answers = [{ ...supported, correct: true }, { ...supported, questionId: secondQuestion.id, correct: false }];
     expect(buildDebriefFromContent(answers, [question, secondQuestion], topic.keyIdeas)).toEqual([
-      { questionId: secondQuestion.id, missingIdea: "Review and explain: Adapt communication." },
+      { questionId: secondQuestion.id, missingIdea: "Explain how to adapt communication in your own words, then retake." },
     ]);
     expect(completeJson).not.toHaveBeenCalled();
     expect(getTopic).not.toHaveBeenCalled();
+    // The debrief names the area to explain, never the idea's full text.
+    expect(JSON.stringify(buildDebriefFromContent(answers, [question, secondQuestion], topic.keyIdeas))).not.toMatch(/Adapt communication\.|SECRET AUTHOR-ONLY IDEA/);
   });
 
   it("returns no gaps for a passed exam without loading content or calling a model", async () => {
@@ -176,7 +178,7 @@ describe("deterministic debrief", () => {
 
   it("retains a convenience wrapper without spending API tokens", async () => {
     expect(await buildDebrief(topic.id, [{ ...supported, correct: false }], notebook)).toEqual([
-      { questionId: question.id, missingIdea: "Review and explain: SECRET AUTHOR-ONLY IDEA" },
+      { questionId: question.id, missingIdea: "Explain the idea behind this question in your own words, then retake." },
     ]);
     expect(completeJson).not.toHaveBeenCalled();
   });

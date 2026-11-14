@@ -181,7 +181,7 @@ function Conversation({ sessionId }: { sessionId: string }) {
       {data && <div className="session-grid">
         <section className="chat-panel" aria-labelledby="explanation-title">
           <div className="chat-heading"><div className="student-avatar" aria-hidden="true">AI</div><div><h2 id="explanation-title">Your AI student</h2><p>Explain, discuss, and build understanding together.</p></div></div>
-          {!data.ai.available ? <p className="notice">{data.ai.message} Your explanations can still be saved.</p> : (
+          {!data.ai.available ? <p className="notice">{data.ai.message} You can keep explaining; everything you write is saved.</p> : (
             <p className="session-guidance">Explain one idea at a time, then answer your student’s questions.</p>
           )}
           <div className="notebook-shortcut"><a href="#student-notebook">View notebook <span>{data.notebook.length}</span><span aria-hidden="true"> ↗</span></a><span>Updates after each explanation</span></div>

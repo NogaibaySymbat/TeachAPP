@@ -76,6 +76,11 @@ describe("readable session export", () => {
     expect(text).toContain("Replacement note.");
     expect(text).toContain("Conversation message [1]");
     expect(text).toContain(data.messages[0].text);
-    expect(text).toContain("Expected answer: a");
+    expect(text).toContain("Correct answer: a");
+  });
+  it("hides correct options for failed questions until the topic is passed", () => {
+    const failedOnly = sessionExportText({ ...empty, attempts: [attempt("before", [false])] });
+    expect(failedOnly).toContain("Correct answer: hidden until the topic is passed");
+    expect(failedOnly).not.toContain("Correct answer: a");
   });
 });
