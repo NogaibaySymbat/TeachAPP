@@ -16,10 +16,14 @@ A study workspace for exam preparation by explaining topics to an AI student. Th
 - The latest user decision removes login controls. Users immediately start lessons and reopen their own browser's history, notebook, and results. `/login` and `/auth/callback` redirect to the workspace.
 - A persistent random browser ID selects owner-scoped PostgreSQL data. Clearing browser data or changing devices loses access; the interface explains this. The client omits old cookies/bearer tokens, so the shared demo account is not silently reused. Existing account data stays stored separately.
 - Student replies require an owner identity, an OpenAI key, and remaining app budget. GPT-6 Luna uses short replies and a persistent conservative $4 allowance shared by all users. Three-second per-owner operation cooldowns and cached results limit repeat work. Errors preserve explanations and offer an explicit retry.
-- The labelled project-stakeholders demo includes three original practice questions. It is not an official PMP exam or a prediction of real exam readiness. A perfect practice score marks the topic as passed in this app.
+- The practice package includes four topics and twelve original questions: stakeholders, project risks, change control and Scrum delivery. It is not an official PMP exam or a prediction of real exam readiness. A perfect practice score marks the topic as passed in this app.
 - Notebook entries quote the user's own messages and retain source links. The examinee sees only notebook entries and public questions/options; code grades against answer keys, rejecting guesses and missing citations. Debriefs map incorrect answers to authored key ideas without another model call. Semantic relevance remains model-dependent.
 - Learning operations reuse completed results for the same explanation revision, reject stale concurrent work, and preserve prior results on failure. Attempts retain notebook/question snapshots for review. The app is deployed at https://teachapp.vercel.app.
 - The session composer offers browser speech-to-text in Russian or English after an explicit microphone click. Users stop, review, and add the dictated text to their draft before sending. Typed text remains intact, and unsupported browsers retain text entry. Browser recognition may process audio online; TeachAPP stores no audio and makes no OpenAI transcription call. One-minute capture and text limits, permission/error states, and cleanup on navigation are included.
+
+- The review compares the latest two saved attempts, including regressions and cited new notes. Changed question snapshots disable the delta; citations do not prove causality. Owner-only TXT/JSON downloads include saved messages, notebook and all available attempts. No import or cross-device access restoration is implemented. These features make no model calls.
+
+- History is a collapsible left sidebar, becoming a modal navigation drawer at narrow widths. Topics use a native selector. User and student messages have distinct alignment and timestamps; writing controls are grouped as a chat composer. The paper/green identity and existing voice input remain.
 
 ## Brand Commitments
 

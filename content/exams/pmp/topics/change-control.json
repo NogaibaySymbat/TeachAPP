@@ -1,0 +1,24 @@
+{
+  "id": "change-control",
+  "title": "Project changes · Practice",
+  "description": "Explain how a predictive project evaluates, approves and communicates changes to its agreed plan. Three original practice questions.",
+  "keyIdeas": [
+    {
+      "id": "change-impact",
+      "text": "On a predictive project, record proposed changes to the agreed scope and analyse their combined effects on schedule, cost, quality and risk before committing to them."
+    },
+    {
+      "id": "change-authority",
+      "text": "Follow the agreed change process and decision authority before implementing a change to a controlled baseline; a request alone is not approval."
+    },
+    {
+      "id": "change-record",
+      "text": "After a change is approved, update the affected baseline and working documents through the agreed process, communicate the decision and track implementation."
+    }
+  ],
+  "misconceptions": [
+    "A small-sounding scope change cannot affect schedule or cost.",
+    "Any stakeholder request automatically authorises work.",
+    "A verbal approval means project records no longer need updating."
+  ]
+}

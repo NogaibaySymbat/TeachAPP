@@ -1,18 +1,21 @@
 import type { SavedExamAttempt } from "@/lib/types";
+import { AttemptComparison } from "@/components/attempt-comparison";
 
 interface ExamReviewProps {
   attempt: SavedExamAttempt;
+  previousAttempt: SavedExamAttempt | null;
   stale: boolean;
   disabled: boolean;
   debriefError: string;
   onDebrief: () => void;
 }
 
-export function ExamReview({ attempt, stale, disabled, debriefError, onDebrief }: ExamReviewProps) {
+export function ExamReview({ attempt, previousAttempt, stale, disabled, debriefError, onDebrief }: ExamReviewProps) {
   const notes = new Map(attempt.notebookSnapshot.map((entry) => [entry.id, entry]));
   return <section className="exam-review" id="exam-review" tabIndex={-1} aria-labelledby="exam-review-title">
     <h2 id="exam-review-title">Your student scored {attempt.score}/{attempt.total}</h2>
     <p className="muted">{stale ? "This result uses an earlier notebook. Update the notebook and retake the exam to test your latest explanation." : attempt.score === attempt.total ? "Your student answered every question correctly and cited your notebook." : "Use the questions below to see what needs a clearer explanation."}</p>
+    <AttemptComparison previous={previousAttempt} current={attempt} />
     <ol className="exam-review-list">
       {attempt.results.map((result, index) => {
         const selected = result.options.find((option) => option.id === result.answer)?.text;

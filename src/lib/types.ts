@@ -116,11 +116,26 @@ export interface ExamResponse { attempt: SavedExamAttempt }
 export interface DebriefResponse { gaps: Gap[]; attemptId: string }
 export interface SessionResponse {
   session: Session;
+  topic: Pick<Topic, "id" | "title" | "description">;
   messages: Message[];
   notebook: NotebookEntry[];
   learning: LearningState;
   latestAttempt: SavedExamAttempt | null;
+  previousAttempt: SavedExamAttempt | null;
   ai: { available: boolean; message: string | null };
+}
+export interface SessionExport {
+  formatVersion: 1;
+  exportedAt: string;
+  topic: Pick<Topic, "id" | "title" | "description">;
+  session: Session;
+  messages: Message[];
+  notebook: NotebookEntry[];
+  notebookFresh: boolean;
+  // Oldest first; each attempt carries its own question and notebook snapshots.
+  attempts: SavedExamAttempt[];
+  // Before immutable question/notebook snapshots were introduced.
+  legacyAttempts: (ExamResult & { id: string; createdAt: string })[];
 }
 export interface SessionHistoryItem extends Session {
   topicTitle: string;

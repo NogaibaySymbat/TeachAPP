@@ -1,0 +1,80 @@
+[
+  {
+    "id": "scrum-delivery-order",
+    "text": "Three departments request different features for a volunteer scheduling product. In Scrum, who is accountable for ordering these requests in the Product Backlog?",
+    "options": [
+      {
+        "id": "a",
+        "text": "The Product Owner, considering value, the Product Goal and stakeholder input."
+      },
+      {
+        "id": "b",
+        "text": "Whichever department sends the most messages."
+      },
+      {
+        "id": "c",
+        "text": "Each department independently, without a shared order."
+      },
+      {
+        "id": "d",
+        "text": "The Scrum Master must personally choose the product priorities."
+      }
+    ],
+    "correctAnswer": "a",
+    "requiredIdeaIds": [
+      "scrum-order"
+    ]
+  },
+  {
+    "id": "scrum-delivery-goal",
+    "text": "Mid-Sprint, Developers discover that a planned integration needs a different implementation. The Sprint Goal remains useful. What is an appropriate response?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Reduce the quality standard so the original task list looks complete."
+      },
+      {
+        "id": "b",
+        "text": "Refuse any discussion because nothing may be learned during a Sprint."
+      },
+      {
+        "id": "c",
+        "text": "Replace the Sprint Goal with an unrelated urgent request."
+      },
+      {
+        "id": "d",
+        "text": "Discuss and renegotiate scope with the Product Owner while protecting the Sprint Goal and quality."
+      }
+    ],
+    "correctAnswer": "d",
+    "requiredIdeaIds": [
+      "scrum-goal"
+    ]
+  },
+  {
+    "id": "scrum-delivery-inspect",
+    "text": "At a Daily Scrum, Developers notice that a blocked dependency threatens the Sprint Goal. What should the event help them do?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Wait for the Scrum Master to assign every remaining task."
+      },
+      {
+        "id": "b",
+        "text": "Inspect the goal’s progress and adapt their upcoming plan together."
+      },
+      {
+        "id": "c",
+        "text": "Read yesterday’s task counts to a manager and keep the plan unchanged."
+      },
+      {
+        "id": "d",
+        "text": "Reorder the entire Product Backlog without the Product Owner."
+      }
+    ],
+    "correctAnswer": "b",
+    "requiredIdeaIds": [
+      "scrum-inspect"
+    ]
+  }
+]

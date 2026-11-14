@@ -1,25 +1,17 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { api } from "@/lib/api";
 import type { SessionHistoryResponse } from "@/lib/types";
 
 function formatDate(value: string) {
-  return new Intl.DateTimeFormat("ru", { dateStyle: "medium", timeStyle: "short" }).format(new Date(value));
+  return new Intl.DateTimeFormat("en", { dateStyle: "medium", timeStyle: "short" }).format(new Date(value));
 }
 
-export function SessionHistory() {
-  return (
-    <section className="session-history" aria-labelledby="history-title" lang="ru">
-      <div className="section-heading"><h2 id="history-title">История занятий</h2></div>
-      <p className="browser-note">История доступна в этом браузере. После очистки его данных или в другом браузере она не появится.</p>
-      <BrowserHistory />
-    </section>
-  );
-}
-
-function BrowserHistory() {
+export function SessionHistory({ onNavigate }: { onNavigate?: () => void }) {
+  const pathname = usePathname();
   const [history, setHistory] = useState<SessionHistoryResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -43,7 +35,7 @@ function BrowserHistory() {
     } catch (cause) {
       if (!signal?.aborted && sequence === loadSequence.current) {
         setRetryOffset(offset);
-        setError(cause instanceof Error ? cause.message : "Не удалось загрузить историю занятий. Попробуйте ещё раз.");
+        setError(cause instanceof Error ? cause.message : "History could not be loaded. Try again.");
       }
     } finally {
       if (!signal?.aborted && sequence === loadSequence.current) setLoading(false);
@@ -64,31 +56,32 @@ function BrowserHistory() {
       controller.abort();
       window.removeEventListener("study-history-updated", refresh);
     };
-  }, [load]);
+  }, [load, pathname]);
 
   return (
-    <div aria-busy={loading}>
+    <section className="session-history" aria-labelledby="history-title" aria-busy={loading}>
+      <h2 id="history-title">Recent sessions</h2>
       {error && (
         <div className="notice error" role="alert">
           <p>{error}</p>
-          <button className="secondary" onClick={() => void load(retryOffset)} disabled={loading}>Попробовать ещё раз</button>
+          <button className="secondary" onClick={() => void load(retryOffset)} disabled={loading}>Try again</button>
         </div>
       )}
-      {!history && loading && <p className="empty-state" role="status">Загружаем историю занятий…</p>}
+      {!history && loading && <p className="empty-state" role="status">Loading history…</p>}
       {history?.sessions.length === 0 && (
-        <div className="empty-state"><h3>У вас пока нет занятий</h3><p>Начните занятие с доступной темы. Оно появится здесь, и вы сможете вернуться к нему позже.</p></div>
+        <div className="empty-state"><h3>No sessions yet</h3><p>Choose a topic to start. Your conversation will appear here.</p></div>
       )}
       {!!history?.sessions.length && (
         <ul className="session-history-list">
           {history.sessions.map((session) => (
             <li key={session.id}>
-              <Link href={`/session/${session.id}`} className="session-history-link">
+              <Link href={`/session/${session.id}`} className="session-history-link" aria-current={pathname === `/session/${session.id}` ? "page" : undefined} onClick={onNavigate}>
                 <div>
                   <h3>{session.topicTitle}</h3>
-                  <p>Последняя активность: <time dateTime={session.lastActivityAt}>{formatDate(session.lastActivityAt)}</time></p>
-                  <p>Сообщений: {session.messageCount}</p>
+                  <p><time dateTime={session.lastActivityAt}>{formatDate(session.lastActivityAt)}</time></p>
+                  <p>{session.messageCount} messages</p>
                 </div>
-                <span className="session-history-result">{session.latestAttempt ? `Последний экзамен: ${session.latestAttempt.score}/${session.latestAttempt.total}` : "Экзамен ещё не пройден"}</span>
+                <span className="session-history-result">{session.latestAttempt ? `Exam: ${session.latestAttempt.score}/${session.latestAttempt.total}` : "Not examined yet"}</span>
               </Link>
             </li>
           ))}
@@ -96,9 +89,9 @@ function BrowserHistory() {
       )}
       {history?.nextOffset != null && !error && (
         <button className="secondary session-history-more" onClick={() => void load(history.nextOffset ?? 0)} disabled={loading}>
-          {loading ? "Загружаем…" : "Показать ещё"}
+          {loading ? "Loading…" : "Show more"}
         </button>
       )}
-    </div>
+    </section>
   );
 }

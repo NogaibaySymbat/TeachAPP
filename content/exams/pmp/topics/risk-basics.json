@@ -1,0 +1,24 @@
+{
+  "id": "risk-basics",
+  "title": "Project risks · Practice",
+  "description": "Explain how to identify uncertainty, choose responses and keep risks under review. Three original practice questions.",
+  "keyIdeas": [
+    {
+      "id": "risk-assess",
+      "text": "Record uncertain events early and assess both their likelihood and their effect on project objectives to decide which need attention."
+    },
+    {
+      "id": "risk-response",
+      "text": "Choose a proportionate response, name a responsible owner and define warning signs and actions before a threat occurs."
+    },
+    {
+      "id": "risk-review",
+      "text": "Revisit risks throughout delivery, check whether responses work and update the register when conditions or warning signs change."
+    }
+  ],
+  "misconceptions": [
+    "The most likely risk must always be the most important risk.",
+    "A risk register removes the need for response owners.",
+    "Risks only need to be assessed at kickoff."
+  ]
+}

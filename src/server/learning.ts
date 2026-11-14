@@ -1,5 +1,5 @@
 import "server-only";
-import type { LearningState, NotebookResponse, SavedExamAttempt } from "@/lib/types";
+import type { LearningState, NotebookResponse, SavedExamAttempt, SessionExport } from "@/lib/types";
 import { extractNotebook } from "@/ai/notebook";
 import { answerQuestions } from "@/ai/examinee";
 import { buildDebriefFromContent } from "@/ai/debrief";
@@ -11,12 +11,28 @@ import { claimLearning, failLearning, finishExam, finishNotebook, getLearningSna
 
 export async function getSessionLearning(userId: string, sessionId: string) {
   const snapshot = await getLearningSnapshot(userId, sessionId);
-  const questions = await getQuestions(snapshot.session.topicId);
+  const [questions, topic] = await Promise.all([getQuestions(snapshot.session.topicId), getTopic(snapshot.session.topicId)]);
   const learning: LearningState = {
     revision: snapshot.revision, notebookRevision: snapshot.notebookRevision,
     notebookFresh: snapshot.revision === snapshot.notebookRevision, questionCount: questions.length,
   };
-  return { session: snapshot.session, messages: snapshot.messages, notebook: snapshot.notebook, learning, latestAttempt: snapshot.latestAttempt };
+  return {
+    session: snapshot.session, topic: { id: topic.id, title: topic.title, description: topic.description },
+    messages: snapshot.messages, notebook: snapshot.notebook, learning,
+    latestAttempt: snapshot.latestAttempt, previousAttempt: snapshot.previousAttempt,
+  };
+}
+export async function exportSession(userId: string, sessionId: string): Promise<SessionExport> {
+  // Ownership and all saved data are read inside one consistent transaction.
+  const snapshot = await getLearningSnapshot(userId, sessionId, true);
+  const topic = await getTopic(snapshot.session.topicId);
+  return {
+    formatVersion: 1, exportedAt: new Date().toISOString(),
+    topic: { id: topic.id, title: topic.title, description: topic.description },
+    session: snapshot.session, messages: snapshot.messages, notebook: snapshot.notebook,
+    notebookFresh: snapshot.revision === snapshot.notebookRevision,
+    attempts: [...snapshot.attempts].reverse(), legacyAttempts: snapshot.legacyAttempts,
+  };
 }
 export async function updateNotebook(userId: string, sessionId: string): Promise<NotebookResponse> {
   const session = await findSession(userId, sessionId);

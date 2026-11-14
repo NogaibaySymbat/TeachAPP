@@ -11,7 +11,7 @@ vi.mock("../src/ai/notebook", () => ({ extractNotebook }));
 vi.mock("../src/ai/examinee", () => ({ answerQuestions }));
 
 import { getQuestions } from "../src/server/content";
-import { getSessionLearning, runPracticeExam, updateNotebook } from "../src/server/learning";
+import { exportSession, getSessionLearning, runPracticeExam, updateNotebook } from "../src/server/learning";
 import { claimLearning, explanationRevision, failLearning, finishNotebook, getLearningSnapshot, getSavedDebrief } from "../src/server/repositories/learning";
 import { getMessages, saveMessage } from "../src/server/repositories/messages";
 import { getNotebook } from "../src/server/repositories/notebook";
@@ -112,6 +112,42 @@ describe.skipIf(!process.env.TEST_DATABASE_URL)("durable learning workflow", () 
     expect(extractNotebook).not.toHaveBeenCalled();
     expect((await getTopicSummaries(userId))[0]).toMatchObject({ status: "failed", bestScore: 0 });
     expect(await getProgressGaps(userId)).toEqual(attempt.gaps);
+  });
+
+  it("reopens two attempts in order and exports the whole session without new generation", async () => {
+    const { userId, sessionId } = await setup(null);
+    const fresh = await getSessionLearning(userId, sessionId);
+    expect(fresh.previousAttempt).toBeNull();
+    expect(fresh.topic.title).toContain("stakeholders");
+    expect(JSON.stringify(await exportSession(userId, sessionId))).not.toContain("correctAnswer");
+    await updateNotebook(userId, sessionId);
+    const first = await runPracticeExam(userId, sessionId);
+    await saveMessage(userId, sessionId, teaching);
+    await clearCooldown(sessionId);
+    await updateNotebook(userId, sessionId);
+    const second = await runPracticeExam(userId, sessionId);
+    await runPracticeExam(userId, sessionId); // A cached retry must not create a third attempt.
+    const saved = await getSessionLearning(userId, sessionId);
+    expect(saved.latestAttempt?.id).toBe(second.id);
+    expect(saved.previousAttempt?.id).toBe(first.id);
+    expect(saved.previousAttempt?.score).toBe(0);
+    expect(saved.latestAttempt?.score).toBe(3);
+    // Pre-snapshot records must remain in the download without fabricated evidence.
+    const legacyId = randomUUID();
+    await database.query("INSERT INTO exam_attempts (id, session_id, score, total) VALUES ($1, $2, 0, 3)", [legacyId, sessionId]);
+    const calls = answerQuestions.mock.calls.length;
+    await saveMessage(userId, sessionId, "A draft saved after the last exam.");
+    const exported = await exportSession(userId, sessionId);
+    expect(exported.attempts.map((a) => a.id)).toEqual([first.id, second.id]);
+    expect(exported.attempts[0].notebookSnapshot).toEqual([]);
+    expect(exported.attempts[1].notebookSnapshot).toEqual(second.notebookSnapshot);
+    expect(exported.notebookFresh).toBe(false);
+    expect(exported.legacyAttempts).toMatchObject([{ id: legacyId, score: 0, total: 3, results: [] }]);
+    expect(exported.messages).toHaveLength(2);
+    expect(answerQuestions.mock.calls.length).toBe(calls);
+    const stranger = await setup(null);
+    await expect(exportSession(stranger.userId, sessionId)).rejects.toMatchObject({ code: "SESSION_NOT_FOUND" });
+    expect(JSON.stringify(exported)).not.toContain(userId);
   });
 
   it("serializes duplicate claims, requires current notebooks and keeps independent student replies compatible", async () => {

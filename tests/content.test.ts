@@ -6,6 +6,25 @@ import { getQuestions, getTopic, getTopics } from "../src/server/content";
 import { gradeAnswers } from "../src/server/grading";
 
 describe("authored practice content", () => {
+  it("loads all four topics with three distinct questions covering their authored ideas", async () => {
+    const topics = await getTopics();
+    expect(topics.map((topic) => topic.id)).toEqual(["stakeholders-demo", "risk-basics", "change-control", "scrum-delivery"]);
+    const questionIds = new Set<string>();
+    for (const topic of topics) {
+      const questions = await getQuestions(topic.id);
+      expect(questions).toHaveLength(3);
+      expect(new Set(questions.flatMap((question) => question.requiredIdeaIds))).toEqual(new Set(topic.keyIdeas.map((idea) => idea.id)));
+      for (const question of questions) {
+        expect(questionIds.has(question.id)).toBe(false);
+        questionIds.add(question.id);
+        expect(question.options).toHaveLength(4);
+        expect(question.options.some((option) => option.id === question.correctAnswer)).toBe(true);
+        expect(JSON.stringify(question)).not.toContain("TODO");
+      }
+      expect(gradeAnswers(questions, [], []).score).toBe(0);
+    }
+    expect(questionIds.size).toBe(12);
+  });
   it("loads the advertised demo through the manifest with complete answer and idea references", async () => {
     const topics = await getTopics();
     expect(topics.some((topic) => topic.id === "stakeholders-demo")).toBe(true);

@@ -1,7 +1,7 @@
 import "server-only";
 import { createHash, randomUUID } from "node:crypto";
 import type { PoolClient } from "pg";
-import type { ExamResult, Gap, Message, NotebookEntry, Question, SavedExamAttempt, Session, Topic } from "@/lib/types";
+import type { ExamResult, Gap, Message, NotebookEntry, Question, SavedExamAttempt, Session, SessionExport, Topic } from "@/lib/types";
 import { getDatabase } from "../db";
 import { ServiceError } from "../errors";
 import { serializeMessage, type MessageRow } from "./messages";
@@ -14,7 +14,9 @@ interface AttemptRow {
 }
 export interface LearningSnapshot {
   session: Session; messages: Message[]; notebook: NotebookEntry[]; notebookRevision: string | null;
-  revision: string; latestAttempt: SavedExamAttempt | null;
+  revision: string; latestAttempt: SavedExamAttempt | null; previousAttempt: SavedExamAttempt | null;
+  attempts: SavedExamAttempt[];
+  legacyAttempts: SessionExport["legacyAttempts"];
 }
 export interface LearningClaim {
   kind: "claimed"; operation: Operation; revision: string; attemptToken: string;
@@ -40,43 +42,59 @@ async function ownedSession(client: PoolClient, userId: string, id: string, lock
   if (!result.rows[0]) throw notFound();
   return result.rows[0];
 }
-async function readAttempt(client: PoolClient, sessionId: string, revision?: string, attemptId?: string): Promise<SavedExamAttempt | null> {
+async function readAttempts(client: PoolClient, sessionId: string, revision?: string, attemptId?: string, limit: number | null = 1): Promise<SavedExamAttempt[]> {
   const result = await client.query<AttemptRow>(
     `SELECT id, created_at, learning_revision, score, total, notebook_snapshot, questions_snapshot, key_ideas_snapshot, gaps
      FROM exam_attempts WHERE session_id = $1 AND learning_revision IS NOT NULL
      AND ($2::text IS NULL OR learning_revision = $2) AND ($3::uuid IS NULL OR id = $3)
-     ORDER BY created_at DESC, id DESC LIMIT 1`, [sessionId, revision ?? null, attemptId ?? null],
+     ORDER BY created_at DESC, id DESC LIMIT $4`, [sessionId, revision ?? null, attemptId ?? null, limit],
   );
-  const row = result.rows[0];
-  if (!row) return null;
+  if (!result.rows.length) return [];
   const answers = await client.query<{
-    question_id: string; answer: string | null; correct: boolean; guessed: boolean; reasoning: string; notebook_refs: string[];
-  }>("SELECT question_id, answer, correct, guessed, reasoning, notebook_refs FROM exam_answers WHERE attempt_id = $1", [row.id]);
-  return {
+    attempt_id: string; question_id: string; answer: string | null; correct: boolean; guessed: boolean; reasoning: string; notebook_refs: string[];
+  }>("SELECT attempt_id, question_id, answer, correct, guessed, reasoning, notebook_refs FROM exam_answers WHERE attempt_id = ANY($1::uuid[])", [result.rows.map((row) => row.id)]);
+  return result.rows.map((row) => ({
     id: row.id, createdAt: row.created_at.toISOString(), revision: row.learning_revision, score: row.score, total: row.total,
     notebookSnapshot: row.notebook_snapshot, gaps: row.gaps,
     results: row.questions_snapshot.map((question) => {
-      const answer = answers.rows.find((answer) => answer.question_id === question.id);
+      const answer = answers.rows.find((answer) => answer.attempt_id === row.id && answer.question_id === question.id);
       if (!answer) throw new Error("Saved practice attempt is incomplete.");
       return {
         questionId: question.id, questionText: question.text, options: question.options, correctAnswer: question.correctAnswer,
         answer: answer.answer, correct: answer.correct, guessed: answer.guessed, reasoning: answer.reasoning, notebookRefs: answer.notebook_refs,
       };
     }),
-  };
+  }));
 }
-export async function getLearningSnapshot(userId: string, sessionId: string): Promise<LearningSnapshot> {
+async function readAttempt(client: PoolClient, sessionId: string, revision?: string, attemptId?: string): Promise<SavedExamAttempt | null> {
+  return (await readAttempts(client, sessionId, revision, attemptId))[0] ?? null;
+}
+async function readLegacyAttempts(client: PoolClient, sessionId: string): Promise<SessionExport["legacyAttempts"]> {
+  const result = await client.query<{ id: string; created_at: Date; score: number; total: number; results: ExamResult["results"] }>(
+    `SELECT a.id, a.created_at, a.score, a.total,
+      COALESCE(jsonb_agg(jsonb_build_object('questionId', e.question_id, 'answer', e.answer,
+        'correct', e.correct, 'guessed', e.guessed, 'reasoning', e.reasoning, 'notebookRefs', e.notebook_refs)
+        ORDER BY e.question_id) FILTER (WHERE e.question_id IS NOT NULL), '[]'::jsonb) AS results
+     FROM exam_attempts a LEFT JOIN exam_answers e ON e.attempt_id = a.id
+     WHERE a.session_id = $1 AND a.learning_revision IS NULL
+     GROUP BY a.id ORDER BY a.created_at, a.id`, [sessionId],
+  );
+  return result.rows.map((row) => ({ id: row.id, createdAt: row.created_at.toISOString(), score: row.score, total: row.total, results: row.results }));
+}
+export async function getLearningSnapshot(userId: string, sessionId: string, includeAllAttempts = false): Promise<LearningSnapshot> {
   const client = await getDatabase().connect();
   try {
     await client.query("BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY");
     const row = await ownedSession(client, userId, sessionId);
     const messages = await readMessages(client, sessionId);
     const notebook = await readNotebook(client, sessionId);
-    const latestAttempt = await readAttempt(client, sessionId);
+    const attempts = await readAttempts(client, sessionId, undefined, undefined, includeAllAttempts ? null : 2);
+    const legacyAttempts = includeAllAttempts ? await readLegacyAttempts(client, sessionId) : [];
     await client.query("COMMIT");
     return {
       session: { id: row.id, topicId: row.topic_id, startedAt: row.started_at.toISOString(), finishedAt: row.finished_at?.toISOString() ?? null },
-      messages, notebook, notebookRevision: row.notebook_revision, revision: explanationRevision(messages), latestAttempt,
+      messages, notebook, notebookRevision: row.notebook_revision, revision: explanationRevision(messages),
+      latestAttempt: attempts[0] ?? null, previousAttempt: attempts[1] ?? null, attempts, legacyAttempts,
     };
   } catch (error) { await client.query("ROLLBACK"); throw error; }
   finally { client.release(); }

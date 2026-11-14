@@ -6,6 +6,7 @@ import { VoiceInput } from "@/components/voice-input";
 import { SpeakMessageButton, VoiceOutputToggle, useStudentVoice } from "@/components/voice-output";
 import { LearningPanel } from "@/components/learning-panel";
 import { ExamReview } from "@/components/exam-review";
+import { SessionExportControls } from "@/components/session-export";
 import { api } from "@/lib/api";
 import type { DebriefResponse, ExamResponse, Message, NotebookResponse, SendMessageResponse, SessionResponse } from "@/lib/types";
 
@@ -48,7 +49,11 @@ function Conversation({ sessionId }: { sessionId: string }) {
     return () => { active = false; };
   }, [path, retry]);
 
-  useEffect(() => { end.current?.scrollIntoView({ block: "nearest" }); }, [data?.messages.length, phase]);
+  useEffect(() => {
+    // Keep new messages in the transcript without moving the whole page on load.
+    const transcript = end.current?.parentElement;
+    if (transcript && !window.location.hash.startsWith("#message-")) transcript.scrollTop = transcript.scrollHeight;
+  }, [data?.messages.length, replying]);
 
   function appendMessage(message: Message) {
     setData((current) => current && !current.messages.some((item) => item.id === message.id)
@@ -101,7 +106,9 @@ function Conversation({ sessionId }: { sessionId: string }) {
     setDebriefError("");
     try {
       const result = await api<ExamResponse>(`${path}/exam`, { method: "POST", body: "{}" });
-      setData((current) => current ? { ...current, latestAttempt: result.attempt } : current);
+      setData((current) => current ? { ...current, latestAttempt: result.attempt,
+        previousAttempt: current.latestAttempt?.id === result.attempt.id ? current.previousAttempt : current.latestAttempt,
+      } : current);
       await refreshSession();
       window.dispatchEvent(new Event("study-history-updated"));
       requestAnimationFrame(() => { document.getElementById("exam-review")?.scrollIntoView({ block: "start" }); });
@@ -146,6 +153,7 @@ function Conversation({ sessionId }: { sessionId: string }) {
       setData((current) => current ? { ...current, learning: { ...current.learning, notebookFresh: false } } : current);
       setText("");
       setSaved(true);
+      window.dispatchEvent(new Event("study-history-updated"));
       if (canReply) {
         setPhase("working");
         await Promise.all([requestReply(message.id), requestNotebook()]);
@@ -159,21 +167,22 @@ function Conversation({ sessionId }: { sessionId: string }) {
   return (
     <div className="session-workspace">
       <Link className="back-link" href="/">Back to topics</Link>
-      <h1>Your teaching session</h1>
+      <h1>{data?.topic?.title ?? "Your teaching session"}</h1>
       <p className="session-intro">Put the idea into your own words. Your student will ask about what needs explaining.</p>
+      {data && <SessionExportControls sessionId={sessionId} disabled={phase !== "idle" || voiceActive} />}
       {error && <div className="notice error" role="alert"><p>{error}</p>{!data && <button className="secondary" onClick={() => { setError(""); setRetry((value) => value + 1); }}>Try again</button>}</div>}
       {!data && !error && <p role="status">Opening your session…</p>}
       {data && <div className="session-grid">
-        <section aria-labelledby="explanation-title">
-          <h2 id="explanation-title">Teach your student</h2>
+        <section className="chat-panel" aria-labelledby="explanation-title">
+          <div className="chat-heading"><div className="student-avatar" aria-hidden="true">AI</div><div><h2 id="explanation-title">Your AI student</h2><p>Explain, discuss, and build understanding together.</p></div></div>
           {!data.ai.available ? <p className="notice">{data.ai.message} Your explanations can still be saved.</p> : (
             <p className="session-guidance">Explain one idea at a time, then answer your student’s questions.</p>
           )}
           <VoiceOutputToggle voice={studentVoice} />
           <div className="transcript" role="log" aria-label="Session messages" aria-live="polite">
-            {data.messages.length === 0 && <div className="empty-state"><h3>Start with the big idea.</h3><p>What would you tell someone meeting this topic for the first time?</p></div>}
-            {data.messages.map((message) => <article className={`message message-${message.role}`} key={message.id} id={`message-${message.id}`}><strong>{message.role === "user" ? "You" : "AI student"}</strong><p>{message.text}</p>{message.role === "student" && <SpeakMessageButton voice={studentVoice} messageId={message.id} text={message.text} />}</article>)}
-            {replying && <p className="student-thinking" role="status">Your student is reading your explanation…</p>}
+            {data.messages.length === 0 && <div className="chat-empty"><h3>Let’s talk about this topic.</h3><p>You teach; your AI student asks questions. Start with one idea in your own words.</p><span>Write your first message below</span></div>}
+            {data.messages.map((message) => <article className={`message message-${message.role}`} key={message.id} id={`message-${message.id}`}><div className="message-meta"><strong>{message.role === "user" ? "You" : "AI student"}</strong><time dateTime={message.createdAt}>{new Date(message.createdAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</time></div><p>{message.text}</p>{message.role === "student" && <SpeakMessageButton voice={studentVoice} messageId={message.id} text={message.text} />}</article>)}
+            {replying && <div className="student-thinking" role="status"><span className="thinking-dots" aria-hidden="true"><i /><i /><i /></span>Your student is reading and replying…</div>}
             <div ref={end} />
           </div>
           {unanswered && canReply && phase === "idle" && <div className={`notice reply-recovery${replyError ? " error" : ""}`} role={replyError ? "alert" : "status"}>
@@ -181,20 +190,20 @@ function Conversation({ sessionId }: { sessionId: string }) {
             {replyError && <p>Your explanation is saved; you do not need to send it again.</p>}
             <button className="secondary" disabled={voiceActive} onClick={() => void retryReply(unanswered.id)}>{replyError ? "Try student reply again" : "Get student reply"}</button>
           </div>}
-          <form onSubmit={(event) => void send(event)}>
-            <label htmlFor="explanation">Explain the topic</label>
-            <textarea ref={explanation} id="explanation" value={text} onChange={(event) => { setText(event.target.value); setSaved(false); }} maxLength={4000} rows={5} placeholder="The way I understand it…" disabled={phase !== "idle" || voiceActive} aria-describedby="save-status" />
+          <form className="chat-composer" onSubmit={(event) => void send(event)}>
+            <label htmlFor="explanation">Message your student</label>
+            <textarea ref={explanation} id="explanation" value={text} onChange={(event) => { setText(event.target.value); setSaved(false); }} maxLength={4000} rows={3} placeholder="Explain an idea or answer your student…" disabled={phase !== "idle" || voiceActive} aria-describedby="save-status" onKeyDown={(event) => { if (event.key === "Enter" && !event.shiftKey && !event.nativeEvent.isComposing) { event.preventDefault(); event.currentTarget.form?.requestSubmit(); } }} />
             <VoiceInput value={text} disabled={phase !== "idle"} onActiveChange={setVoiceActive} onAppend={(dictated) => {
               setText((current) => `${current}${current && !/\s$/u.test(current) ? " " : ""}${dictated}`);
               setSaved(false);
               explanation.current?.focus();
             }} />
-            <div className="composer-actions"><span id="save-status" role="status">{phase !== "idle" ? activity : voiceActive ? "Stop dictation to review your words before sending." : saved ? "Explanation saved." : "Up to 4,000 characters. Write in any language."}</span><button type="submit" disabled={phase !== "idle" || voiceActive || !text.trim()}>{phase !== "idle" ? "Working…" : canReply ? "Send explanation" : "Save explanation"}</button></div>
+            <div className="composer-actions"><span id="save-status" role="status">{phase !== "idle" ? activity : voiceActive ? "Stop dictation to review your words before sending." : saved ? "Explanation saved." : "Enter to send · Shift + Enter for a new line. Up to 4,000 characters."}</span><button type="submit" disabled={phase !== "idle" || voiceActive || !text.trim()}>{phase !== "idle" ? "Working…" : canReply ? "Send message" : "Save message"}</button></div>
           </form>
         </section>
         <LearningPanel data={data} disabled={phase !== "idle" || voiceActive} updating={updatingNotebook} examining={phase === "exam"} error={learningError} onUpdate={() => void updateNotebook()} onExam={() => void runExam()} />
       </div>}
-      {data?.latestAttempt && <ExamReview attempt={data.latestAttempt} stale={!data.learning.notebookFresh || data.latestAttempt.revision !== data.learning.revision} disabled={phase !== "idle" || voiceActive} debriefError={debriefError} onDebrief={() => void loadDebrief()} />}
+      {data?.latestAttempt && <ExamReview attempt={data.latestAttempt} previousAttempt={data.previousAttempt ?? null} stale={!data.learning.notebookFresh || data.latestAttempt.revision !== data.learning.revision} disabled={phase !== "idle" || voiceActive} debriefError={debriefError} onDebrief={() => void loadDebrief()} />}
     </div>
   );
 }

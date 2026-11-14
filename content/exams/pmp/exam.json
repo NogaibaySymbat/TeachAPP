@@ -1,6 +1,11 @@
 {
   "id": "pmp",
   "title": "PMP",
-  "description": "Prepare by explaining a topic to your student.",
-  "topics": ["stakeholders-demo"]
+  "description": "Four short practice topics. Learn by explaining; these original questions are not an official PMP exam.",
+  "topics": [
+    "stakeholders-demo",
+    "risk-basics",
+    "change-control",
+    "scrum-delivery"
+  ]
 }

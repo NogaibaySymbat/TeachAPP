@@ -1,0 +1,80 @@
+[
+  {
+    "id": "risk-basics-assess",
+    "text": "A museum digitisation project may face a scanner delivery delay. A team member also reports a possible licensing restriction. Neither has happened. What should the team do to decide which needs attention first?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Handle whichever concern was reported first."
+      },
+      {
+        "id": "b",
+        "text": "Record both and assess their likelihood and potential effect on the project."
+      },
+      {
+        "id": "c",
+        "text": "Treat both as confirmed delays and move the deadline immediately."
+      },
+      {
+        "id": "d",
+        "text": "Wait until one happens before discussing it."
+      }
+    ],
+    "correctAnswer": "b",
+    "requiredIdeaIds": [
+      "risk-assess"
+    ]
+  },
+  {
+    "id": "risk-basics-response",
+    "text": "A remote research project depends on one transport route that may close. The team has already judged the threat significant. Which response plan is most actionable?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Ask everyone to be careful and leave ownership open."
+      },
+      {
+        "id": "b",
+        "text": "Remove the threat from the register once it is discussed."
+      },
+      {
+        "id": "c",
+        "text": "Assign an owner, agree on warning signs and arrange a feasible alternative route."
+      },
+      {
+        "id": "d",
+        "text": "Promise stakeholders that the route will never close."
+      }
+    ],
+    "correctAnswer": "c",
+    "requiredIdeaIds": [
+      "risk-response"
+    ]
+  },
+  {
+    "id": "risk-basics-review",
+    "text": "A team arranged a backup supplier, but the supplier has now changed its delivery conditions. What should happen to the existing risk plan?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Reassess the exposure, check the response and update the register and actions."
+      },
+      {
+        "id": "b",
+        "text": "Keep it unchanged because a response was already approved."
+      },
+      {
+        "id": "c",
+        "text": "Close the risk because two suppliers have been contacted."
+      },
+      {
+        "id": "d",
+        "text": "Wait until project closure to review the change."
+      }
+    ],
+    "correctAnswer": "a",
+    "requiredIdeaIds": [
+      "risk-review"
+    ]
+  }
+]

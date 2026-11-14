@@ -1,8 +1,10 @@
 # TeachAPP
 
+Team and agent handoff: [TEAM_HANDOFF.md](TEAM_HANDOFF.md) (Russian). Claude Code entry point: [CLAUDE.md](CLAUDE.md). The handoff distinguishes the current release from historical plans and verification records below.
+
 A study workspace where people prepare by explaining topics to an AI student. The student will use only their notebook when taking practice questions.
 
-**Current scope:** frontend and backend, browser-owned history without login, browser voice input, and the explain → notebook → student exam → debrief cycle. OpenAI powers student replies, notebook extraction, and exam answers with a persistent spending guard. Grading and the debrief use code and authored content. The demonstration topic has three original practice questions; it is not an official PMP test. No generated replies or results are simulated.
+**Current scope:** frontend and backend, browser-owned history without login, browser voice input, and the explain → notebook → student exam → debrief cycle. OpenAI powers student replies, notebook extraction, and exam answers with a persistent spending guard. Grading and the debrief use code and authored content. The practice package has four topics and twelve original questions; it is not an official PMP test. No generated replies or results are simulated.
 
 Production URL: **https://teachapp.vercel.app**. The current interface has no sign-in screen: history, student replies, notebook extraction, exam, and debrief use the browser identity. OpenAI `gpt-6-luna` is active under the shared $4 cap. Browser checks and the production ledger/cache verification passed.
 
@@ -34,7 +36,7 @@ psql 'YOUR_POSTGRES_CONNECTION_STRING' -v ON_ERROR_STOP=1 -f db/schema.sql
 npm run dev
 ```
 
-Open http://localhost:3000. Without a database, the app still opens; persistence endpoints return an error. The initial topic is a demonstration about project stakeholders with three original practice questions, not a complete PMP study package or official exam.
+Open http://localhost:3000. Without a database, the app still opens; persistence endpoints return an error. The package covers stakeholders, project risks, change control and Scrum delivery, with three original questions per topic. It is a small practice package, not a complete PMP course or official exam.
 
 ## OpenAI student replies
 
@@ -116,11 +118,33 @@ TEST_DATABASE_URL='YOUR_TEST_POSTGRES_CONNECTION_STRING' npm test
 
 The integration suite applies the schema and removes only its own test users and budget records. It is skipped when `TEST_DATABASE_URL` is absent. Provider tests mock HTTP and do not spend API credits; a live smoke test requires a configured key.
 
+## History sidebar and conversation layout — 15 November 2026
+
+Published at https://teachapp.vercel.app as `dpl_2bopWWkw2iwWTejVfdKMHN1MjNjY` on 15 November 2026. No Git commit or push was made.
+
+History opens from the panel button beside TeachAPP on every study page. Desktop uses an adjacent sidebar; narrow screens use a native modal drawer with close controls and focus management. The active session is highlighted, and history refreshes after creating a lesson, saving an explanation, or completing an exam. Existing browser ownership and storage keys are unchanged.
+
+The home page uses a native topic selector and shows only the selected topic's description and progress. The conversation distinguishes right-aligned user messages from left-aligned AI student replies, shows timestamps and waiting status, and groups writing controls in a composer. Enter sends; Shift+Enter inserts a newline; IME composition does not submit. VoiceInput and the backend are unchanged.
+
+Verification: all 275 tests passed with isolated PostgreSQL; TypeScript, scoped ESLint and production build passed. Safari verified topic selection, session creation, sidebar refresh, active selection, and narrow drawer navigation. Native automation could not reliably focus the textarea, so keyboard submission still needs a direct manual check. Narrow verification used desktop zoom rather than a physical phone.
+
+## Comparison, practice topics and export — 15 November 2026
+
+Published at https://teachapp.vercel.app as `dpl_8UpBQBQwzu3dTHA4BUNbqcJBZbra`. Public production checks confirmed four topics, export of an existing saved attempt, and HTTP 404 for another browser. These checks made no model calls; no data or `ai_usage` migration/reset was performed.
+
+The review compares the latest two saved attempts in the same session: score change, newly correct and regressed answers, and new notebook notes cited in improved answers. Comparisons use immutable snapshots; a changed question, option or answer key disables the score delta. A first attempt shows guidance to explain more and retry. Cited notes do not prove what caused an improvement.
+
+The package now contains four topics and twelve original questions: project stakeholders, project risks, change control and Scrum delivery. See `content/exams/pmp/README.md` for scope and reference sources.
+
+**Download this session** saves TXT for reading or JSON for reuse. Downloads include saved messages, the current notebook and every saved attempt, including available legacy results. Unsaved drafts are excluded. Downloads do not restore browser access; importing a file is not implemented. The owner-checked export omits the browser access ID and unattempted answer keys.
+
+Verification: **275 tests in 24 files passed** with isolated PostgreSQL, plus TypeScript/build and scoped ESLint. Safari downloads were checked as real TXT and JSON files, including both saved attempt scores. Desktop comparison and export were visually checked with labelled local fixtures; narrow layout reflow was also checked using Safari at 200% zoom. A physical-phone check remains outstanding. No paid model calls were made for these checks. No schema, environment, voice or spending-guard changes are required; comparison and export spend no OpenAI tokens.
+
 ## Architecture and ownership
 
 | Location | Responsibility |
 | --- | --- |
-| `src/app/page.tsx`, `src/app/session/[id]`, `src/app/login`, `src/components` | Frontend: topics, history, Email/Google sign-in, teaching session, notebook and exam states |
+| `src/app/page.tsx`, `src/app/session/[id]`, `src/app/login`, `src/components` | Frontend: topics, browser history, teaching session, notebook, exam comparison and session export; legacy login routes redirect home |
 | `src/app/api` | Backend: thin route handlers, request validation and verified account/guest identity |
 | `src/server/auth.ts`, `src/server/demo-auth.ts`, `src/lib/auth-client.ts` | Supabase verification and browser session; signed demo cookie support |
 | `src/components/auth-provider.tsx` | Shared verified account state for the header and history |
@@ -149,7 +173,8 @@ Browser session and history requests require `x-anonymous-id: <UUID>`. Email and
 | DELETE | `/api/auth/demo` | Clears the demo session cookie |
 | POST | `/api/sessions` | `{ topicId }` → `{ sessionId, firstMessage: null }` |
 | POST | `/api/auth/claim` | Requires verified Supabase account plus guest header; transfers guest history and retires the guest ID |
-| GET | `/api/sessions/:id` | `{ session, messages, notebook, learning, latestAttempt, ai }` for the owner; learning reports revision/freshness and question count |
+| GET | `/api/sessions/:id` | `{ session, topic, messages, notebook, learning, latestAttempt, previousAttempt, ai }` for the owner; learning reports revision/freshness and question count |
+| GET | `/api/sessions/:id/export` | Owner-only versioned JSON attachment: saved messages, current notebook, all modern attempt snapshots and available legacy attempts; no generation |
 | POST | `/api/sessions/:id/messages` | `{ text }` → `{ message }`; saves a user explanation without a student reply |
 | POST | `/api/sessions/:id/reply` | Browser owner; `{ messageId }` → `{ message }` with a persisted student reply; completed requests reuse the reply |
 | POST | `/api/sessions/:id/notebook` | Browser owner; `{}` → `{ notebook, learning }`; reuses a completed current revision |

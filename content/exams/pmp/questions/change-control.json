@@ -1,0 +1,80 @@
+[
+  {
+    "id": "change-control-impact",
+    "text": "A predictive project has an agreed scope for a library booking system. A librarian requests an additional reporting feature. Before promising delivery, what should the project manager do?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Accept because reports sound simple."
+      },
+      {
+        "id": "b",
+        "text": "Reject every change once the project starts."
+      },
+      {
+        "id": "c",
+        "text": "Ask developers to hide the work inside another task."
+      },
+      {
+        "id": "d",
+        "text": "Record the request and assess its effects on the project constraints and risks."
+      }
+    ],
+    "correctAnswer": "d",
+    "requiredIdeaIds": [
+      "change-impact"
+    ]
+  },
+  {
+    "id": "change-control-authority",
+    "text": "A design change has been analysed and would alter an approved baseline. The project plan assigns this decision to a review board, but the requester wants work to begin today. What is the appropriate next step?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Implement now and ask for approval at the next meeting."
+      },
+      {
+        "id": "b",
+        "text": "Submit the assessed request to the designated board and obtain its decision before implementation."
+      },
+      {
+        "id": "c",
+        "text": "Let the most available developer approve it."
+      },
+      {
+        "id": "d",
+        "text": "Delete the baseline so that approval is no longer needed."
+      }
+    ],
+    "correctAnswer": "b",
+    "requiredIdeaIds": [
+      "change-authority"
+    ]
+  },
+  {
+    "id": "change-control-record",
+    "text": "The designated authority approves a scope change and its revised delivery date. How should the manager make the decision usable by the team?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Keep the approval in a private inbox until the end of the project."
+      },
+      {
+        "id": "b",
+        "text": "Leave the old plan in place and tell people to remember the new date."
+      },
+      {
+        "id": "c",
+        "text": "Update the affected controlled records, communicate the decision and track the approved work."
+      },
+      {
+        "id": "d",
+        "text": "Treat approval as evidence that the work is already complete."
+      }
+    ],
+    "correctAnswer": "c",
+    "requiredIdeaIds": [
+      "change-record"
+    ]
+  }
+]

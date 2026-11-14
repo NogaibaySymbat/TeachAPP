@@ -4,12 +4,14 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { api } from "@/lib/api";
 import type { CreateSessionResponse, Progress, TopicSummary } from "@/lib/types";
-import { SessionHistory } from "@/components/session-history";
+
 
 const statusLabels = { not_started: "Not started", failed: "Ready to revisit", passed: "Student passed" };
 
 export function Dashboard({ examTitles }: { examTitles: string[] }) {
   const router = useRouter();
+  const [selectedId, setSelectedId] = useState("");
+  const startLock = useRef(false);
   const [topics, setTopics] = useState<TopicSummary[] | null>(null);
   const [progress, setProgress] = useState<Progress | null>(null);
   const [error, setError] = useState("");
@@ -46,26 +48,32 @@ export function Dashboard({ examTitles }: { examTitles: string[] }) {
     };
   }, [load]);
 
+  const selectedTopic = topics?.find((topic) => topic.id === selectedId) ?? topics?.[0];
+
   async function start(topicId: string) {
+    if (startLock.current) return;
+    startLock.current = true;
     setStarting(topicId);
     setError("");
     try {
       const response = await api<CreateSessionResponse>("/api/sessions", {
         method: "POST", body: JSON.stringify({ topicId }),
       });
+      window.dispatchEvent(new Event("study-history-updated"));
       router.push(`/session/${response.sessionId}`);
     } catch (cause) {
       setError(cause instanceof Error ? cause.message : "The session could not be started.");
       setStarting(null);
+      startLock.current = false;
     }
   }
 
   return (
     <div className="dashboard">
       <section className="intro">
-        <h1>Understanding starts<br />with explaining.</h1>
+        <h1>What will you teach<br />your student today?</h1>
         <p>Explain a topic in your own words. See what your student writes down, then let them take the practice exam.</p>
-        <div className="study-meta"><span>{examTitles.join(" · ") || "Study topics"}</span><span>Your sessions, ready to continue</span></div>
+        <div className="study-meta"><span>{examTitles.join(" · ") || "Study topics"}</span><span>Past conversations are in the history panel</span></div>
       </section>
       <div className="workspace-grid">
         <div className="study-sections">
@@ -75,15 +83,21 @@ export function Dashboard({ examTitles }: { examTitles: string[] }) {
             {loading ? <p className="empty-state" role="status">Loading your study space…</p> : topics?.length === 0 ? (
               <div className="empty-state"><h3>Your first topic is on its way.</h3><p>This workspace is being prepared. Study topics will appear here when they are ready.</p><button className="secondary" onClick={() => void load()}>Check for topics</button></div>
             ) : (
-              <ul className="topic-list">{topics?.map((topic) => (
-                <li key={topic.id}>
-                  <div><span className={`status status-${topic.status}`}>{statusLabels[topic.status]}</span><h3>{topic.title}</h3><p>{topic.description}</p>{topic.bestScore !== null && <p>Best score: {topic.bestScore}</p>}</div>
-                  <button disabled={starting !== null} onClick={() => void start(topic.id)}>{starting === topic.id ? "Starting…" : topic.status === "not_started" ? "Start explaining" : "Explain again"}</button>
-                </li>
-              ))}</ul>
+              selectedTopic && <div className="topic-picker">
+                <label htmlFor="topic-choice">Choose a topic</label>
+                <select id="topic-choice" value={selectedTopic.id} onChange={(event) => setSelectedId(event.target.value)} disabled={starting !== null}>
+                  {topics?.map((topic) => <option value={topic.id} key={topic.id}>{topic.title}</option>)}
+                </select>
+                <div className="selected-topic" aria-live="polite">
+                  <span className={`status status-${selectedTopic.status}`}>{statusLabels[selectedTopic.status]}</span>
+                  <h3>{selectedTopic.title}</h3><p>{selectedTopic.description}</p>
+                  {selectedTopic.bestScore !== null && <p>Best score: {selectedTopic.bestScore}</p>}
+                </div>
+                <button disabled={starting !== null} onClick={() => void start(selectedTopic.id)}>{starting ? "Starting…" : "Start a conversation"}</button>
+              </div>
             )}
           </section>
-          <SessionHistory />
+
         </div>
         <aside aria-labelledby="progress-title">
           <h2 id="progress-title">Keep the thread</h2>

@@ -7,6 +7,7 @@ vi.mock("server-only", () => ({}));
 vi.mock("../src/server/db", () => ({ getDatabase: () => database }));
 import { GET as historyGet } from "../src/app/api/sessions/route";
 import { GET as sessionGet } from "../src/app/api/sessions/[id]/route";
+import { GET as exportGet } from "../src/app/api/sessions/[id]/export/route";
 import { POST as notebookPost } from "../src/app/api/sessions/[id]/notebook/route";
 import { POST as examPost } from "../src/app/api/sessions/[id]/exam/route";
 import { POST as replyPost } from "../src/app/api/sessions/[id]/reply/route";
@@ -40,6 +41,15 @@ describe.skipIf(!process.env.TEST_DATABASE_URL)("browser history and guest owner
     expect(await other.json()).toMatchObject({ sessions: [] });
     const context = { params: Promise.resolve({ id: session.id }) };
     expect((await sessionGet(request(users[1], `/api/sessions/${session.id}`), context)).status).toBe(404);
+    expect((await exportGet(request(users[1], `/api/sessions/${session.id}/export`), context)).status).toBe(404);
+    const download = await exportGet(request(users[0], `/api/sessions/${session.id}/export`), context);
+    expect(download.status).toBe(200);
+    expect(download.headers.get("cache-control")).toBe("no-store");
+    expect(download.headers.get("content-disposition")).toContain("attachment;");
+    const exported = await download.json();
+    expect(exported).toMatchObject({ formatVersion: 1, messages: [{ id: message.id }], attempts: [] });
+    expect(JSON.stringify(exported)).not.toContain(users[0]);
+    expect(JSON.stringify(exported)).not.toContain("correctAnswer");
     for (const handler of [notebookPost, examPost]) {
       expect((await handler(request(users[1], `/api/sessions/${session.id}`, {}), context)).status).toBe(404);
     }
