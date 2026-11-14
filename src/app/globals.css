@@ -626,3 +626,11 @@ button.plan-action:disabled { justify-content: center; }
   .pricing-compare dl > div { padding: 12px; }
 }
 @media (prefers-reduced-motion: reduce) { .header-links a, .faq-chevron { transition: none; } }
+
+/* Topic of the day: a framed suggestion inside the Sea Green progress panel. */
+.topic-of-day { margin-top: 20px; padding: 18px; border: 1px solid #526e62; border-radius: 16px; }
+.topic-of-day h3 { margin-bottom: 6px; font-size: 12px; font-weight: 700; letter-spacing: .02em; }
+.progress-panel .topic-of-day-name { margin-bottom: 6px; font-size: 16px; font-weight: 700; line-height: 1.4; }
+.progress-panel .topic-of-day p:not(.topic-of-day-name) { font-size: 13px; line-height: 1.65; margin-bottom: 16px; }
+.topic-of-day > button { width: 100%; margin: 0; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.topic-of-day > button svg { flex-shrink: 0; }

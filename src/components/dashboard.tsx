@@ -45,7 +45,9 @@ export function Dashboard({ examTitles }: { examTitles: string[] }) {
     };
   }, [load]);
 
-  const selectedTopic = topics?.find((topic) => topic.id === selectedId) ?? topics?.[0];
+  const todayTopic = progress?.topicOfTheDay ? topics?.find((topic) => topic.id === progress.topicOfTheDay?.topicId) : undefined;
+  // Until the user picks a topic, the picker opens on the topic of the day.
+  const selectedTopic = topics?.find((topic) => topic.id === selectedId) ?? todayTopic ?? topics?.[0];
 
   async function start(topicId: string) {
     if (startLock.current) return;
@@ -95,7 +97,12 @@ export function Dashboard({ examTitles }: { examTitles: string[] }) {
           <h2 id="progress-title">Keep the thread</h2>
           <p>A little explaining each day goes a long way.</p>
           {loading ? <p role="status">Loading progress…</p> : progressError ? <div><p className="muted">Your progress is unavailable right now.</p><button className="secondary" onClick={() => void load()}>Retry progress</button></div> : progress && <p className="streak">{progress.streak} {progress.streak === 1 ? "day" : "days"} in a row</p>}
-          {progress?.topicOfTheDay && <p>{progress.topicOfTheDay.reason}</p>}
+          {todayTopic && progress?.topicOfTheDay && <section className="topic-of-day" aria-labelledby="topic-of-day-title">
+            <h3 id="topic-of-day-title">Today&apos;s topic</h3>
+            <p className="topic-of-day-name">{todayTopic.title}</p>
+            <p>{progress.topicOfTheDay.reason}</p>
+            <button disabled={starting !== null} onClick={() => void start(todayTopic.id)}>{starting === todayTopic.id ? "Starting…" : "Start this topic"}<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" /></svg></button>
+          </section>}
           <hr />
           <h3>How it works</h3>
           <ol className="steps"><li>Choose a topic and explain it in your own words.</li><li>Review the notes your student took.</li><li>Let your student take the exam, then explain the gaps.</li></ol>
