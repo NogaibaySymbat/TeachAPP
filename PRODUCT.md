@@ -23,7 +23,7 @@ A study workspace for exam preparation by explaining topics to an AI student. Th
 
 - The review compares the latest two saved attempts, including regressions and cited new notes. Changed question snapshots disable the delta; citations do not prove causality. Owner-only TXT/JSON downloads include saved messages, notebook and all available attempts. No import or cross-device access restoration is implemented. These features make no model calls.
 
-- History is a collapsible left sidebar, becoming a modal navigation drawer at narrow widths. Topics use a styled native disclosure with statuses and a selected checkmark. User and student messages have distinct alignment and timestamps; writing controls are grouped as a chat composer. The workspace uses the user-supplied Pearl, Harbor, Midnight, Santorini and Sea Green palette with self-hosted Manrope. Existing voice input remains.
+- History is a collapsible left sidebar, becoming a modal navigation drawer at narrow widths. Topics are visible cards with statuses; one start button begins the selected topic. User and student messages have distinct alignment and timestamps; writing controls are grouped as a chat composer. The workspace uses the user-supplied Pearl, Harbor, Midnight, Santorini and Sea Green palette with self-hosted Manrope. Existing voice input remains.
 
 ## Brand Commitments
 

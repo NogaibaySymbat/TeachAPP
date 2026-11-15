@@ -84,7 +84,7 @@ Your browser may send audio to its own recognition service. TeachAPP does not up
 
 ## Topic of the day
 
-`GET /api/progress` returns `topicOfTheDay` from `pickTopicOfTheDay` in `src/ai/planner.ts`, with no model call: a failed topic first (lowest best score, then exam order), otherwise the first topic not taught yet, otherwise a review topic that rotates once per UTC day. The home page shows it in the progress panel with a **Start this topic** action, and the topic picker opens on it until the user chooses another topic.
+`GET /api/progress` returns `topicOfTheDay` from `pickTopicOfTheDay` in `src/ai/planner.ts`, with no model call: a failed topic first (lowest best score, then exam order), otherwise the first topic not taught yet, otherwise a review topic that rotates once per UTC day. The home page marks it with a **Today's topic** badge on its card, and that card is selected until the user chooses another topic.
 
 ## Pricing preview
 

@@ -1,6 +1,6 @@
 # TeachAPP
 
-**Find the PMP ideas you can't explain — before the exam does.**
+**Teach PMP to an AI student. See what you can't explain yet.**
 
 Live: **https://teachapp.vercel.app**
 

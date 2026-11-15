@@ -3,7 +3,7 @@ import { AppShell } from "@/components/app-shell";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "TeachAPP · Study workspace",
+  title: "TeachAPP · PMP prep by teaching",
   description: "Explain a topic, build your student's notebook, and see what they learned.",
 };
 

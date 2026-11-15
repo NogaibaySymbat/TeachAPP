@@ -21,7 +21,7 @@ colors:
   harbor-hover: "#c4d6d8"
   green-ink: "#24332f"
   green-line: "#526e62"
-  heading-accent: "#657e83"
+  heading-accent: "#4f686d"
   error: "#8b2929"
   error-surface: "#f7ece8"
 typography:
@@ -118,12 +118,10 @@ components:
     textColor: "{colors.midnight}"
     rounded: "{rounded.panel}"
     padding: "30px"
-  progress-panel:
+  progress-badge:
     backgroundColor: "{colors.sea-green}"
     textColor: "{colors.green-ink}"
-    rounded: "{rounded.panel}"
-    padding: "28px"
-  topic-disclosure:
+  topic-card:
     backgroundColor: "{colors.pearl}"
     textColor: "{colors.midnight}"
     rounded: "{rounded.disclosure}"
@@ -140,14 +138,14 @@ components:
 
 **Creative North Star: "Pearl / Harbor study workspace"**
 
-A calm teaching workspace built from Pearl canvas, Harbor navigation and rounded task surfaces. Midnight gives headings, actions and user messages a consistent anchor; Sea Green progress and Santorini notebook panels separate supporting work.
+A calm teaching workspace built from Pearl canvas, Harbor navigation and rounded task surfaces. Midnight gives headings, actions and user messages a consistent anchor; Sea Green progress marks and Santorini notebook panels separate supporting work.
 
 Manrope keeps the invitation, controls and conversation in one voice. Depth comes from adjacent color fields and fine borders, with compact metadata and generous task spacing. This record replaces the retired account-entry system and describes the current workspace only.
 
 **Key Characteristics:**
 - Five supplied colors with explicit readable companion inks
 - Self-hosted Manrope throughout
-- Rounded task panels and native disclosure controls
+- Rounded task panels and visible topic cards
 - Flat tonal depth and restrained state feedback
 
 ## Colors
@@ -164,7 +162,7 @@ Harbor carries history navigation and selected topics. Harbor ink and Harbor lin
 
 ### Tertiary
 
-Sea Green identifies progress and process guidance with Green ink and Green line. Santorini separates the student's notebook and disabled controls; disabled ink stays readable.
+Sea Green identifies progress with Green ink and Green line: the Today's topic badge and the streak outline on the home page. Santorini separates the student's notebook and disabled controls; disabled ink stays readable.
 
 ### Neutral
 
@@ -211,11 +209,11 @@ Primary buttons are Midnight with white labels, 44px minimum height and the reco
 
 ### Chips
 
-Course context is a fine outlined pill with 11px bold text. The progress streak uses a Green line outline and 13px semibold text. These are status/context, not new primary actions.
+Course context is a fine outlined pill with 11px bold text. The progress streak sits in the topic panel heading with a Green line outline and 13px semibold text, and appears only once the streak is above zero. These are status/context, not new primary actions.
 
 ### Cards / Containers
 
-White topic and chat panels share the panel radius; topic padding is 30px and chat padding 24px. Progress and notebook asides use 28px padding. The notebook uses Santorini, progress Sea Green, and exam review white. Panels rely on color rather than shadow. Notices use Wash, 8px corners and 16px padding; failures use the error pair.
+White topic and chat panels share the panel radius; topic padding is 30px and chat padding 24px. Notebook asides use 28px padding. The notebook uses Santorini and exam review white. The home page has no progress panel; the white How it works example sits beside the invitation on wide screens and after the topic panel on narrow ones. Panels rely on color rather than shadow. Notices use Wash, 8px corners and 16px padding; failures use the error pair.
 
 The notebook separates the student's latest restatement/question from exact source quotes. Quote entries use white surfaces, 14px corners and 13px text; source and Clarify actions have 44px targets. A textual New badge and border identify additions in the current visit, with a 3-second Harbor-to-white highlight (disabled for reduced motion). The note list scrolls at 480px. A View notebook anchor connects the chat to the panel, while Clarify focuses the composer and preserves its draft.
 
@@ -227,13 +225,13 @@ The Pearl composer has a one-pixel line border, 18px corners and 16px padding. I
 
 Harbor history rows use compact titles and secondary metadata; the current page uses Pearl. The new-session action is Midnight with Pearl text and a plus SVG. Desktop navigation is collapsible; narrow navigation uses the modal drawer. Pointer toggles slide the panel left/right over 240ms with cubic-bezier(0.32, 0.72, 0, 1), and the backdrop fades in sync. The desktop content reflows once and uses an interruptible translation to bridge its position change. Closed desktop history stays mounted but inert and hidden from assistive technology. Keyboard toggles and Escape are immediate; reduced motion keeps a 160ms fade without translation. The header toggle is a transparent 44px control with a Santorini hover surface. On desktop it is hidden while history is open, leaving only the close button inside the rail; keyboard focus follows the visible control.
 
-### Topic disclosure
+### Topic cards
 
-Native details/summary holds the current topic and status. The summary has an 80px minimum height and 18px 20px padding; narrow padding becomes 14px. Options have a 68px minimum height, 12px padding and 10px corners. Selected and hovered options use Harbor with Harbor ink status text; selection also has an SVG check. Opening rotates the chevron by 180 degrees. Escape, outside pointer interaction and leaving focus close the disclosure; choosing returns focus to the summary.
+Every topic is a visible toggle button in a four-column grid (two columns below 1000px). Cards are Pearl with a field border, 16px corners, 16px padding and a 92px minimum height, showing the title, status and a Sea Green Today's topic badge. The selected card is Harbor with a 2px Midnight border. Choosing a card only selects it; the single Midnight start button below names the selected topic and begins the session.
 
 ### Conversation
 
-User bubbles align right in Midnight/Pearl; student bubbles align left in Wash/Midnight. Timestamp metadata remains separate from message text. The composer groups writing, voice controls and submission. Color changes and the disclosure rotation use 160ms ease-out; reduced-motion preference removes these transitions. There is no entrance animation.
+User bubbles align right in Midnight/Pearl; student bubbles align left in Wash/Midnight. Timestamp metadata remains separate from message text. The composer groups writing, voice controls and submission. Color changes use 160ms ease-out; reduced-motion preference removes these transitions. There is no entrance animation.
 
 ## Do's and Don'ts
 
