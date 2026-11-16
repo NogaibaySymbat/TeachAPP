@@ -419,6 +419,19 @@ button { font-size: 14px; }
 .chat-heading { padding-bottom: 20px; }
 .chat-heading h2 { font-size: 17px; }
 .chat-heading p { font-size: 12px; }
+.milo-avatar { display: inline-flex; width: 56px; height: 56px; flex: 0 0 56px; border-radius: 16px; color: var(--midnight); background: var(--santorini); transition: background-color 180ms ease-out; }
+.milo-avatar svg { width: 100%; height: 100%; }
+.milo-avatar[data-expression="curious"], .milo-avatar[data-expression="learning"], .milo-avatar[data-expression="engaged"] { background: var(--harbor); }
+.milo-avatar[data-expression="celebrating"] { background: var(--sea-green); }
+.milo-page { fill: var(--pearl); stroke: currentColor; stroke-width: 1.6; }
+.milo-label { font-size: 12px; font-weight: 500; color: var(--muted); letter-spacing: 0; }
+.milo-mouth path { opacity: 0; transition: opacity 180ms ease-out; }
+.milo-avatar[data-expression="neutral"] [data-face="neutral"],
+.milo-avatar[data-expression="curious"] [data-face="curious"],
+.milo-avatar[data-expression="learning"] [data-face="learning"],
+.milo-avatar[data-expression="engaged"] [data-face="engaged"],
+.milo-avatar[data-expression="celebrating"] [data-face="celebrating"] { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .milo-avatar, .milo-mouth path { transition: none; } }
 .chat-panel > .secondary { font-size: 12px; min-height: 36px; padding: 6px 12px; border-radius: 999px; }
 .chat-panel > .secondary[aria-pressed="true"] { background: var(--harbor); }
 .chat-panel .transcript { min-height: 250px; margin-bottom: 12px; padding-top: 24px; }
@@ -455,7 +468,7 @@ button { font-size: 14px; }
 .notebook-update-summary:empty { display: none; }
 .learning-panel .notebook { display: grid; gap: 10px; max-height: 480px; padding: 4px; margin: -4px; scroll-padding-block: 4px; }
 .learning-panel .notebook-entry { background: var(--surface); border: 1px solid transparent; border-radius: 14px; padding: 12px 14px 4px; }
-.learning-panel .notebook-entry.is-new { border-color: #66858b; animation: note-arrived 3s ease-out; }
+.learning-panel .notebook-entry.is-new { border-color: #66858b; animation: note-arrived 3s ease-out, note-written 200ms cubic-bezier(0.16, 1, 0.3, 1) var(--note-delay, 0ms) backwards; }
 .note-heading { display: flex; justify-content: space-between; gap: 12px; align-items: center; color: var(--muted); font-size: 10px; font-weight: 650; margin-bottom: 8px; }
 .note-new { color: #40545d; background: var(--harbor); border-radius: 999px; padding: 1px 8px; }
 .notebook-entry blockquote { margin: 0; font-size: 13px; line-height: 1.75; white-space: pre-wrap; }
@@ -476,6 +489,7 @@ button { font-size: 14px; }
 .clarifying-note .clarify-dismiss { background: transparent; border: 0; color: var(--ink); min-width: 44px; padding: 0; font-size: 24px; }
 .clarifying-note blockquote { margin: 0 0 8px; padding-left: 12px; border-left: 2px solid #657e83; max-height: 120px; overflow-y: auto; overflow-wrap: anywhere; white-space: pre-wrap; font-size: 13px; }
 .clarifying-note p { margin: 0; color: var(--muted); font-size: 12px; }
+@keyframes note-written { from { opacity: 0.4; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes note-arrived { from { background: var(--harbor); } to { background: var(--surface); } }
 @media (prefers-reduced-motion: reduce) { .learning-panel .notebook-entry.is-new { animation: none; } }
 .exam-review { background: var(--surface); padding: 32px; border-radius: 24px; border: 0; margin-top: 32px; }
@@ -511,6 +525,56 @@ footer { padding-block: 28px; margin-top: 28px; font-size: 11px; }
 }
 @media (prefers-reduced-motion: reduce) {
   button, .new-session-link, .session-history-link { transition: none; }
+}
+
+/* Saved learning feedback: notes, exam walkthrough and earned improvement. */
+.note-source { min-width: 0; flex: 1 1 140px; overflow-wrap: anywhere; }
+.note-source[open] { flex-basis: 100%; }
+.note-actions:has(.note-source[open]) .note-clarify { margin-left: auto; }
+.note-source summary { padding-block: 12px; min-height: 44px; color: var(--muted); font-size: 11px; cursor: pointer; }
+.learning-panel .note-source p { margin: 4px 0 12px; padding: 10px; background: var(--wash); border-radius: 8px; color: var(--ink); font-size: 12px; white-space: pre-wrap; max-height: 180px; overflow: auto; }
+.exam-heading { display: flex; align-items: flex-start; gap: 16px; }
+.exam-heading > div { min-width: 0; }
+.exam-heading h2 { font-size: clamp(24px, 3vw, 34px); margin-bottom: 8px; font-variant-numeric: tabular-nums; scroll-margin-top: 24px; }
+.exam-heading p { margin-bottom: 0; max-width: 70ch; }
+.exam-walkthrough-controls { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-top: 28px; }
+.exam-walkthrough-controls > span { font-size: 14px; font-weight: 650; font-variant-numeric: tabular-nums; }
+.exam-walkthrough-controls button, .exam-replay { font-size: 13px; }
+.exam-steps { display: flex; list-style: none; padding: 0; gap: 8px; margin: 16px 0 28px; }
+.exam-steps li { display: flex; align-items: center; gap: 8px; flex: 1; color: var(--muted); font-size: 12px; }
+.exam-steps li::after { content: ""; height: 2px; flex: 1; background: var(--santorini); }
+.exam-steps li > span:first-child { width: 28px; height: 28px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 50%; }
+.exam-steps li[aria-current="step"] > span:first-child { border-color: var(--midnight); background: var(--midnight); color: var(--surface); }
+.exam-steps li[data-seen="true"] > span:first-child { background: var(--harbor); border-color: var(--harbor); color: var(--ink); }
+.exam-steps li[data-seen="true"]::after { background: var(--harbor); }
+.exam-question { padding: 24px 0 0; border-top: 1px solid var(--line); }
+.exam-question > h3 { margin: 8px 0 24px; max-width: 65ch; font-size: 21px; line-height: 1.5; scroll-margin-top: 24px; }
+.exam-question > .answer-status { margin-bottom: 0; font-weight: 650; }
+.exam-question .answer-detail { padding-bottom: 0; }
+.exam-walkthrough-next { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--line); }
+.exam-walkthrough-next p { margin: 0; font-size: 12px; }
+.exam-walkthrough-next button { display: inline-flex; align-items: center; justify-content: center; gap: 18px; }
+.explain-question { margin-top: 20px; font-size: 13px; }
+.comparison-earned { display: inline-flex; align-items: center; gap: 10px; color: #24332f; background: var(--sea-green); border-radius: 12px; padding: 12px 16px; margin: 8px 0 0; font-size: 15px; font-weight: 650; }
+.comparison-earned svg { flex-shrink: 0; }
+.comparison-earned.is-celebrating svg { animation: earned-result 280ms cubic-bezier(0.16, 1, 0.3, 1); }
+.attempt-comparison .comparison-scores { align-items: center; gap: 20px 32px; }
+.attempt-comparison .comparison-scores dd { font-size: 30px; }
+.attempt-comparison .comparison-scores .comparison-arrow { display: flex; align-items: center; color: var(--muted); }
+@keyframes learning-fade { from { opacity: 0.35; } to { opacity: 1; } }
+@keyframes earned-result { from { opacity: 0.4; transform: scale(0.86) rotate(-12deg); } to { opacity: 1; transform: scale(1) rotate(0); } }
+@media (max-width: 520px) {
+  .exam-heading { gap: 12px; }
+  .exam-heading .milo-avatar { width: 44px; height: 44px; flex-basis: 44px; border-radius: 12px; }
+  .exam-question > h3 { font-size: 18px; }
+  .exam-walkthrough-controls { gap: 8px; }
+  .exam-walkthrough-controls button { padding-inline: 12px; }
+  .exam-walkthrough-next button { width: 100%; }
+  .attempt-comparison .comparison-scores { gap: 16px; }
+  .attempt-comparison .comparison-scores > div:last-child { flex-basis: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .comparison-earned.is-celebrating svg { animation: learning-fade 140ms ease-out; }
 }
 
 /* Pricing preview: same Pearl canvas, white panels and Harbor selection. */

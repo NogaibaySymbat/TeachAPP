@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Local database files and recovery snapshots are not application source.
+    ".data/**",
   ]),
 ]);
 

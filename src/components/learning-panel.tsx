@@ -1,5 +1,6 @@
 "use client";
 
+import type { CSSProperties } from "react";
 import { currentNotebookUpdate, latestStudentExchange, notebookEntryKey, type NotebookUpdate } from "@/lib/notebook-view";
 import type { NotebookEntry, SessionResponse } from "@/lib/types";
 
@@ -11,13 +12,14 @@ interface LearningPanelProps {
   replyError: string;
   update: NotebookUpdate | null;
   examining: boolean;
+  reviewing?: boolean;
   error: string;
   onUpdate: () => void;
   onExam: () => void;
   onClarify: (entry: NotebookEntry) => void;
 }
 
-export function LearningPanel({ data, disabled, updating, replying, replyError, update, examining, error, onUpdate, onExam, onClarify }: LearningPanelProps) {
+export function LearningPanel({ data, disabled, updating, replying, replyError, update, examining, reviewing = false, error, onUpdate, onExam, onClarify }: LearningPanelProps) {
   const { notebook, learning, latestAttempt } = data;
   const currentResult = learning.notebookFresh && latestAttempt?.revision === learning.revision;
   const explanations = data.messages.filter((message) => message.role === "user");
@@ -49,11 +51,14 @@ export function LearningPanel({ data, disabled, updating, replying, replyError, 
         {orderedNotes.map((entry, index) => {
           const sourceNumber = explanations.findIndex((message) => message.id === entry.sourceMessageId) + 1;
           const isNew = added.has(notebookEntryKey(entry));
-          return <li className={isNew ? "notebook-entry is-new" : "notebook-entry"} key={entry.id} id={`note-${entry.id}`}>
+          const source = explanations[sourceNumber - 1];
+          const arrivalIndex = Math.max(0, changes?.addedKeys.indexOf(notebookEntryKey(entry)) ?? 0);
+          // Stable evidence keys keep regenerated IDs from replaying unchanged notes.
+          return <li className={isNew ? "notebook-entry is-new" : "notebook-entry"} key={notebookEntryKey(entry)} id={`note-${entry.id}`} style={{ "--note-delay": `${Math.min(arrivalIndex, 4) * 40}ms` } as CSSProperties}>
             <div className="note-heading"><span>Note {index + 1}</span>{isNew && <span className="note-new">New</span>}</div>
             <blockquote>{entry.claim}</blockquote>
             <div className="note-actions">
-              {sourceNumber > 0 && <a href={`#message-${entry.sourceMessageId}`}>Explanation {sourceNumber}<span className="sr-only">: source for note {index + 1}</span></a>}
+              {source && <details className="note-source"><summary>From your explanation<span className="sr-only">: original words for note {index + 1}</span></summary><p>{source.text}</p><a href={`#message-${entry.sourceMessageId}`}>Show explanation {sourceNumber} in chat</a></details>}
               <button type="button" className="note-clarify" disabled={disabled} onClick={() => onClarify(entry)}>Clarify<span className="sr-only"> note {index + 1}</span><span aria-hidden="true"> ↗</span></button>
             </div>
           </li>;
@@ -67,7 +72,7 @@ export function LearningPanel({ data, disabled, updating, replying, replyError, 
     <h3>Student exam</h3>
     <p>{learning.questionCount} practice questions. Your student can use only this notebook.</p>
     {currentResult && latestAttempt ? <>
-      <p className="saved-score">Latest result: {latestAttempt.score}/{latestAttempt.total}</p>
+      <p className="saved-score">{reviewing ? "Your exam results are ready." : `Latest result: ${latestAttempt.score}/${latestAttempt.total}`}</p>
       <a className="review-link" href="#exam-review">Review saved result</a>
     </> : <>
       <button type="button" disabled={disabled || (!data.ai.available && notebook.length > 0) || !learning.notebookFresh || learning.questionCount === 0} onClick={onExam}>

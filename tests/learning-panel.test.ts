@@ -25,6 +25,8 @@ describe("notebook panel honesty and recovery", () => {
     const html = render(data);
     expect(html).toContain('<blockquote>Assess likelihood.</blockquote>');
     expect(html).toContain('href="#message-m1"');
+    expect(html).toContain('From your explanation');
+    expect(html).toContain('<p>Assess likelihood.</p>');
     expect(html).not.toContain('class="note-new"');
     expect(render(data, { update: compareNotebookUpdate([], [note], "r1") })).toContain('class="note-new"');
   });
@@ -56,5 +58,18 @@ describe("notebook panel honesty and recovery", () => {
     const html = render({ ...data, notebook: [{ ...note, claim: '<script>alert("test")</script>' }] });
     expect(html).toContain('&lt;script&gt;');
     expect(html).not.toContain('<script>');
+  });
+  it("keeps the full original message available without replacing the exact note", () => {
+    const html = render({ ...data, messages: [{ ...explanation, text: 'Assess likelihood. <b>This is source text.</b>' }] });
+    expect(html).toContain('<blockquote>Assess likelihood.</blockquote>');
+    expect(html).toContain('Assess likelihood. &lt;b&gt;This is source text.&lt;/b&gt;');
+    expect(html).not.toContain('<b>This is source text.</b>');
+  });
+  it("does not spoil the score while the saved exam is being revealed", () => {
+    const session = { ...data, latestAttempt: { id: 'exam', createdAt: explanation.createdAt, revision: 'r1', score: 2, total: 3, results: [], notebookSnapshot: [note], gaps: [] } };
+    const html = render(session, { reviewing: true });
+    expect(html).toContain('Your exam results are ready.');
+    expect(html).not.toContain('2/3');
+    expect(render(session)).toContain('Latest result: 2/3');
   });
 });

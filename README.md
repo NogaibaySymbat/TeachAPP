@@ -19,6 +19,10 @@ TeachAPP works alongside a prep course and a question bank: they show *what* you
 
 No sign-in: history is saved per browser.
 
+Milo's book avatar starts neutral and gradually smiles as distinct notes are saved. A fresh, fully passed practice exam earns a bigger smile. This reflects saved progress, not a guarantee of understanding; drafts and repeated quotes do not advance the expression. The avatar runs locally in the UI and adds no model calls.
+
+New notebook quotes arrive with a brief highlight; **From your explanation** opens the original message. Newly completed exams open one saved answer at a time, with **Show all results** available immediately. Missed answers link back to the composer without clearing your draft. Retakes show the previous and latest scores, newly cited notes, and a brief acknowledgement only for a comparable improvement. Reloading or replaying saved results never calls a model.
+
 ## What is real and what is not
 
 - Every reply, notebook and exam answer comes from a live model call. Nothing is pre-recorded or simulated. Grading and the debrief are deterministic code.

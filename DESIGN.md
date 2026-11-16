@@ -233,6 +233,22 @@ Every topic is a visible toggle button in a four-column grid (two columns below 
 
 User bubbles align right in Midnight/Pearl; student bubbles align left in Wash/Midnight. Timestamp metadata remains separate from message text. The composer groups writing, voice controls and submission. Color changes use 160ms ease-out; reduced-motion preference removes these transitions. There is no entrance animation.
 
+### Milo avatar
+
+Restored on top of the production design at `14be3d8`, preserving its home page, topic cards, chat and notebook layout. The chat heading uses a 56px inline SVG book in a 16px-radius tile, followed by “Milo · AI student” and a factual text status. Midnight strokes and a Pearl page sit on Santorini when empty, Harbor while notes accumulate, and Sea Green after a fresh passed exam.
+
+The face progresses from neutral (zero distinct nonempty notes), through curious (one), learning (two), and engaged (three or more), to celebrating (a fully passed exam matching the current fresh notebook revision). Duplicate quotes and unsent drafts do not count. Smiling acknowledges saved notes, not correctness or measured understanding. Listening, thinking, writing, examining and paused states have separate text feedback; thinking, writing and examining use focused eyes. Paused replies preserve the saved-progress expression.
+
+Mouth opacity and tile color transition over 180ms ease-out only when state changes. Reduced motion removes both transitions. The SVG is decorative and hidden from assistive technology; the visible status uses `role="status"`. No background loop, raster asset or extra model request is used.
+
+### Saved learning feedback
+
+Restores the morning features without changing production's homepage or workspace grid. New notebook entries use stable source-plus-quote keys, a 200ms arrival (4px translation/opacity, stagger capped at 160ms), and the existing 3-second Harbor highlight. Reduced motion keeps the New badge/border with no animation. “From your explanation” is a native disclosure containing the original message and a source link; an expanded source occupies the full note width.
+
+Only a newly completed exam opens the optional question-by-question review. Numbered steps show review position, never fake generation progress. The teacher can skip to all results or revisit a saved exam without an API call. Each transition focuses its heading; “Help Milo with this question” focuses the composer, preserves its draft and shows the question as context. Failed-question answer keys remain hidden under the existing grading policy. Reloaded/stale results open in full. During review, the notebook score and Milo's passed-exam expression wait for the summary.
+
+Attempt comparison retains the current detailed evidence and adds a score arrow and Sea Green improvement acknowledgement. Only comparable positive score changes qualify. The checkmark's 280ms turn/scale occurs once when finishing a newly completed review; replay/reload, regressions and changed questions do not celebrate. Reduced motion uses a 140ms fade. No sound, confetti, timer, new dependency or paid request is added.
+
 ## Do's and Don'ts
 
 ### Do:

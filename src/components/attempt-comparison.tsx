@@ -1,13 +1,16 @@
 import { compareAttempts } from "@/lib/attempt-comparison";
 import type { SavedExamAttempt } from "@/lib/types";
 
-export function AttemptComparison({ previous, current }: { previous: SavedExamAttempt | null; current: SavedExamAttempt }) {
+export function AttemptComparison({ previous, current, celebrate = false }: { previous: SavedExamAttempt | null; current: SavedExamAttempt; celebrate?: boolean }) {
   if (!previous || previous.id === current.id) return <p className="notice">Your first result is saved. Add an explanation and retake the exam to compare your attempts here.</p>;
   const comparison = compareAttempts(previous, current);
+  const improved = comparison.comparable && comparison.delta !== null && comparison.delta > 0;
   return <section className="attempt-comparison" aria-labelledby="attempt-comparison-title">
     <h3 id="attempt-comparison-title">Before and after your explanation</h3>
+    {improved && <p className={`comparison-earned${celebrate ? " is-celebrating" : ""}`}><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="m8 12 3 3 5-6" /></svg>{comparison.delta} more {comparison.delta === 1 ? "answer" : "answers"} correct this time</p>}
     <dl className="comparison-scores">
       <div><dt>Previous attempt</dt><dd>{previous.score}/{previous.total}</dd></div>
+      <div className="comparison-arrow" aria-hidden="true"><dt className="sr-only">To</dt><dd><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M5 12h14m-6-6 6 6-6 6" /></svg></dd></div>
       <div><dt>Latest attempt</dt><dd>{current.score}/{current.total}</dd></div>
       <div><dt>Change</dt><dd>{comparison.delta === null ? "Not comparable" : comparison.delta > 0 ? `+${comparison.delta} correct` : comparison.delta < 0 ? `${comparison.delta} correct` : "Same score"}</dd></div>
     </dl>

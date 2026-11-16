@@ -381,6 +381,11 @@
         "name": "history-panel",
         "value": "240ms cubic-bezier(0.32, 0.72, 0, 1)",
         "purpose": "Interruptible history slide and desktop content translation, with a fading mobile backdrop. Keyboard toggles are immediate; reduced motion uses a 160ms fade only."
+      },
+      {
+        "name": "milo-expression",
+        "value": "180ms ease-out",
+        "purpose": "Crossfade mouth opacity and transition tile background on saved-state changes only; no loop; disabled for reduced motion."
       }
     ],
     "breakpoints": [
@@ -404,7 +409,38 @@
         "name": "history-open-stack-upper",
         "value": "1150px"
       }
-    ]
+    ],
+    "studentPersona": {
+      "updatedAt": "2026-11-15",
+      "productionDesignBase": "14be3d8",
+      "scope": "Local restoration of the session header avatar; production layout preserved.",
+      "component": "src/components/student-persona.tsx",
+      "state": "src/lib/student-persona.ts",
+      "size": "56px",
+      "radius": "16px",
+      "expressions": {
+        "neutral": "0 distinct nonempty saved notes",
+        "curious": "1 note",
+        "learning": "2 notes",
+        "engaged": "3 or more notes",
+        "celebrating": "full-score exam at the current fresh notebook revision"
+      },
+      "semantics": "Acknowledges saved progress, not correctness or measured understanding. Drafts and duplicate quotes do not advance the expression. API pauses preserve it.",
+      "surfaces": {
+        "neutral": "santorini",
+        "learning": "harbor",
+        "celebrating": "sea-green"
+      },
+      "accessibility": "Decorative SVG is aria-hidden. Visible AI label and role=status text remain."
+    },
+    "learningFeedback": {
+      "updatedAt": "2026-11-15",
+      "productionDesignBase": "14be3d8",
+      "scope": "Restore morning features 3, 4 and 5; preserve the current homepage and workspace layout.",
+      "notebook": "Stable source-plus-quote keys; new entries arrive over 200ms, stagger capped at 160ms; original message in a native From your explanation disclosure. Reduced motion removes arrival/highlight animation.",
+      "exam": "Only a new saved attempt opens the skippable question walkthrough. Reload/stale results open in full. Focus follows headings; explain-question action preserves the composer draft. No model calls for review.",
+      "improvement": "Existing detailed comparison plus score arrow and Sea Green acknowledgement. One 280ms checkmark animation for a newly completed, comparable positive change; 140ms fade for reduced motion. No celebration on replay, regression or changed questions."
+    }
   },
   "components": [
     {

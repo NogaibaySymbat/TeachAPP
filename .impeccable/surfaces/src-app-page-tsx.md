@@ -7,7 +7,7 @@ related_targets: ["src/app/session/[id]/page.tsx","src/components/dashboard.tsx"
 
 # TeachAPP study workspace
 
-Mode: Operate. Scope: home, history navigation, chat, notebook and exam review. Preserve browser-owned data, all API behavior, voice controls and the shared $4 budget. User supplied a five-swatch reference and explicitly requested a prettier frontend in that style; this pins the visual direction. Implement directly in code with real existing content, without another approval round. No decorative raster assets are needed.
+Mode: Operate. Current scope (2026-11-15): restore Milo's expressive book avatar in the session header. The user pins the current live production design, matching `14be3d8`, as visual truth. Preserve its homepage, topic cards, history, chat and notebook structure, browser-owned data, all API behavior, voice controls and shared $4 budget. Earlier local redesigns are archived, not part of this restoration. No decorative raster assets are needed.
 
 ## Direction contract
 
@@ -17,8 +17,12 @@ OWN-WORLD: Pearl #F6F2EF canvas, Harbor #B0C8CC navigation, Midnight #363E4F ink
 
 STORY: Choose a topic, explain it, inspect the student's notebook, then review the exam. History remains accessible from the header on every study page.
 
-FIRST VIEWPORT: Slim brand/header row, left-aligned two-line 48px invitation, compact course/history context, then a broad topic work area beside a narrower Sea Green progress/how-it-works panel. Session: compact title/export controls, white chat pane and distinct notebook column. At small widths all task columns stack, history becomes the existing modal drawer.
+FIRST VIEWPORT: Production's PMP header and learning invitation, a white How it works example beside it, then four visible topic cards with one named start action. On narrow screens the example follows topic choice. Session retains title/export controls, white chat pane and distinct notebook column; only its AI tile/header becomes Milo. At small widths task columns stack and history becomes the existing modal drawer.
 
-FORM: User-pinned soft color-block workspace takes precedence over concept seed a3b0e5c7 (assigned index 4). Signature interaction: topic disclosure visibly highlights the current choice; subtle chevron rotation and control-color feedback, no entrance motion or content initially hidden. Native focus and reduced motion retained.
+FORM: User-pinned production workspace takes precedence over earlier concept seeds and dropdown variants. Milo's 56px geometric book begins neutral and smiles as distinct saved notes accumulate; only a fresh current-revision full-score exam celebrates. Expression is separate from listening/thinking/writing/paused activity. It acknowledges progress without claiming understanding. A 180ms mouth-opacity/color transition is removed for reduced motion. No entrance motion or background animation.
 
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
+
+FINISH VERDICT (2026-11-15): neutral and passed-exam faces verified in local Safari at desktop and narrow widths; source delta preserves production layout. Typecheck, lint, 19 focused tests and build pass. Detector has no findings. No shipping raster assets. Published by explicit owner request as dpl_GagMv3M8faRGzGV37pbEVcFeuPc9; Milo verified in an existing session at teachapp.vercel.app. Source commit/push remains the owner's responsibility.
+
+RESTORATION EXTENSION (2026-11-15): user requests the morning features 1, 3, 4, 5 on the working site. Preserve the pinned production layout; restore note arrival/source disclosure, saved-question walkthrough with draft-preserving return, and earned improvement feedback alongside Milo. Focal motion is the actual score improvement; supporting note feedback identifies new saved evidence. Replays are immediate and free of model calls. Reduced-motion alternatives retain textual evidence.
