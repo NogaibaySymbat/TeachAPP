@@ -69,7 +69,7 @@ export function LearningPanel({ data, disabled, updating, replying, replyError, 
     {!learning.notebookFresh && explanations.length > 0 && !updating && <button type="button" className="secondary" disabled={disabled || !data.ai.available} onClick={onUpdate}>{error ? "Retry notebook update" : "Update notebook"}</button>}
     <p className="notebook-footnote">Notes preserve your words, including mistakes. The exam tests how the student uses them.</p>
     <hr />
-    <h3>Student exam</h3>
+    <h3 id="student-exam" tabIndex={-1}>Student exam</h3>
     <p>{learning.questionCount} practice questions. Your student can use only this notebook.</p>
     {currentResult && latestAttempt ? <>
       <p className="saved-score">{reviewing ? "Your exam results are ready." : `Latest result: ${latestAttempt.score}/${latestAttempt.total}`}</p>

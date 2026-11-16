@@ -21,6 +21,8 @@ No sign-in: history is saved per browser.
 
 The home page links straight to topic choice. Empty sessions put the composer directly below Milo; notes update automatically after a message, with a manual retry when an update fails. Session export is below the conversation and results.
 
+Each session has quick links to **Chat**, **Notebook** and **Exam**. Unsent drafts are automatically saved in this browser, separately for each session, and restored when you return. A successful message save clears its draft; a failed send keeps it. Drafts are not sent to the server, included in exports or synced across devices. Clearing site data removes them. These features make no model calls.
+
 Milo's book avatar starts neutral and gradually smiles as distinct notes are saved. A fresh, fully passed practice exam earns a bigger smile. This reflects saved progress, not a guarantee of understanding; drafts and repeated quotes do not advance the expression. The avatar runs locally in the UI and adds no model calls.
 
 New notebook quotes arrive with a brief highlight; **From your explanation** opens the original message. Newly completed exams open one saved answer at a time, with **Show all results** available immediately. Missed answers link back to the composer without clearing your draft. Retakes show the previous and latest scores, newly cited notes, and a brief acknowledgement only for a comparable improvement. Reloading or replaying saved results never calls a model.

@@ -81,8 +81,6 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 24px 0; }
 .error { color: var(--error); background: #f7ece8; }
 .error p { margin-bottom: 12px; }
 .back-link { display: inline-block; margin-block: 32px 24px; }
-.session-workspace > h1 { font-size: clamp(32px, 4vw, 46px); }
-.session-intro { margin-bottom: 40px; color: var(--muted); }
 .session-guidance, .student-thinking { color: var(--muted); font-size: 14px; }
 .reply-recovery { margin-bottom: 24px; }
 .transcript { min-height: 200px; max-height: 480px; overflow-y: auto; margin-bottom: 24px; scrollbar-color: #718b91 var(--paper); scrollbar-width: thin; }
@@ -332,13 +330,12 @@ footer { color: var(--muted); font-size: 12px; padding-block: 48px 24px; margin-
 .selected-topic { margin-block: 24px; }
 .selected-topic p { color: var(--muted); font-size: 15px; }
 .session-workspace .back-link { margin-block: 24px 16px; font-size: 14px; }
-.session-workspace > h1 { margin-bottom: 12px; font-size: clamp(28px, 3vw, 40px); }
-.session-intro { margin-bottom: 20px; font-size: 15px; }
 .session-grid { gap: 32px; grid-template-columns: minmax(0, 1fr) 280px; }
 .chat-panel { min-width: 0; background: var(--surface); border-radius: 24px; padding: 24px; }
-.chat-heading { display: flex; align-items: center; gap: 12px; padding-bottom: 16px; border-bottom: 1px solid var(--line); }
+.chat-heading { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; margin: -24px -24px 24px; padding: 20px 24px; border-radius: 24px 24px 0 0; background: var(--midnight); color: var(--pearl); }
+.chat-heading-main { display: flex; align-items: center; gap: 12px; min-width: 0; }
 .chat-heading h2 { font-size: 18px; margin: 0 0 2px; }
-.chat-heading p { margin: 0; color: var(--muted); font-size: 13px; }
+.chat-heading p { margin: 0; color: var(--santorini); font-size: 13px; }
 .student-avatar { flex: 0 0 40px; height: 40px; display: grid; place-items: center; background: var(--accent); color: white; border-radius: 12px; font-size: 13px; font-weight: 700; }
 .chat-panel > .notice, .chat-panel > .session-guidance { margin-block: 16px; }
 .chat-panel .transcript { min-height: 260px; max-height: 52dvh; padding: 20px 8px 12px 0; margin-bottom: 16px; overscroll-behavior-y: contain; }
@@ -352,7 +349,11 @@ footer { color: var(--muted); font-size: 12px; padding-block: 48px 24px; margin-
 .thinking-dots { display: inline-flex; gap: 4px; }
 .thinking-dots i { width: 4px; height: 4px; border-radius: 50%; background: var(--accent); }
 .chat-composer { background: var(--paper); border: 1px solid var(--line); border-radius: 18px; padding: 16px; }
-.chat-composer > label { font-size: 13px; }
+.composer-heading { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 4px 16px; margin-bottom: 8px; }
+.composer-heading > label { font-size: 13px; margin: 0; }
+.draft-status { color: var(--muted); font-size: 11px; }
+.draft-status:empty { display: none; }
+.draft-status.is-unavailable { color: var(--error); }
 .chat-composer textarea { border: 0; border-radius: 0; background: transparent; min-height: 88px; padding: 8px 0; }
 .chat-composer .composer-actions { border-top: 1px solid var(--line); padding-top: 12px; }
 .chat-composer .composer-actions button { flex-shrink: 0; }
@@ -406,12 +407,18 @@ button { font-size: 14px; }
 .sidebar-privacy { font-size: 11px; line-height: 1.75; }
 .history-drawer { border-radius: 0 24px 24px 0; }
 .session-workspace .back-link { text-decoration: none; display: inline-flex; align-items: center; gap: 8px; padding-block: 6px; }
-.session-workspace > h1 { font-size: clamp(26px, 3vw, 36px); font-weight: 650; }
-.session-intro { max-width: 72ch; font-size: 14px; }
+.session-title-row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px 24px; margin-bottom: 24px; }
+.session-title-row h1 { font-size: clamp(26px, 3vw, 36px); font-weight: 650; margin: 0; }
+.session-navigation { display: flex; align-items: stretch; border: 1px solid var(--line); border-radius: 14px; padding: 4px; gap: 2px; }
+.session-navigation a { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 8px 12px; border-radius: 10px; text-decoration: none; font-size: 12px; font-weight: 650; }
+.session-step { display: inline-grid; place-items: center; width: 18px; height: 18px; border-radius: 50%; background: var(--santorini); font-size: 10px; }
+.session-note-count { color: var(--muted); font-size: 11px; font-variant-numeric: tabular-nums; }
+#explanation-title, #student-exam { scroll-margin-top: 24px; }
+.chat-heading :focus-visible { outline-color: var(--harbor); }
+@media (hover: hover) { .session-navigation a:hover { background: var(--santorini); color: var(--ink); } }
 .session-grid { grid-template-columns: minmax(0, 1fr) 350px; gap: 24px; }
 .session-export summary { font-size: 13px; }
 .student-avatar { background: var(--midnight); border-radius: 14px; height: 44px; flex-basis: 44px; }
-.chat-heading { padding-bottom: 20px; }
 .chat-heading h2 { font-size: 17px; }
 .chat-heading p { font-size: 12px; }
 .milo-avatar { display: inline-flex; width: 56px; height: 56px; flex: 0 0 56px; border-radius: 16px; color: var(--midnight); background: var(--santorini); transition: background-color 180ms ease-out; }
@@ -419,7 +426,7 @@ button { font-size: 14px; }
 .milo-avatar[data-expression="curious"], .milo-avatar[data-expression="learning"], .milo-avatar[data-expression="engaged"] { background: var(--harbor); }
 .milo-avatar[data-expression="celebrating"] { background: var(--sea-green); }
 .milo-page { fill: var(--pearl); stroke: currentColor; stroke-width: 1.6; }
-.milo-label { font-size: 12px; font-weight: 500; color: var(--muted); letter-spacing: 0; }
+.milo-label { font-size: 12px; font-weight: 500; color: var(--santorini); letter-spacing: 0; }
 .milo-mouth path { opacity: 0; transition: opacity 180ms ease-out; }
 .milo-avatar[data-expression="neutral"] [data-face="neutral"],
 .milo-avatar[data-expression="curious"] [data-face="curious"],
@@ -427,9 +434,8 @@ button { font-size: 14px; }
 .milo-avatar[data-expression="engaged"] [data-face="engaged"],
 .milo-avatar[data-expression="celebrating"] [data-face="celebrating"] { opacity: 1; }
 @media (prefers-reduced-motion: reduce) { .milo-avatar, .milo-mouth path { transition: none; } }
-.chat-tools { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px 16px; margin-bottom: 16px; }
-.chat-tools > .secondary { font-size: 12px; min-height: 44px; padding: 6px 12px; border-radius: 999px; }
-.chat-tools > .secondary[aria-pressed="true"] { background: var(--harbor); color: var(--ink); }
+.chat-heading > .secondary { flex-shrink: 0; font-size: 12px; min-height: 44px; padding: 6px 12px; border-radius: 999px; color: var(--pearl); border-color: var(--harbor); }
+.chat-heading > .secondary[aria-pressed="true"] { background: var(--harbor); color: var(--ink); }
 .chat-panel .transcript { min-height: 250px; margin-bottom: 12px; padding-top: 24px; }
 .chat-panel .transcript.is-empty { min-height: 0; padding: 0; margin: 0; }
 .chat-panel .message { padding: 16px 18px; border-radius: 18px; }
@@ -476,9 +482,6 @@ button { font-size: 14px; }
 .notebook-empty { padding: 20px 16px; border: 1px dashed #87949d; border-radius: 14px; }
 .notebook-empty p { margin: 0; }
 .learning-panel .notebook-footnote { margin: 20px 0 0; font-size: 11px; line-height: 1.7; }
-.notebook-shortcut { display: flex; align-items: center; }
-.notebook-shortcut > a { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; font-size: 12px; font-weight: 650; text-decoration: none; }
-.notebook-shortcut > a span:first-child { background: var(--santorini); min-width: 22px; text-align: center; border-radius: 6px; padding: 1px 5px; font-size: 10px; }
 .clarifying-note { padding: 0 0 16px; margin-bottom: 16px; border-bottom: 1px solid #a4afb7; }
 .clarifying-note > div { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
 .clarifying-note strong { font-size: 12px; }
@@ -508,12 +511,14 @@ footer { padding-block: 28px; margin-top: 28px; font-size: 11px; }
   .brand-link { gap: 9px; }
   .study-sections, aside, .chat-panel, .exam-review { padding: 20px; border-radius: 20px; }
   .selected-topic { min-height: 0; }
-  .session-workspace > h1 { font-size: 27px; }
+  .session-title-row h1 { font-size: 27px; }
+  .session-navigation { width: 100%; }
+  .session-navigation a { flex: 1 1 auto; padding-inline: 8px; gap: 6px; }
   .chat-panel { padding: 16px; }
   .chat-panel .message { max-width: 96%; padding: 12px 14px; }
   .chat-panel .message p { font-size: 14px; }
   .chat-composer { padding: 12px; }
-  .chat-heading { align-items: flex-start; }
+  .chat-heading { align-items: flex-start; margin: -16px -16px 20px; padding: 16px; border-radius: 20px 20px 0 0; }
   .chat-composer .voice-toolbar { gap: 12px; }
   .voice-toggle { padding-inline: 12px; }
   .history-sidebar { border-radius: 0; }

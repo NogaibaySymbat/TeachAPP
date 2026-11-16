@@ -1,9 +1,12 @@
+import type { ReactNode } from "react";
 import type { StudentPersonaState } from "@/lib/student-persona";
 
-export function StudentPersona({ state }: { state: StudentPersonaState }) {
+export function StudentPersona({ state, action }: { state: StudentPersonaState; action?: ReactNode }) {
   return <div className="chat-heading">
-    <StudentAvatar expression={state.expression} activity={state.activity} />
-    <div><h2 id="explanation-title">Milo <span className="milo-label">· AI student</span></h2><p role="status">{state.status}</p></div>
+    <div className="chat-heading-main"><StudentAvatar expression={state.expression} activity={state.activity} />
+      <div><h2 id="explanation-title" tabIndex={-1}>Milo <span className="milo-label">· AI student</span></h2><p role="status">{state.status}</p></div>
+    </div>
+    {action}
   </div>;
 }
 

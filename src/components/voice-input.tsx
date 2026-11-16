@@ -145,7 +145,7 @@ export function VoiceInput({ value, disabled, onAppend, onActiveChange }: VoiceI
           </div>
         </>}
       </div>}
-      <p id={`${id}-privacy`} className="voice-privacy">Your browser may process audio online. TeachAPP saves only the text you choose to send.</p>
+      <p id={`${id}-privacy`} className="voice-privacy">Your browser may process audio online. Only text you send reaches TeachAPP’s server.</p>
     </div>
   );
 }

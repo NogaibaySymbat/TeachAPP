@@ -30,3 +30,19 @@ RESTORATION EXTENSION (2026-11-15): user requests the morning features 1, 3, 4, 
 LOCAL REFINEMENT (2026-11-16): user requests local file improvements and reserves commit/push. Preserve the palette, topic cards, Milo, voice and learning feedback. Add a first-viewport topic anchor, shorten the static example, collapse the empty transcript, group chat tools, move export below the workspace/results, and distinguish automatic notebook updates from manual recovery. No new dependency or animation. AI prompt refinements preserve concrete source quotes and request abstention when essential answer steps lack evidence; model, call count and shared budget are unchanged.
 
 REFINEMENT VERDICT (2026-11-16): desktop and narrow browser inspection passed for home and empty chat; topic/notebook anchors transfer focus, no horizontal overflow, a local message saves with AI disabled, and the inspected console has no errors. Typecheck, lint, build and 249 tests pass; 59 database tests skipped. AI prompt changes have not had a live paid evaluation. Local screenshot: `.data/qa-ui-20261116/home.jpg`. No production deployment, commit or push performed.
+
+## Session redesign and drafts — 2026-11-16
+
+THESIS: Make the session feel like a conversation with Milo and let a teacher resume an unfinished explanation without rewriting it.
+
+OWN-WORLD: Extend the existing Pearl, Harbor, Midnight and Santorini workspace with its Manrope typography and geometric Milo avatar. Midnight now anchors the chat header; no new palette, assets or dependencies.
+
+STORY: Open a topic, write to Milo, jump to the notebook or exam, then return to the same session with any unsent draft restored. The status distinguishes a browser draft from a submitted explanation.
+
+FIRST VIEWPORT: The topic title and compact Chat → Notebook → Exam anchor navigation sit above a white conversation panel and Santorini notebook. The Midnight Milo header includes the voice toggle. The composer follows immediately in an empty chat. Narrow screens stack the navigation and panels; every navigation target remains at least 44px tall.
+
+FORM: A code-led local extension of the user-pinned workspace, not a new visual world or comp exercise. Draft restoration is the signature interaction; no decorative animation is added. Existing Milo and learning feedback motion remains unchanged, including reduced-motion alternatives.
+
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
+
+SESSION VERDICT (2026-11-16): independent finish reviewer returned **ship**, with no material fixes, covering desktop, mobile and the default 694px preview. Browser checks verified per-session restoration, persistence after reload, clearing after a successful local save, focus at notebook/exam anchors and no console errors. Typecheck, lint and build passed; 255 tests passed, 59 database tests skipped. The one detector invocation's output was lost during context compaction; no clean detector result is claimed. AI was disabled during browser verification; no paid calls were made. No new shipping raster media, commit, push or deployment.

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-14T20:02:52.177148+00:00",
+  "generatedAt": "2026-11-16T17:20:36.033926Z",
   "title": "Design System: TeachAPP Study Workspace",
   "extensions": {
     "colorMeta": {
@@ -437,7 +437,7 @@
       "updatedAt": "2026-11-16",
       "scope": "Compact local refinement of topic entry, empty chat and notebook recovery; existing palette and Milo retained.",
       "home": "48px Midnight anchor moves keyboard focus to topic choice; Free preview label and shorter static example.",
-      "chat": "Empty transcript collapses; notebook shortcut and voice toggle share a wrapping 44px toolbar. Export follows workspace and exam results.",
+      "chat": "Empty transcript collapses; section anchors now sit in the session title row, and the voice toggle sits in the Midnight Milo header. Export follows workspace and exam results.",
       "notebook": "Automatic-update explanation; manual recovery only after teaching, hidden during extraction. No extra paid calls.",
       "verification": "Desktop and narrow browser checks: topic/notebook anchor focus, no horizontal overflow, paused-AI message persistence. Typecheck, lint, build and 249 unit tests passed; 59 database tests skipped. Live AI behavior not evaluated."
     },
@@ -448,6 +448,20 @@
       "notebook": "Stable source-plus-quote keys; new entries arrive over 200ms, stagger capped at 160ms; original message in a native From your explanation disclosure. Reduced motion removes arrival/highlight animation.",
       "exam": "Only a new saved attempt opens the skippable question walkthrough. Reload/stale results open in full. Focus follows headings; explain-question action preserves the composer draft. No model calls for review.",
       "improvement": "Existing detailed comparison plus score arrow and Sea Green acknowledgement. One 280ms checkmark animation for a newly completed, comparable positive change; 140ms fade for reduced motion. No celebration on replay, regression or changed questions."
+    },
+    "sessionDrafts": {
+      "updatedAt": "2026-11-16",
+      "scope": "Local session extension of the incumbent Pearl / Harbor workspace; canonical tokens and existing motion preserved.",
+      "header": "Midnight band with Pearl heading, Santorini AI label/status, existing 56px Milo avatar and colocated voice toggle; Harbor keyboard focus.",
+      "navigation": "Wrapping title-row Chat, Notebook and Exam anchors; 44px targets, saved-note count, Santorini hover and full-width navigation below 520px.",
+      "composer": "Visible label and wrapping 11px draft status: muted saved/restored feedback, error ink for unavailable storage, empty status hidden. Per-session browser drafts restore on return; failed storage keeps current text in memory.",
+      "sources": [
+        "src/components/session-workspace.tsx",
+        "src/components/session-navigation.tsx",
+        "src/components/student-persona.tsx",
+        "src/lib/session-draft.ts",
+        "src/app/globals.css"
+      ]
     }
   },
   "components": [
@@ -471,9 +485,9 @@
       "name": "Composer",
       "kind": "input",
       "refersTo": "composer",
-      "description": "Writing surface with persistent visible label.",
-      "html": "<div class=\"ds-composer\"><label for=\"ds-explanation\">Your explanation</label><textarea id=\"ds-explanation\" placeholder=\"Explain one idea in your own words…\"></textarea></div>",
-      "css": ".ds-composer{font-family: Manrope, \"Avenir Next\", \"Segoe UI\", sans-serif; line-height: 1.6;background:var(--paper,#f6f2ef);color:var(--ink,#363e4f);border:1px solid var(--line,#d2d7da);border-radius:18px;padding:16px;}.ds-composer:focus-within{border-color:#657e83;}.ds-composer label{display:block;font-size:13px;font-weight:600;margin-bottom:8px;}.ds-composer textarea{font:inherit;color:inherit;width:100%;min-height:88px;resize:vertical;border:0;border-radius:0;padding:8px 0;background:transparent;}.ds-composer textarea::placeholder{color:var(--muted,#596271);}.ds-composer textarea:focus-visible { outline: 3px solid var(--focus, #396b7a); outline-offset: 4px; }"
+      "description": "Pearl writing surface with a visible label and browser-draft status.",
+      "html": "<div class=\"ds-composer\"><div class=\"ds-composer-heading\"><label for=\"ds-explanation\">Teach Milo one idea</label><span class=\"ds-draft-status\" id=\"ds-draft-status\" role=\"status\">Draft saved in this browser</span></div><textarea id=\"ds-explanation\" aria-describedby=\"ds-draft-status\" placeholder=\"The way I understand it…\"></textarea></div>",
+      "css": ".ds-composer{font-family: Manrope, \"Avenir Next\", \"Segoe UI\", sans-serif; line-height: 1.6;background:var(--paper,#f6f2ef);color:var(--ink,#363e4f);border:1px solid var(--line,#d2d7da);border-radius:18px;padding:16px;}.ds-composer:focus-within{border-color:#657e83;}.ds-composer label{display:block;font-size:13px;font-weight:600;margin-bottom:8px;}.ds-composer textarea{font:inherit;color:inherit;width:100%;min-height:88px;resize:vertical;border:0;border-radius:0;padding:8px 0;background:transparent;}.ds-composer textarea::placeholder{color:var(--muted,#596271);}.ds-composer textarea:focus-visible { outline: 3px solid var(--focus, #396b7a); outline-offset: 4px; }.ds-composer-heading{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:4px 16px;margin-bottom:8px;}.ds-composer-heading>label{margin:0;}.ds-draft-status{color:var(--muted,#596271);font-size:11px;}.ds-draft-status:empty{display:none;}.ds-draft-status.is-unavailable{color:var(--error,#8b2929);}@media(max-width:520px){.ds-composer{padding:12px;}}"
     },
     {
       "name": "History navigation",

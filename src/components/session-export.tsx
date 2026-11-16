@@ -37,7 +37,7 @@ export function SessionExportControls({ sessionId, disabled }: { sessionId: stri
 
   return <details className="session-export">
     <summary>Download this session</summary>
-    <p className="muted">Keep a copy of saved messages, notes and exam attempts before clearing browser data. Unsaved drafts are not included. Importing a copy back into TeachAPP is not available.</p>
+    <p className="muted">Keep a copy of saved messages, notes and exam attempts before clearing browser data. Unsent drafts are not included. Importing a copy back into TeachAPP is not available.</p>
     <div className="export-actions"><button className="secondary" disabled={disabled || pending} onClick={() => void download("txt")}>Download text</button><button className="secondary" disabled={disabled || pending} onClick={() => void download("json")}>Download JSON</button></div>
     <p role="status" className="muted">{pending ? "Preparing your download…" : status}</p>
     {error && <p role="alert" className="notice error">{error}</p>}

@@ -189,7 +189,7 @@ Header, main and footer share a 1240px maximum width with 40px gutters, decreasi
 
 The home task grid uses a flexible primary column and 320px supporting column, narrowed to 280px below 1000px and stacked below 800px. The session has a 350px notebook column and stacks at 1000px. With desktop history open, the frame adds a 280px fixed, independently scrolling rail; task grids stack from 761–1150px. At 760px and below, history becomes a native modal drawer, width min(320px, 100% - 40px), with body scroll locked and focus restored on close. Content remains in normal document flow.
 
-Chat transcript scrolling is bounded by 52dvh with a 250px minimum once messages exist. Empty transcripts collapse so the composer follows Milo and the compact toolbar. Messages occupy at most 88%, then 94% below 760px and 96% below 520px. Composer actions stack below 520px. Small-screen panels use 20px corners and padding, with chat padding reduced to 16px.
+Chat transcript scrolling is bounded by 52dvh with a 250px minimum once messages exist. Empty transcripts collapse so the composer follows the Midnight Milo header. The topic title shares a wrapping row with Chat, Notebook and Exam anchors; at 520px and below the navigation fills the row. Messages occupy at most 88%, then 94% below 760px and 96% below 520px. Composer actions stack below 520px. Small-screen panels use 20px corners and padding, with chat padding reduced to 16px.
 
 ## Elevation & Depth
 
@@ -215,15 +215,17 @@ Course context is a fine outlined pill with 11px bold text. The progress streak 
 
 White topic and chat panels share the panel radius; topic padding is 30px and chat padding 24px. Notebook asides use 28px padding. The notebook uses Santorini and exam review white. The home page has no progress panel; the white How it works example sits beside the invitation on wide screens and after the topic panel on narrow ones. Panels rely on color rather than shadow. Notices use Wash, 8px corners and 16px padding; failures use the error pair.
 
-The notebook separates the student's latest restatement/question from exact source quotes. Quote entries use white surfaces, 14px corners and 13px text; source and Clarify actions have 44px targets. A textual New badge and border identify additions in the current visit, with a 3-second Harbor-to-white highlight (disabled for reduced motion). The note list scrolls at 480px. A View notebook anchor connects the chat to the panel, while Clarify focuses the composer and preserves its draft.
+The notebook separates the student's latest restatement/question from exact source quotes. Quote entries use white surfaces, 14px corners and 13px text; source and Clarify actions have 44px targets. A textual New badge and border identify additions in the current visit, with a 3-second Harbor-to-white highlight (disabled for reduced motion). The note list scrolls at 480px. The Notebook anchor in the session title row connects the chat to the panel, while Clarify focuses the composer and preserves its draft.
 
 ### Inputs / Fields
 
-The Pearl composer has a one-pixel line border, 18px corners and 16px padding. Its textarea is transparent and borderless with an 88px minimum height, vertical resizing and muted placeholder. Focus within changes the composer border to heading accent; the textarea retains visible keyboard focus. Voice language selection is a 44px minimum-height Pearl control with a field border and 12px corners.
+The Pearl composer has a one-pixel line border, 18px corners and 16px padding. Its textarea is transparent and borderless with an 88px minimum height, vertical resizing and muted placeholder. Focus within changes the composer border to heading accent; the textarea retains visible keyboard focus. The composer heading pairs its visible label with an 11px browser-draft status, wrapping when needed. Restored and saved states use muted ink; a storage failure uses error ink and retains the current text. Empty status takes no space. Voice language selection is a 44px minimum-height Pearl control with a field border and 12px corners.
 
 ### Navigation
 
 Harbor history rows use compact titles and secondary metadata; the current page uses Pearl. The new-session action is Midnight with Pearl text and a plus SVG. Desktop navigation is collapsible; narrow navigation uses the modal drawer. Pointer toggles slide the panel left/right over 240ms with cubic-bezier(0.32, 0.72, 0, 1), and the backdrop fades in sync. The desktop content reflows once and uses an interruptible translation to bridge its position change. Closed desktop history stays mounted but inert and hidden from assistive technology. Keyboard toggles and Escape are immediate; reduced motion keeps a 160ms fade without translation. The header toggle is a transparent 44px control with a Santorini hover surface. On desktop it is hidden while history is open, leaving only the close button inside the rail; keyboard focus follows the visible control.
+
+The session title row has a compact outlined navigation group with Chat, Notebook and Exam anchors, 44px minimum-height links and numbered Santorini circles. Notebook includes the saved-note count; Exam targets the saved review when available. Links use Santorini hover feedback and visible keyboard focus.
 
 ### Topic cards
 
@@ -235,11 +237,11 @@ The invitation includes a Midnight “Choose a topic” anchor, at least 48px ta
 
 User bubbles align right in Midnight/Pearl; student bubbles align left in Wash/Midnight. Timestamp metadata remains separate from message text. The composer groups writing, voice controls and submission. Color changes use 160ms ease-out; reduced-motion preference removes these transitions. There is no entrance animation.
 
-The notebook anchor and voice toggle share a wrapping toolbar with 44px targets. A new session labels the composer “Teach Milo one idea”; existing conversations use “Message Milo”. Session export follows the workspace and results. The notebook explains automatic updates when AI is available, offers manual recovery only for stale notes after an explanation, and hides the duplicate update action while extraction is running. The initial exam stays disabled until teaching has been recorded.
+The voice toggle sits in the wrapping Midnight Milo header; section anchors sit beside the topic title. Header keyboard focus uses Harbor for contrast. A new session labels the composer “Teach Milo one idea”; existing conversations use “Message Milo”. Session export follows the workspace and results. The notebook explains automatic updates when AI is available, offers manual recovery only for stale notes after an explanation, and hides the duplicate update action while extraction is running. The initial exam stays disabled until teaching has been recorded.
 
 ### Milo avatar
 
-Restored on top of the production design at `14be3d8`, preserving its home page, topic cards, chat and notebook layout. The chat heading uses a 56px inline SVG book in a 16px-radius tile, followed by “Milo · AI student” and a factual text status. Midnight strokes and a Pearl page sit on Santorini when empty, Harbor while notes accumulate, and Sea Green after a fresh passed exam.
+The chat heading is a Midnight band flush with the white conversation panel, with rounded upper corners and Pearl heading text. Its AI label and factual status use Santorini. It contains a 56px inline SVG book in a 16px-radius tile, followed by “Milo · AI student”, with the voice toggle alongside. The band uses 20px vertical and 24px horizontal padding, reduced to 16px on small screens. Midnight strokes and a Pearl page sit on Santorini when empty, Harbor while notes accumulate, and Sea Green after a fresh passed exam.
 
 The face progresses from neutral (zero distinct nonempty notes), through curious (one), learning (two), and engaged (three or more), to celebrating (a fully passed exam matching the current fresh notebook revision). Duplicate quotes and unsent drafts do not count. Smiling acknowledges saved notes, not correctness or measured understanding. Listening, thinking, writing, examining and paused states have separate text feedback; thinking, writing and examining use focused eyes. Paused replies preserve the saved-progress expression.
 
