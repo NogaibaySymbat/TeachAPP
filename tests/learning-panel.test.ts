@@ -21,6 +21,13 @@ function render(session: SessionResponse, props: Partial<ComponentProps<typeof L
 }
 
 describe("notebook panel honesty and recovery", () => {
+  it("starts with teaching rather than offering an empty notebook update", () => {
+    const html = render({ ...data, messages: [], notebook: [], learning: { ...data.learning, notebookFresh: false } });
+    expect(html).not.toContain('Build notebook');
+    expect(html).not.toMatch(/<button[^>]*>Update notebook<\/button>/);
+    expect(html).toContain('Send your first explanation to get started.');
+    expect(html).toMatch(/<button[^>]*disabled=""[^>]*>Start student exam<\/button>/);
+  });
   it("shows saved quotes with source links, but does not label reloaded notes as new", () => {
     const html = render(data);
     expect(html).toContain('<blockquote>Assess likelihood.</blockquote>');
@@ -43,11 +50,21 @@ describe("notebook panel honesty and recovery", () => {
     const pending = render({ ...empty, learning: { ...data.learning, notebookFresh: false } }, { updating: true, disabled: true });
     expect(pending).toContain('Taking notes…');
     expect(pending).toContain('aria-busy="true"');
+    expect(pending).not.toMatch(/<button[^>]*>[^<]*notebook[^<]*<\/button>/);
+    expect(pending).toMatch(/<button[^>]*disabled=""[^>]*>Start student exam<\/button>/);
     expect(pending).not.toContain('No relevant statements were recorded');
     const completed = render({ ...empty, ai: { available: false, message: "Paused" } });
     expect(completed).toContain('No relevant statements were recorded');
     // The existing empty-notebook exam can still run without a paid model call.
     expect(completed).not.toMatch(/<button[^>]*disabled=""[^>]*>Start student exam<\/button>/);
+  });
+  it("offers manual recovery for a stale notebook and disables it while AI is unavailable", () => {
+    const stale = { ...data, learning: { ...data.learning, notebookFresh: false } };
+    expect(render(stale)).toMatch(/<button type="button" class="secondary">Update notebook<\/button>/);
+    const paused = render({ ...stale, ai: { available: false, message: "Paused" } });
+    expect(paused).toMatch(/<button[^>]*disabled=""[^>]*>Update notebook<\/button>/);
+    expect(paused).not.toContain('Updates automatically after each message.');
+    expect(paused).toContain('<blockquote>Assess likelihood.</blockquote>');
   });
   it("does not show an old reply as interpretation of a new explanation", () => {
     const html = render({ ...data, messages: [explanation, { id: "s1", role: "student", text: "OLD INTERPRETATION", createdAt: explanation.createdAt, replyToMessageId: "m1" }, { ...explanation, id: "m2", text: "A different idea." }] }, { replying: true });

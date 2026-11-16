@@ -75,20 +75,21 @@ export function Dashboard({ examTitles }: { examTitles: string[] }) {
       <div className="home-hero">
         <section className="intro">
           <h1>Teach PMP to an AI student.<br /><span>See what you can&apos;t explain yet.</span></h1>
-          <p>PMP is the project management certification exam. Explain a topic in your own words. Your student writes down only what you said, then takes a practice exam from those notes. Every wrong answer points to an idea to explain again.</p>
+          <p>Prepare for the project management certification exam by teaching Milo. Explain an idea, review his notes, then see what he can answer.</p>
+          <div className="home-start"><a className="primary-link" href="#topics">Choose a topic<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" /></svg></a><span>Free preview</span></div>
           <div className="study-meta"><span>{examTitles.join(" · ") || "Study topics"}</span><span>Works alongside your course and question bank</span></div>
         </section>
         <section className="session-example" aria-labelledby="example-title">
           <div className="section-heading"><h2 id="example-title">How it works</h2><span>Example</span></div>
           <ol>
-            <li><span className="example-step">You explain</span><p>&ldquo;A risk is something that might go wrong, so we deal with it when it happens.&rdquo;</p></li>
-            <li><span className="example-step">Your student takes notes</span><p>Only your words, quoted: <q>deal with it when it happens</q></p></li>
-            <li><span className="example-step">Your student takes the exam</span><p>&ldquo;A vendor may deliver late. What should the project manager do first?&rdquo; It answers from your notes and gets it wrong.</p></li>
-            <li><span className="example-step">You find the gap</span><p>Explain how to respond to a risk before it occurs, then let your student retake the exam.</p></li>
+            <li><span className="example-step">Explain an idea</span><p>&ldquo;We deal with risks when they happen.&rdquo;</p></li>
+            <li><span className="example-step">Check Milo’s notes</span><p><q>deal with risks when they happen</q> — your words, mistakes included.</p></li>
+            <li><span className="example-step">See the gap</span><p>A practice question asks how to act before a risk occurs. That idea is missing.</p></li>
+            <li><span className="example-step">Explain again & retake</span><p>Teach the missing idea, then compare the results.</p></li>
           </ol>
         </section>
       </div>
-      <section className="study-sections" aria-labelledby="topics-title" aria-busy={loading}>
+      <section className="study-sections" id="topics" tabIndex={-1} aria-labelledby="topics-title" aria-busy={loading}>
         <div className="section-heading">
           <h2 id="topics-title">Pick a topic to teach</h2>
           {loading ? <span role="status">Loading</span> : progressError ? <button className="secondary progress-retry" onClick={() => void load()}>Retry progress</button> : streak > 0 ? <span className="streak">Daily streak: {streak} {streak === 1 ? "day" : "days"} in a row</span> : <span>{topics ? `${topics.length} ${topics.length === 1 ? "topic" : "topics"}` : ""}</span>}

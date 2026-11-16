@@ -433,6 +433,14 @@
       },
       "accessibility": "Decorative SVG is aria-hidden. Visible AI label and role=status text remain."
     },
+    "onboardingRefinement": {
+      "updatedAt": "2026-11-16",
+      "scope": "Compact local refinement of topic entry, empty chat and notebook recovery; existing palette and Milo retained.",
+      "home": "48px Midnight anchor moves keyboard focus to topic choice; Free preview label and shorter static example.",
+      "chat": "Empty transcript collapses; notebook shortcut and voice toggle share a wrapping 44px toolbar. Export follows workspace and exam results.",
+      "notebook": "Automatic-update explanation; manual recovery only after teaching, hidden during extraction. No extra paid calls.",
+      "verification": "Desktop and narrow browser checks: topic/notebook anchor focus, no horizontal overflow, paused-AI message persistence. Typecheck, lint, build and 249 unit tests passed; 59 database tests skipped. Live AI behavior not evaluated."
+    },
     "learningFeedback": {
       "updatedAt": "2026-11-15",
       "productionDesignBase": "14be3d8",

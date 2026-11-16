@@ -31,7 +31,7 @@ export function LearningPanel({ data, disabled, updating, replying, replyError, 
 
   return <aside className="learning-panel" id="student-notebook" tabIndex={-1} aria-labelledby="notebook-title">
     <div className="notebook-heading"><svg width="22" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true"><rect x="5" y="3" width="15" height="18" rx="3" /><path d="M9 3v18M3 7h4M3 12h4M3 17h4m9-9h4m-4 4h4" /></svg><h2 id="notebook-title">Student’s notebook</h2></div>
-    <p className="notebook-intro">See what your explanation leaves behind.</p>
+    <p className="notebook-intro">{data.ai.available ? "Updates automatically after each message." : "Saved notes stay here while Milo is unavailable."}</p>
     <div className="notebook-sync" role="status"><span className={`notebook-status${updating ? " is-updating" : ""}`}>{status}</span><span>{notebook.length} {notebook.length === 1 ? "note" : "notes"}</span></div>
 
     {exchange && <section className="student-take" aria-labelledby="student-take-title">
@@ -66,7 +66,7 @@ export function LearningPanel({ data, disabled, updating, replying, replyError, 
       </ol> : <div className="notebook-empty"><p>{updating ? "Your first notes will appear here." : learning.notebookFresh ? "No relevant statements were recorded. Try explaining one idea with an example." : "A blank page, for now. Teach one idea and watch your student take notes."}</p></div>}
     </section>
     {error && <div className="notice error" role="alert"><p>{error}</p></div>}
-    {!learning.notebookFresh && <button type="button" className="secondary" disabled={disabled || (!data.ai.available && explanations.length > 0)} onClick={onUpdate}>{updating ? "Updating notebook…" : error ? "Retry notebook update" : explanations.length ? "Update notebook" : "Build notebook"}</button>}
+    {!learning.notebookFresh && explanations.length > 0 && !updating && <button type="button" className="secondary" disabled={disabled || !data.ai.available} onClick={onUpdate}>{error ? "Retry notebook update" : "Update notebook"}</button>}
     <p className="notebook-footnote">Notes preserve your words, including mistakes. The exam tests how the student uses them.</p>
     <hr />
     <h3>Student exam</h3>
@@ -78,7 +78,7 @@ export function LearningPanel({ data, disabled, updating, replying, replyError, 
       <button type="button" disabled={disabled || (!data.ai.available && notebook.length > 0) || !learning.notebookFresh || learning.questionCount === 0} onClick={onExam}>
         {examining ? "Student is taking the exam…" : latestAttempt ? "Retake student exam" : "Start student exam"}
       </button>
-      {!learning.notebookFresh && <p className="muted">Update the notebook before the next attempt.</p>}
+      {!learning.notebookFresh && <p className="muted">{explanations.length === 0 ? "Send your first explanation to get started." : updating ? "The exam will be ready when these notes are saved." : "Update the notebook before the next attempt."}</p>}
       {latestAttempt && <p className="muted">Previous result: {latestAttempt.score}/{latestAttempt.total}. Your new explanation has not been tested yet.</p>}
     </>}
   </aside>;

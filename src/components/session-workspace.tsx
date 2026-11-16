@@ -184,20 +184,15 @@ function Conversation({ sessionId }: { sessionId: string }) {
     <div className="session-workspace">
       <Link className="back-link" href="/"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6" /></svg>Back to topics</Link>
       <h1>{data?.topic?.title ?? "Your teaching session"}</h1>
-      <p className="session-intro">Put the idea into your own words. Your student will ask about what needs explaining.</p>
-      {data && <SessionExportControls sessionId={sessionId} disabled={phase !== "idle" || voiceActive} />}
+      <p className="session-intro">Explain an idea. Check Milo’s notes. Try the exam.</p>
       {error && <div className="notice error" role="alert"><p>{error}</p>{!data && <button className="secondary" onClick={() => { setError(""); setRetry((value) => value + 1); }}>Try again</button>}</div>}
       {!data && !error && <p role="status">Opening your session…</p>}
       {data && <div className="session-grid">
         <section className="chat-panel" aria-labelledby="explanation-title">
           <StudentPersona state={getStudentPersona(data, { listening: voiceActive, examining: phase === "exam", writing: updatingNotebook, replying, reviewing })} />
-          {!data.ai.available ? <p className="notice">{data.ai.message} You can keep explaining; everything you write is saved.</p> : (
-            <p className="session-guidance">Explain one idea at a time, then answer your student’s questions.</p>
-          )}
-          <div className="notebook-shortcut"><a href="#student-notebook">View notebook <span>{data.notebook.length}</span><span aria-hidden="true"> ↗</span></a><span>Updates after each explanation</span></div>
-          <VoiceOutputToggle voice={studentVoice} />
-          <div className="transcript" role="log" aria-label="Session messages" aria-live="polite">
-            {data.messages.length === 0 && <div className="chat-empty"><h3>Let’s talk about this topic.</h3><p>You teach; your AI student asks questions. Start with one idea in your own words.</p><span>Write your first message below</span></div>}
+          {!data.ai.available && <p className="notice">{data.ai.message} You can keep explaining; everything you write is saved.</p>}
+          <div className="chat-tools"><div className="notebook-shortcut"><a href="#student-notebook">View notebook <span>{data.notebook.length}</span><span aria-hidden="true"> ↗</span></a></div><VoiceOutputToggle voice={studentVoice} /></div>
+          <div className={`transcript${data.messages.length === 0 && !replying ? " is-empty" : ""}`} role="log" aria-label="Session messages" aria-live="polite">
             {data.messages.map((message) => <article className={`message message-${message.role}`} key={message.id} id={`message-${message.id}`}><div className="message-meta"><strong>{message.role === "user" ? "You" : "Milo · AI student"}</strong><time dateTime={message.createdAt}>{new Date(message.createdAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</time></div><p>{message.text}</p>{message.role === "student" && <SpeakMessageButton voice={studentVoice} messageId={message.id} text={message.text} />}</article>)}
             {replying && <div className="student-thinking" role="status"><span className="thinking-dots" aria-hidden="true"><i /><i /><i /></span>Your student is reading and replying…</div>}
             <div ref={end} />
@@ -210,8 +205,8 @@ function Conversation({ sessionId }: { sessionId: string }) {
           <form className="chat-composer" onSubmit={(event) => void send(event)}>
             {clarifying && <div className="clarifying-note" id="clarifying-note"><div><strong>Clarify this idea</strong><button type="button" className="clarify-dismiss" aria-label="Stop clarifying this note" onClick={() => { setClarifying(null); explanation.current?.focus(); }}>×</button></div><blockquote>{clarifying.claim}</blockquote><p>Explain it again in your own words, or add an example below.</p></div>}
             {revisitingQuestion && <div className="clarifying-note" id="revisiting-question"><div><strong>Help Milo with this question</strong><button type="button" className="clarify-dismiss" aria-label="Stop revisiting this question" onClick={() => { setRevisitingQuestion(null); explanation.current?.focus(); }}>×</button></div><blockquote>{revisitingQuestion}</blockquote><p>Teach the idea behind it in your own words. Your draft is still here.</p></div>}
-            <label htmlFor="explanation">Message your student</label>
-            <textarea ref={explanation} id="explanation" value={text} onChange={(event) => { setText(event.target.value); setSaved(false); }} maxLength={4000} rows={3} placeholder="Explain an idea or answer your student…" disabled={phase !== "idle" || voiceActive} aria-describedby={clarifying ? "clarifying-note save-status" : revisitingQuestion ? "revisiting-question save-status" : "save-status"} onKeyDown={(event) => { if (event.key === "Enter" && !event.shiftKey && !event.nativeEvent.isComposing) { event.preventDefault(); event.currentTarget.form?.requestSubmit(); } }} />
+            <label htmlFor="explanation">{data.messages.length ? "Message Milo" : "Teach Milo one idea"}</label>
+            <textarea ref={explanation} id="explanation" value={text} onChange={(event) => { setText(event.target.value); setSaved(false); }} maxLength={4000} rows={3} placeholder={data.messages.length ? "Explain an idea or answer Milo’s question…" : "The way I understand it…"} disabled={phase !== "idle" || voiceActive} aria-describedby={clarifying ? "clarifying-note save-status" : revisitingQuestion ? "revisiting-question save-status" : "save-status"} onKeyDown={(event) => { if (event.key === "Enter" && !event.shiftKey && !event.nativeEvent.isComposing) { event.preventDefault(); event.currentTarget.form?.requestSubmit(); } }} />
             <VoiceInput value={text} disabled={phase !== "idle"} onActiveChange={setVoiceActive} onAppend={(dictated) => {
               setText((current) => `${current}${current && !/\s$/u.test(current) ? " " : ""}${dictated}`);
               setSaved(false);
@@ -239,6 +234,7 @@ function Conversation({ sessionId }: { sessionId: string }) {
         explanation.current?.focus();
         requestAnimationFrame(() => { explanation.current?.scrollIntoView({ block: "center" }); });
       }} />}
+      {data && <SessionExportControls sessionId={sessionId} disabled={phase !== "idle" || voiceActive} />}
     </div>
   );
 }

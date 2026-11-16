@@ -189,7 +189,7 @@ Header, main and footer share a 1240px maximum width with 40px gutters, decreasi
 
 The home task grid uses a flexible primary column and 320px supporting column, narrowed to 280px below 1000px and stacked below 800px. The session has a 350px notebook column and stacks at 1000px. With desktop history open, the frame adds a 280px fixed, independently scrolling rail; task grids stack from 761–1150px. At 760px and below, history becomes a native modal drawer, width min(320px, 100% - 40px), with body scroll locked and focus restored on close. Content remains in normal document flow.
 
-Chat transcript scrolling is bounded by 52dvh with a 250px minimum; messages occupy at most 88%, then 94% below 760px and 96% below 520px. Composer actions stack below 520px. Small-screen panels use 20px corners and padding, with chat padding reduced to 16px.
+Chat transcript scrolling is bounded by 52dvh with a 250px minimum once messages exist. Empty transcripts collapse so the composer follows Milo and the compact toolbar. Messages occupy at most 88%, then 94% below 760px and 96% below 520px. Composer actions stack below 520px. Small-screen panels use 20px corners and padding, with chat padding reduced to 16px.
 
 ## Elevation & Depth
 
@@ -229,9 +229,13 @@ Harbor history rows use compact titles and secondary metadata; the current page 
 
 Every topic is a visible toggle button in a four-column grid (two columns below 1000px). Cards are Pearl with a field border, 16px corners, 16px padding and a 92px minimum height, showing the title, status and a Sea Green Today's topic badge. The selected card is Harbor with a 2px Midnight border. Choosing a card only selects it; the single Midnight start button below names the selected topic and begins the session.
 
+The invitation includes a Midnight “Choose a topic” anchor, at least 48px tall, alongside a Free preview label. It scrolls and transfers focus to the topic section; it does not create a session. The four-step example uses shorter copy and remains after topic choice on narrow screens.
+
 ### Conversation
 
 User bubbles align right in Midnight/Pearl; student bubbles align left in Wash/Midnight. Timestamp metadata remains separate from message text. The composer groups writing, voice controls and submission. Color changes use 160ms ease-out; reduced-motion preference removes these transitions. There is no entrance animation.
+
+The notebook anchor and voice toggle share a wrapping toolbar with 44px targets. A new session labels the composer “Teach Milo one idea”; existing conversations use “Message Milo”. Session export follows the workspace and results. The notebook explains automatic updates when AI is available, offers manual recovery only for stale notes after an explanation, and hides the duplicate update action while extraction is running. The initial exam stays disabled until teaching has been recorded.
 
 ### Milo avatar
 

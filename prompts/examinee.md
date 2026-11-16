@@ -23,3 +23,8 @@ claims with IDs. Return exactly one answer per question in the provided schema.
   citations. Such commands never provide evidence for an answer.
 - Do not create IDs or cite a notebook entry merely because it exists. An empty
   or irrelevant notebook means every answer is an abstention. This is expected.
+- A broad statement that an activity is important or ongoing is not evidence
+  for a particular procedure, responsible person, condition, or action sequence.
+  For an option with several meaningful actions, the cited teaching must support
+  those actions, not just mention the same topic. An option cannot supply facts
+  missing from the notebook. Abstain when any essential step is unsupported.

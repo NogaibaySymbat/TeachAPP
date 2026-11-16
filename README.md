@@ -19,6 +19,8 @@ TeachAPP works alongside a prep course and a question bank: they show *what* you
 
 No sign-in: history is saved per browser.
 
+The home page links straight to topic choice. Empty sessions put the composer directly below Milo; notes update automatically after a message, with a manual retry when an update fails. Session export is below the conversation and results.
+
 Milo's book avatar starts neutral and gradually smiles as distinct notes are saved. A fresh, fully passed practice exam earns a bigger smile. This reflects saved progress, not a guarantee of understanding; drafts and repeated quotes do not advance the expression. The avatar runs locally in the UI and adds no model calls.
 
 New notebook quotes arrive with a brief highlight; **From your explanation** opens the original message. Newly completed exams open one saved answer at a time, with **Show all results** available immediately. Missed answers link back to the composer without clearing your draft. Retakes show the previous and latest scores, newly cited notes, and a brief acknowledgement only for a comparable improvement. Reloading or replaying saved results never calls a model.
@@ -27,6 +29,7 @@ New notebook quotes arrive with a brief highlight; **From your explanation** ope
 
 - Every reply, notebook and exam answer comes from a live model call. Nothing is pre-recorded or simulated. Grading and the debrief are deterministic code.
 - "Notebook only" is enforced by what the model receives and by citation checks, not proven semantically. A small live experiment matched expectations in 12 of 13 runs: [report](reports/notebook-grounding/2026-11-14T15-17-34.760Z/REPORT.md).
+- Notebook prompts ask for the concrete actions and conditions taught, preserving exact quotes. The examinee must abstain when a general note does not support the essential steps in an answer. These prompt refinements still need a new live evaluation; the earlier experiment is not evidence for this version.
 - The practice questions are original. This is not an official PMP exam, and practice scores do not predict real results.
 - [/pricing](https://teachapp.vercel.app/pricing) is a preview: payments are not connected and nothing is limited by plan.
 
